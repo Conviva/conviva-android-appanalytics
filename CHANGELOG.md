@@ -9,9 +9,6 @@
 * Added feature to auto track the Fragment and its load time
 * Added feature to auto track user clicks inside Activity and Fragment
 * Added feature to enable or disable activityTrackingPeriodicHB() set to true by default, with default interval of 40 seconds and delay of 2 seconds
-
-## 0.1.2 (01/APR/2022)
-
 * Simplified the integration instructions by absorbing internally the:
     * default gateway endpoint to "https://appgw.conviva.com"
     * HTTPMethod POST
