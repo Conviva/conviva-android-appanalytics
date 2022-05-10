@@ -1,6 +1,13 @@
 
 # Changelog
 
+## 0.2.1 (10/MAY/2022)
+
+* Added feature of Auto Detection of Low Power Mode in Platform Contexts
+* Added feature to auto track deepLink set to true by default with option to enable or disable deepLinkAutotracking()
+* Option to enable or disable userClickAutotracking() set to false by default
+* Fixed the issue of auto collection of first Fragment onCreate and onResume timestamps
+
 ## 0.2.0 (20/APR/2022)
 
 * Published the binaries to maven
