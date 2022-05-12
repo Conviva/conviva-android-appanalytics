@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.2.2 (11/MAY/2022)
+
+* Fixed the ClassCastException introduced in 0.2.0v of Conviva SDK
+
 ## 0.2.1 (10/MAY/2022)
 
 * Added feature of Auto Detection of Low Power Mode in Platform Contexts
