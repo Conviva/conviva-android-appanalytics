@@ -1,7 +1,7 @@
 
 # Changelog
 
-## 0.2.2 (11/MAY/2022)
+## 0.2.2 (12/MAY/2022)
 
 * Fixed the ClassCastException introduced in 0.2.0v of Conviva SDK
 
