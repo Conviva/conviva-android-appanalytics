@@ -54,6 +54,18 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
 );
 ```
 
+## Initialize the tracker to enable or disable specific autocollection
+
+```
+TrackerConfiguration trackerConfiguration = new TrackerConfiguration(<YOUR_APP_NAME_ADVISED_BY_Conviva>)
+    .bundleInfoAutotracking(false);
+    
+TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
+    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
+    trackerConfiguration
+);
+```
+
 ## Set the user id (viewer id)
 
 ```
