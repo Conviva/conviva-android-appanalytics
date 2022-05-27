@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.3.0 (27/MAY/2022)
+
+* Option to enable or disable bundleInfoAutotracking() set to true by default
+
 ## 0.2.2 (12/MAY/2022)
 
 * Fixed the ClassCastException introduced in 0.2.0v of Conviva SDK
