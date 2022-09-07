@@ -17,14 +17,14 @@ dependencies {
     // Conviva video sensor dependency(supported 4.0.19 onwards)
     implementation 'com.conviva.sdk:conviva-core-sdk:<version>'
 
-    // If 'lifecycleAutotracking' is enabled
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-
-    // If 'installAutotracking' is enabled
-    implementation 'com.android.installreferrer:installreferrer:2.2'
-
     // Dependency package required for Conviva Android tracker
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    
+    // Need to add this dependency explicitly prior to 0.3.1 
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    // Need to add this dependency explicitly prior to 0.3.1
+    implementation 'com.android.installreferrer:installreferrer:2.2'
     ...
 }
 ```
