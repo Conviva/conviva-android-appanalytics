@@ -1,6 +1,16 @@
 
 # Changelog
 
+## 0.3.1 (07/SEP/2022)
+
+* Supports remote config feature to configure enabling/disabling of features and the time intervals from backend portal
+* Supports adding the required dependency packages lifecycle and installreferrer in Conviva App Sensor SDK
+* Supports collecting the Android IDFA automatically
+* Internal inprovements in multi threaded application environments
+* Fixes the Conviva data enrichment issues related to referrer, batteryLevel, systemAvailableMemory and empty body warnings
+* Fixes the issue of the incorrect session id timeout logic for background and foreground events
+* Fixes the issue of raw event being sent with empty string eventName attribute
+
 ## 0.3.0 (27/MAY/2022)
 
 * Option to enable or disable bundleInfoAutotracking() set to true by default
