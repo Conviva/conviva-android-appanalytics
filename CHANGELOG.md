@@ -6,6 +6,7 @@
 * Supports remote config feature to configure enabling/disabling of features and the time intervals from backend portal
 * Supports adding the required dependency packages lifecycle and installreferrer in Conviva App Sensor SDK
 * Supports collecting the Android IDFA automatically
+* Deprecates the API createTracker(context, customerKey, trackerConfiguration) and mandates to use createTracker(context, customerKey, appName)
 * Internal improvements in multi threaded application environments
 * Fixes the Conviva data enrichment issues related to referrer, batteryLevel, systemAvailableMemory and empty body warnings
 * Fixes the issue of the incorrect session id timeout logic for background and foreground events
