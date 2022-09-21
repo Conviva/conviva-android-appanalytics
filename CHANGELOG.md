@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 0.3.2 (21/SEP/2022)
+
+* Fixes the issue of cached customer key used for the gateway endpoint and app name
+* Replaces the external dependency of NamedThreadFactory with internal one
+* Enhances the logging by removing unwanted error messages, especially on the missing Advertising Id
+
 ## 0.3.1 (07/SEP/2022)
 
 * Supports remote config feature to configure enabling/disabling of features and the time intervals from backend portal
