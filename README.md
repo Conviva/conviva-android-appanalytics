@@ -66,6 +66,19 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationCont
 );
 ```
 
+## Initialize the tracker to disable event caching
+
+```
+EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
+    .disableEventCaching(true);
+    
+TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
+    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
+    <YOUR_APP_NAME_ADVISED_BY_Conviva>
+    emitterConfiguration
+);
+```
+
 ## Set the user id (viewer id)
 
 ```
@@ -89,8 +102,3 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, JSONValue.toJSONString(eventData));
 ```
-
-## Note:  
-
-* Refer https://pulse.conviva.com/learning-center/content/sensor_developer_center/sensor_integration/android/application_analytics/android_application_analytics.htm for integration guidelines.
-
