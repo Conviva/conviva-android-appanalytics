@@ -1,6 +1,13 @@
 
 # Changelog
 
+## 0.3.3 (12/OCT/2022)
+
+* Option to disableEventCaching() set to false by default, to avoid storing events in db
+* Fixes the issue of the iid getting changed on new session
+* Fixes the issue of non closing of Response body for unsuccessful Requests
+* Fixes issue of missing events when the application is launched in offline mode
+
 ## 0.3.2 (21/SEP/2022)
 
 * Fixes the issue of cached customer key used for the gateway endpoint and app name
