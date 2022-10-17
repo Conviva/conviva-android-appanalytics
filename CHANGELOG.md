@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 0.3.4 (17/OCT/2022)
+
+* Supports createTracker() with a callback function for the TrackerController with readcache from worker thread
+* Fixes the Strict Mode issues
+
 ## 0.3.3 (12/OCT/2022)
 
 * Option to disableEventCaching() set to false by default, to avoid storing events in db
