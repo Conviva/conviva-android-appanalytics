@@ -68,13 +68,36 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationCont
 
 ## Initialize the tracker to disable event caching
 
+### To run the Conviva initialisation in the main thread
 ```
+// Supported from 0.3.3 onwards
 EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
     .disableEventCaching(true);
     
 TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
     <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
     <YOUR_APP_NAME_ADVISED_BY_Conviva>
+    emitterConfiguration
+);
+```
+
+### To run the Conviva initialisation in the worker thread
+```
+// Supported from 0.3.4 onwards
+EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
+    .disableEventCaching(true);
+
+TrackerController tracker;
+ConvivaAppAnalytics.createTracker(getApplicationContext(),
+    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
+    <YOUR_APP_NAME_ADVISED_BY_Conviva>,
+    new Consumer<TrackerController>() {
+        @Override
+        public void accept(TrackerController trackerController) {
+            tracker = trackerController;
+            // update the tracker to be used for setting the user id
+        }
+    },
     emitterConfiguration
 );
 ```
