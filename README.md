@@ -29,6 +29,9 @@ dependencies {
 }
 ```
 
+<details>
+  <summary><b> Offline library</b></summary>
+    
 ## Offline library
 Place the Conviva App Sensor in app's 'libs' folder and add the following line to app's <strong>build.gradle</strong> file:
 
@@ -39,6 +42,7 @@ dependencies {
     ...
 }
 ```
+</details>
 
 ## Support Android Version
 
@@ -54,6 +58,9 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
 );
 ```
 
+<details>
+  <summary><b> Initialize the tracker to enable or disable specific autocollection</b></summary>
+
 ## Initialize the tracker to enable or disable specific autocollection
 
 ```
@@ -65,6 +72,10 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationCont
     trackerConfiguration
 );
 ```
+</details>
+
+<details>
+  <summary><b> Initialize the tracker to disable event caching</b></summary>
 
 ## Initialize the tracker to disable event caching
 
@@ -80,7 +91,7 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationCont
     emitterConfiguration
 );
 ```
-
+        
 ### To run the Conviva initialisation in the worker thread
 ```
 // Supported from 0.3.4 onwards
@@ -101,13 +112,16 @@ ConvivaAppAnalytics.createTracker(getApplicationContext(),
     emitterConfiguration
 );
 ```
-
+</details>
+        
+        
 ## Set the user id (viewer id)
 
 ```
 tracker.getSubject().setUserId(userId);
 ```
 
+        
 ## Extend tracking to track your application specific events and state changes
 Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
 <strong>eventName</strong> - Name of the custom event<br>
