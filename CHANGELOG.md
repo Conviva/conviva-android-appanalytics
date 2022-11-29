@@ -1,6 +1,13 @@
 
 # Changelog
 
+## 0.3.4.4 (07/NOV/2022)
+
+* Hot fix on top of 0.3.4
+* Fixes the intermittent StackOverflowError Exception during retry of failed Heartbeats
+* Fixes the potential db syncronisation issues
+
+
 ## 0.3.4 (17/OCT/2022)
 
 * Supports createTracker() with a callback function for the TrackerController with readcache from worker thread
