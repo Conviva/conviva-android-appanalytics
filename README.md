@@ -46,7 +46,7 @@ dependencies {
 
 ## Support Android Version
 
-Target sdk version : Android 12L (API level 32)<br> 
+Target sdk version : Android 13 (API level 33)<br> 
 Minimum sdk version : Android 4.0.4 (API level 15)
 
 ## Initialize the tracker by enabling autocollection
