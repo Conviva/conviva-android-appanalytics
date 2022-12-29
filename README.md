@@ -139,3 +139,27 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, JSONValue.toJSONString(eventData));
 ```
+
+## Extend tracking to set your application specific custom tags
+Use <strong>setCustomTags()</strong> API to set custom tags<br>
+Use <strong>clearCustomTags()</strong> API to clear few of the previously set custom tags<br>
+Use <strong>clearAllCustomTags()</strong> API to clear all the previously set custom tags<br>
+
+The following example shows the implementation of the application using these API's:
+```
+// Adds the custom tags
+HashMap<String, Object> tags = new HashMap<>(); 
+eventData.put("key1", intValue); 
+eventData.put("key2", boolValue); 
+eventData.put("key3", "stringValue");
+tracker.setCustomTags(tags);
+
+// clears few of the custom tags
+Set<String> clearTagKeysSet = new HashSet<>();
+clearTagKeysSet.add("key1"); 
+clearTagKeysSet.add("key2"); 
+tracker.clearCustomTags(clearTagKeysSet);
+
+// clears all the custom tags
+tracker.clearAllCustomTags();
+```
