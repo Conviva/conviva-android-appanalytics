@@ -3,7 +3,7 @@
 
 ## 0.4.0 (29/DEC/2022)
 * Supports Android 13 (API level 33)
-* Supports feature to recieve the broadcasted video events from Conviva Android Video Sensor SDK(supports Video Sensor SDK 4.0.29 onwards)
+* Supports feature to receive the broadcasted video events from Conviva Android Video Sensor SDK(supports Video Sensor SDK 4.0.29 onwards)
 * Adds the API's setCustomTags(), clearCustomTags() and clearAllCustomTags() for reporting/remove custom tags similar to video sensor
 * Adds eventIndex and previousEventTimestamp to event_info context
 * Enhances the performance, while sending offline data with default settings of:
@@ -17,13 +17,13 @@
    * Adds pause and resume to EmitterController
    * Adds session callback
    * Adds eventIndex and firstEventTimestamp properties to client sessions
-   * Adds a customizable set of failure HTTP status codes for which collector requests should not be retried
+   * Adds a customisable set of failure HTTP status codes for which collector requests should not be retried
    * Adds support for storing cookies in NetworkConnection
    * Sets log level without trackerDiagnostic 
    * Attaches LifecycleEntity before the first Background event
    * Enables updating collector endpoint while Emitter is running
    * Checks session for background event using foreground timeout
-   * Ensures english numerals are used in datetimes
+   * Ensures english numerals are used in date-times
    * Fixes multiple ScreenContexts on ScreenView events
    * Fixes updating IDFA during app runtime
    * Does not allow multiple state machines with the same ID
