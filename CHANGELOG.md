@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.4.1 (05/JAN/2023)
+* Hot fix on top of the 0.4.0
+* Fixes the NullPointerException thrown due to Objects.requireNonNull check for the SetUserId which can be null.
+
 ## 0.4.0 (29/DEC/2022)
 * Supports Android 13 (API level 33)
 * Supports feature to receive the broadcasted video events from Conviva Android Video Sensor SDK(supports Video Sensor SDK 4.0.29 onwards)
