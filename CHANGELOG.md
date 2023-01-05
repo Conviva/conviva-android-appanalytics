@@ -1,8 +1,7 @@
 
 # Changelog
 
-## 0.4.1 (05/JAN/2023)
-* Hot fix on top of the 0.4.0
+## 0.4.2 (05/JAN/2023)
 * Fixes the NullPointerException thrown due to Objects.requireNonNull check for the SetUserId which can be null.
 
 ## 0.4.0 (29/DEC/2022)
