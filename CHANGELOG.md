@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 0.4.3 (12/JAN/2023)
+* Fixes the VideoSensorReceiver zero argument issue
+* Fixes the regression issue of userclicktracking default value to true by disabling in this version(introduced in 0.4.0)
+* Supports devices api level >= 21
+
 ## 0.4.2 (05/JAN/2023)
 * Fixes the NullPointerException thrown due to Objects.requireNonNull check for the SetUserId which can be null.
 
@@ -79,7 +84,10 @@
 
 * Added feature of Auto Detection of Low Power Mode in Platform Contexts
 * Added feature to auto track deepLink set to true by default with option to enable or disable deepLinkAutotracking()
-* Option to enable or disable userClickAutotracking() set to false by default
+* Option to enable or disable 
+
+
+Autotracking() set to false by default
 * Fixed the issue of auto collection of first Fragment onCreate and onResume timestamps
 
 ## 0.2.0 (20/APR/2022)
