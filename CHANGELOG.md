@@ -1,10 +1,13 @@
 
 # Changelog
 
+## 0.4.4 (19/JAN/2023)
+*	Fixes the Null Pointer exceptions in receiving the Video Sensor Events + Extra null checks added for the feature
+*	Limits support for the devices api level >= 21 in the Manifest file
+
 ## 0.4.3 (12/JAN/2023)
 * Fixes the VideoSensorReceiver zero argument issue
 * Fixes the regression issue of userclicktracking default value to true by disabling in this version(introduced in 0.4.0)
-* Supports devices api level >= 21
 
 ## 0.4.2 (05/JAN/2023)
 * Fixes the NullPointerException thrown due to Objects.requireNonNull check for the SetUserId which can be null.
