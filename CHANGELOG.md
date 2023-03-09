@@ -5,7 +5,7 @@
 *	Supports auto detection of the Application Not Responding(ANR), which is set to default as false("anrTracking" remote config)
 *	Adds trackCustomEvent(eventName, JSONObject) to pass the JSONObject instead of String conversion
 *	Adds Client Id of the device with "X-Client-ID" HTTP Header while sending HB
-*	Enhances the auto detection of Application Background and Foreground events, which fails when the application choose to remove the InitializationProvider in the Manifest
+*	Enhances the auto detection of Application Background and Foreground events, which earlier failed when the application choose to remove the InitializationProvider in the Manifest
 *	Enhances reporting error log message in console for trackCustomEvent(eventName, String), if the Object is non JSON
 *	Downgrades the okhttp dependency package to 4.9.3 as 4.10.0 in causes issues with using App and Video Sensors
 
