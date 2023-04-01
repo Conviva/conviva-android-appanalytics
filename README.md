@@ -53,10 +53,14 @@ Minimum sdk version : Android 5.0 (API level 21)
 
 ```
 TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
-    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
-    <YOUR_APP_NAME_ADVISED_BY_Conviva>
+    customerKey,
+    appName
 );
 ```
+<strong>customerKey</strong> - a string to identify specific customer account. Different keys shall be used for development / debug versus production environment. Find your keys on the account info page in Pulse.
+
+<strong>appName</strong> - a string value used to distinguish your applications. Simple values that are unique across all of your integrated platforms work best here.
+
 
 <details>
   <summary><b> Initialize the tracker to enable or disable specific autocollection</b></summary>
@@ -64,11 +68,11 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
 ## Initialize the tracker to enable or disable specific autocollection
 
 ```
-TrackerConfiguration trackerConfiguration = new TrackerConfiguration(<YOUR_APP_NAME_ADVISED_BY_Conviva>)
+TrackerConfiguration trackerConfiguration = new TrackerConfiguration(appName)
     .bundleInfoAutotracking(false);
     
 TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
+    customerKey,
     trackerConfiguration
 );
 ```
@@ -86,8 +90,8 @@ EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
     .disableEventCaching(true);
     
 TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
-    <YOUR_APP_NAME_ADVISED_BY_Conviva>
+    customerKey,
+    appName
     emitterConfiguration
 );
 ```
@@ -100,8 +104,8 @@ EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
 
 TrackerController tracker;
 ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    <YOUR_CUSTOMER_KEY_ADVISED_BY_Conviva>,
-    <YOUR_APP_NAME_ADVISED_BY_Conviva>,
+    customerKey,
+    appName,
     new Consumer<TrackerController>() {
         @Override
         public void accept(TrackerController trackerController) {
