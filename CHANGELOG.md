@@ -1,6 +1,12 @@
 
 # Changelog
 
+##  0.5.1 (06/APR/2023)
+
+* Fixes the issue of new session creation while applying remote config and local cache, due to which duplicate heartbeats are sent
+* Fixes the reporting of Periodic Heartbeat event being independent on the remote configuration
+* Fixes the issue of inaccurate collection of 'Low Power Mode' device setting
+
 ## 0.5.0 (09/MAR/2023)
 *	Supports auto detection of the Application Not Responding(ANR), which is set to default as false("anrTracking" remote config)
 *	Adds trackCustomEvent(eventName, JSONObject) to pass the JSONObject instead of String conversion
