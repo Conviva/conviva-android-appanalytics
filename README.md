@@ -129,6 +129,28 @@ tracker.getSubject().setUserId(userId);
 ## Extend tracking to track your application specific events and state changes
 Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
 <strong>eventName</strong> - Name of the custom event<br>
+<strong>eventData</strong> - Any type of data in JSONObject format
+
+The following example shows the implementation of the 'onClick' event listener to any element.
+```
+// Supported from 0.5.0 onwards
+
+JSONObject eventDataJSON = new JSONObject();
+eventDataJSON.put("identifier1", intValue);
+eventDataJSON.put("identifier2", boolValue);
+eventDataJSON.put("identifier3", "stringValue");
+
+String eventName = "your-event-name";
+
+tracker.trackCustomEvent(eventName, eventDataJSON);
+```
+<details>
+  <summary><b> track application with data in string format </b></summary>
+
+## trackCustomEvent() with data in string format
+
+Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
+<strong>eventName</strong> - Name of the custom event<br>
 <strong>eventData</strong> - Any type of data in string format
 
 The following example shows the implementation of the 'onClick' event listener to any element.
@@ -143,6 +165,7 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, JSONValue.toJSONString(eventData));
 ```
+</details>
 
 ## Extend tracking to set your application specific custom tags
 Use <strong>setCustomTags()</strong> API to set custom tags<br>
