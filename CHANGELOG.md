@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 0.5.2 (23/APR/2023)
+
+* Implements feature of the client id based event sequence number
+* Fixes the issue of custom events not getting blocked for the camel case event names
+* Fixes unwanted diagnostic error on the missing Android IDFA in React Native and Flutter Sensors
+
 ##  0.5.1 (06/APR/2023)
 
 * Fixes the issue of new session creation while applying remote config and local cache, due to which duplicate heartbeats are sent
