@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 0.5.3 (01/MAY/2023)
+
+* Fixes the issue of duplicate event sequence number(client id based) while taking application to foreground after killing the application during background state
+* Fixes the issue of recurring suffix to the tracker version while pause and un pause of the application
+
 ## 0.5.2 (23/APR/2023)
 
 * Implements feature of the client id based event sequence number
