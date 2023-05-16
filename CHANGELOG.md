@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 0.5.5 (16/MAY/2023)
+
+* Enhances the applying of the remote configuration at an interval of cacheRefreshInterval which is set to 30 mins by default
+* Enhances the auto collection of screen_view event, by excluding the Fragment tracking
+* Fixes the Strict Mode issues
+
 ## 0.5.3 (01/MAY/2023)
 
 * Fixes the issue of duplicate event sequence number(client id based) while taking application to foreground after killing the application during background state
