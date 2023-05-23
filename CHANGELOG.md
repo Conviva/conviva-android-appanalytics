@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.5.6 (23/MAY/2023)
+
+* Fixes the issue of the default config not applied till the remote config is downloaded on first time using Conviva SDK
+
 ## 0.5.5 (16/MAY/2023)
 
 * Enhances the applying of the remote configuration at an interval of cacheRefreshInterval which is set to 30 mins by default
