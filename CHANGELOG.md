@@ -1,6 +1,14 @@
 
 # Changelog
 
+## 0.6.0 (21/JUN/2023)
+
+* Enhances App Sensor by handling Exceptions, due to which the return value of createTracker can be Nullable
+* Fixes the crash issue of the SecurityException due to Settings key: <psm_switch>, which is found in Specific Device
+* Fixes the ANR issue due to registerReceiver by moving it to Worker Thread, which is found in Smart TV's
+* Fixes the issue of tracker creation while applying remote config in some cases 
+* Enhances applying of the remote config while enabling and disabling feature
+
 ## 0.5.6 (23/MAY/2023)
 
 * Fixes the issue of the default config not applied till the remote config is downloaded on first time using Conviva SDK
