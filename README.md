@@ -190,3 +190,17 @@ tracker.clearCustomTags(clearTagKeysSet);
 // clears all the custom tags
 tracker.clearAllCustomTags();
 ```
+
+## Collection of the OkHttp/Retrofit NetworkRequest Tracking
+This feature supports to track the Network Requests triggerred with in the application scope.
+
+*Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
+
+The following example shows how to set the Network Request Interceptor for okhttp/retrofit:
+```
+...
+OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(new ConvivaOkHttpInterceptor())
+        .build();
+...
+```
