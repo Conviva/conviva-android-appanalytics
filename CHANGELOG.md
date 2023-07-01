@@ -2,7 +2,7 @@
 # Changelog
 
 ## 0.7.0 (01/JUL/2023)
-* Supports collection of network request(http/https) performance metrics using the ConvivaOkHttpInterceptor
+* Supports collection of network request(http/https) performance metrics using the ConvivaOkHttpInterceptor(which is disabled by default)
 
 ## 0.6.0 (21/JUN/2023)
 
