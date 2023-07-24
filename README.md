@@ -91,7 +91,7 @@ EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
     
 TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
     customerKey,
-    appName
+    appName,
     emitterConfiguration
 );
 ```
