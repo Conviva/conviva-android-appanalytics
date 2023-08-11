@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.7.1 (11/AUG/2023)
+* Supports auto collection of network request(http/https) performance metrics using the instrumentation logic for the okhttp and HTTPUrlConnection using conviva-instrumentation-tracker and conviva-android-plugin packages.
+
 ## 0.7.0 (01/JUL/2023)
 * Supports collection of network request(http/https) performance metrics using the ConvivaOkHttpInterceptor(which is disabled by default)
 
