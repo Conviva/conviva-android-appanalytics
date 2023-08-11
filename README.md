@@ -191,8 +191,32 @@ tracker.clearCustomTags(clearTagKeysSet);
 tracker.clearAllCustomTags();
 ```
 
-## Collection of the OkHttp/Retrofit NetworkRequest Tracking
-This feature supports to track the Network Requests triggerred with in the application scope.
+## Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
+This feature supports to track the Network Requests triggerred with in application and third party libraries scope as well supported from 0.7.1 version onwards
+
+*Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
+
+The following example shows how to include the plugin:
+```
+// in root top-level build.gradle
+dependencies {
+  ...
+  classpath 'com.conviva.sdk:android-plugin:<version>'
+  ...
+}
+
+// in app module-level build.gradle
+...
+apply plugin: 'com.conviva.sdk.android-plugin'
+...
+```
+*<strong>Note: Please remove the interceptor integration while using the android plugin.</strong>* <br>
+
+<details>
+  <summary><b> Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor</b></summary>
+
+### Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor
+This feature supports to track the Network Requests triggerred with in the application scope supported from 0.7.0 version onwards.
 
 *Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
 
@@ -204,3 +228,4 @@ OkHttpClient client = new OkHttpClient.Builder()
         .build();
 ...
 ```
+</details>
