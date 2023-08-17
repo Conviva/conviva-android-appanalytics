@@ -208,6 +208,9 @@ dependencies {
 // in app module-level build.gradle
 ...
 apply plugin: 'com.conviva.sdk.android-plugin'
+
+// starts from 0.1.0 version onwards
+implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
 ...
 ```
 *<strong>Note: Please remove the interceptor integration while using the android plugin.</strong>* <br>
