@@ -1,5 +1,7 @@
 
 # Changelog
+## 0.7.3 (05/SEP/2023)
+* Supports the auto collection of the click events by instrumenting the **onClick(View v)** function of the **android.view.View.OnClickListener** interface, when **com.conviva.sdk.android-plugin** applied in the project level build.gradle.
 
 ## 0.7.1 (11/AUG/2023)
 * Supports auto collection of network request(http/https) performance metrics using the instrumentation logic for the okhttp and HTTPUrlConnection using conviva-instrumentation-tracker and conviva-android-plugin packages.
