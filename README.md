@@ -191,28 +191,27 @@ tracker.clearCustomTags(clearTagKeysSet);
 tracker.clearAllCustomTags();
 ```
 
-## Collection of the view click events via instrumentation
-This feature supports tracking the click events of views in the application and third party libraries scope as well supported from 0.7.3 version onwards
-
-*Note: This collection is enabled by default, reach out to Conviva Team for disabling the tracking.* <br>
+## Collection of the user click events of any clickable views via instrumentation
+This feature supports tracking the user click events of views when a View.OnClickListener is set in the application and is supported from 0.7.3 version onwards
 
 The following example shows how to include the plugin:
 ```
 // in root top-level build.gradle
 dependencies {
   ...
-//For Android Gradle Plugin version 8.0 and above use
+//For Android Gradle Plugin version 8.0 and above, use
 classpath 'com.conviva.sdk:android-plugin:0.3.0'
 
-//For Android Gradle Plugin, below 7.2 and below use
+//For Android Gradle Plugin version 7.2 and below, use
 classpath 'com.conviva.sdk:android-plugin:0.2.0'
   ...
 }
 
-// in app module-level build.gradle
+// in app module-level build.gradle at the end of plugins add the 
 ...
-apply plugin: 'com.conviva.sdk.android-plugin'
-
+{
+    apply plugin: 'com.conviva.sdk.android-plugin'
+}
 ```
 
 ## Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
