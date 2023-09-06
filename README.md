@@ -196,7 +196,7 @@ This feature supports tracking the user click events of views when a View.OnClic
 
 The following example shows how to include the plugin:
 ```
-// in root top-level build.gradle
+// in the root or project-level build.gradle
 dependencies {
   ...
 //For Android Gradle Plugin version 8.0 and above, use
