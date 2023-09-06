@@ -207,16 +207,20 @@ classpath 'com.conviva.sdk:android-plugin:0.2.0'
   ...
 }
 
-// in app module-level build.gradle at the end of plugins add the 
+// in the app, build.gradle at the end of plugins add the
 ...
-{
-    ...
-    ...
-    apply plugin: 'com.conviva.sdk.android-plugin'
+apply plugin: 'com.conviva.sdk.android-plugin'
+
+
+
+// in the app, build.gradle.kts at the end of plugins add the
+plugins {
+    id 'com.conviva.sdk.android-plugin'
 }
+
 ```
 
-## Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
+### Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
 This feature supports to track the Network Requests triggerred with in application and third party libraries scope as well supported from 0.7.1 version onwards
 
 *Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
