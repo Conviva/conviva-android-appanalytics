@@ -219,7 +219,9 @@ plugins {
 }
 
 ```
-
+<details>
+    <summary><b> Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation</b></summary>
+    
 ### Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
 This feature supports to track the Network Requests triggerred with in application and third party libraries scope as well supported from 0.7.1 version onwards
 
@@ -243,6 +245,7 @@ implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
 ...
 ```
 *<strong>Note: Please remove the interceptor integration while using the android plugin.</strong>* <br>
+</details>
 
 <details>
   <summary><b> Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor</b></summary>
