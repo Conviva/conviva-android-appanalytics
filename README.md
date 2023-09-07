@@ -200,10 +200,10 @@ The following example shows how to include the plugin:
 dependencies {
   ...
 //For Android Gradle Plugin version 8.0 and above, use
-classpath 'com.conviva.sdk:android-plugin:0.3.0'
+classpath 'com.conviva.sdk:android-plugin:0.3.1'
 
 //For Android Gradle Plugin version 7.2 and below, use
-classpath 'com.conviva.sdk:android-plugin:0.2.0'
+classpath 'com.conviva.sdk:android-plugin:0.2.1'
   ...
 }
 
