@@ -1,5 +1,10 @@
 
 # Changelog
+
+## 0.7.4 (03/OCT/2023)
+* Fixed an OutOfMemory bug in the Network-Request-Tracking feature, when a request with large response is tracked.
+* Default block list of the Network-Request-Tracking feature is updated to cover more urls with large responses(Ex: MP4).
+
 ## 0.7.3 (05/SEP/2023)
 * Supports the auto collection of the click events by instrumenting the **onClick(View v)** function of the **android.view.View.OnClickListener** interface, when **com.conviva.sdk.android-plugin** applied in the project level build.gradle.
 
