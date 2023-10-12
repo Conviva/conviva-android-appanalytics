@@ -240,8 +240,10 @@ dependencies {
 ...
 apply plugin: 'com.conviva.sdk.android-plugin'
 
-// starts from 0.1.0 version onwards
+// For conviva tracker version <7.0.3 only
 implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
+//<version> starts from 0.1.0 version onwards
+
 ...
 ```
 *<strong>Note: Please remove the interceptor integration while using the android plugin.</strong>* <br>
