@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.7.5 (27/OCT/2023)
+* Enhances network request & response collection feature to capture limited (json only, size limit 10kb) and controlled set of information from headers and body.
+
 ## 0.7.4 (03/OCT/2023)
 * Fixed an OutOfMemory bug in the Network-Request-Tracking feature, when a request with large response is tracked.
 * Default block list of the Network-Request-Tracking feature is updated to cover more urls with large responses(Ex: MP4).
