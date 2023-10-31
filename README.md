@@ -272,7 +272,7 @@ OkHttpClient client = new OkHttpClient.Builder()
     
 ##### Conviva provides a rich set of application performance metrics with the help of autocollected app events, such as _screen_view_ , _button_click_, and _network_request_.
 
-Event | Description |
+Event | Occurrence |
 ------|------------ |
 network_request | after receiving the network request response |
 screen_view | when the screen is interacted on either first launch or relaunch |
