@@ -3,7 +3,9 @@
 
 ## 0.7.5 (27/OCT/2023)
 * Enhances network request & response collection feature to capture limited (json only, size limit 10kb) and controlled set of information from headers and body.
+* Fixes the issue of implicit Broadcast of the Network Requests with in the application package.
 * Enhances setCustomTags() to support passing any Map<String, Object> argument instead of HashMap.
+
 
 ## 0.7.4 (03/OCT/2023)
 * Fixed an OutOfMemory bug in the Network-Request-Tracking feature, when a request with large response is tracked.
