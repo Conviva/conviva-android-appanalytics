@@ -1,6 +1,20 @@
 
 # Changelog
 
+## 0.8.0 (12/DEC/2023)
+* Enhances Conviva SDK initialisation for lightweight execution on the application thread, relocating internal SDK API calls to Conviva Worker Threads.
+* Enhances Network Request Feature to parse Request Body and Response Body only when the fields are available in remote config.
+* Enhances Network Request Feature by passing data from instrumentation to tracker via callback function instead of Broadcast.
+* Enhances Custom Event blocking logic by matching the substring instead of regex match.
+* Enhances the User Click event to have atleast only one of the attributes as mandatory.
+* Enhances handling of the unwanted diagnostic error log message on the first launch of the application.
+* Enhances the logic of the timer tasks for applying the remote configuration.
+* Enhances the default timeout of sending Heartbeat to 30 seconds(from 15 seconds).
+* Deprecates few of the unused API's of createTracker()
+* Fixes the issue of App Load Time(onCreate and onResume) dependency on the initialisation of Conviva SDK and the first activity invocation.
+* Fixes the issue preventing heartbeats from being sent in a specific corner case.
+
+
 ## 0.7.5 (27/OCT/2023)
 * Enhances network request & response collection feature to capture limited (json only, size limit 10kb) and controlled set of information from headers and body.
 * Fixes the issue of implicit Broadcast of the Network Requests with in the application package.
