@@ -12,6 +12,7 @@
 * Enhances the default timeout of sending Heartbeat to 30 seconds(from 15 seconds).
 * Deprecates few of the unused API's of createTracker()
 * Fixes the issue of App Load Time(onCreate and onResume) dependency on the initialisation of Conviva SDK and the first activity invocation.
+*	Fixes the issue of the Screen Load Time(missing onCreate and onResume) of the first activity invocation.
 * Fixes the issue preventing heartbeats from being sent in a specific corner case.
 
 
