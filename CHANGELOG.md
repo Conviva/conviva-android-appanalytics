@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.8.1 (21/DEC/2023)
+* Fixes the Network Request Feature issue of sending Request/Response Body/Headers as String instead of JSONObject. <br/>
+  **Note: The 0.8.1 version needs to be used for extracting the Request/Response Body/Headers for Network Request Feature, please refer to [Network Request Feature](https://github.com/Conviva/conviva-android-appanalytics?tab=readme-ov-file#collection-of-the-okhttpretrofithttpsurlconnectionhttpurlconnection-networkrequest-tracking-via-instrumentation) for more details** 
+
 ## 0.8.0 (12/DEC/2023)
 * Enhances Conviva SDK initialisation for lightweight execution on the application thread, relocating internal SDK API calls to Conviva Worker Threads.
 * Enhances Network Request Feature to parse Request Body and Response Body only when the fields are available in remote config.
