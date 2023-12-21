@@ -244,7 +244,16 @@ implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
 
 ...
 ```
-*<strong>Note: Please remove the interceptor integration while using the android plugin.</strong>* <br>
+*<strong>Note:</strong>* <br>
+*Please remove the interceptor integration while using the android plugin.</strong>* <br>
+<br> *Here are some of the granular details/limitations of the feature:*
+* *Response and Request Body atributes are collected only when the:*
+    * *size is < 10kb and the content-length is available* 
+    * *content-type is "json" or "text/plain"*
+    * *data is a JSONObject or Nested JSONObject(JSONArray is not yet supported)*
+* *Response and Request Headers are collected only when the:*
+    * *data is a JSONObject(Nested JSONObject and JSONArray are not yet supported)*
+    * *server is provisioned with "Access-Control-Expose-Headers:*"* 
 </details>
 
 <details>
