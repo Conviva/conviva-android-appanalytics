@@ -6,9 +6,6 @@
   **Note: The 0.8.1 version needs to be used for extracting the Request/Response Body/Headers for Network Request Feature, please refer to [Network Request Feature](https://github.com/Conviva/conviva-android-appanalytics?tab=readme-ov-file#collection-of-the-okhttpretrofithttpsurlconnectionhttpurlconnection-networkrequest-tracking-via-instrumentation) for more details** 
 
 ## 0.8.0 (12/DEC/2023)
-* Enhances Conviva SDK initialisation for lightweight execution on the application thread, relocating internal SDK API calls to Conviva Worker Threads.
-* Enhances Network Request Feature to parse Request Body and Response Body only when the fields are available in remote config.
-* Enhances Network Request Feature by passing data from instrumentation to tracker via callback function instead of Broadcast.
 * Enhances Custom Event blocking logic by matching the substring instead of regex match.
 * Enhances the User Click event to have atleast only one of the attributes as mandatory.
 * Enhances handling of the unwanted diagnostic error log message on the first launch of the application.
@@ -16,8 +13,14 @@
 * Enhances the default timeout of sending Heartbeat to 30 seconds(from 15 seconds).
 * Deprecates few of the unused API's of createTracker()
 * Fixes the issue of App Load Time(onCreate and onResume) dependency on the initialisation of Conviva SDK and the first activity invocation.
-*	Fixes the issue of the Screen Load Time(missing onCreate and onResume) of the first activity invocation.
 * Fixes the issue preventing heartbeats from being sent in a specific corner case.
+
+
+## 0.7.5.1 (14/NOV/2023)
+* Enhances Conviva SDK initialisation for lightweight execution on the application thread, relocating internal SDK API calls to Conviva Worker Threads.
+* Enhances Network Request Feature to parse Request Body and Response Body only when the fields are available in remote config.
+* Enhances Network Request Feature by passing data from instrumentation to tracker via callback function instead of Broadcast.
+* Fixes the issue of the Screen Load Time(missing onCreate and onResume) of the first activity invocation.
 
 
 ## 0.7.5 (27/OCT/2023)
