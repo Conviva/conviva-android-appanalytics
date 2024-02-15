@@ -16,15 +16,6 @@ dependencies {
 
     // Conviva video sensor dependency(supported 4.0.19 onwards)
     implementation 'com.conviva.sdk:conviva-core-sdk:<version>'
-
-    // Dependency package required for Conviva Android tracker
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    
-    // Need to add this dependency explicitly prior to 0.3.1 
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-
-    // Need to add this dependency explicitly prior to 0.3.1
-    implementation 'com.android.installreferrer:installreferrer:2.2'
     ...
 }
 ```
@@ -145,13 +136,13 @@ String eventName = "your-event-name";
 tracker.trackCustomEvent(eventName, eventDataJSON);
 ```
 <details>
-  <summary><b> track application with data in string format </b></summary>
+  <summary><b> track application with data in JSON String format </b></summary>
 
-## trackCustomEvent() with data in string format
+## trackCustomEvent() with data in JSON String format
 
 Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
 <strong>eventName</strong> - Name of the custom event<br>
-<strong>eventData</strong> - Any type of data in string format
+<strong>eventData</strong> - Any type of data in JSON String format
 
 The following example shows the implementation of the 'onClick' event listener to any element.
 ```
@@ -250,7 +241,7 @@ implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
 * *Response and Request Body atributes are collected only when the:*
     * *size is < 10kb and the content-length is available* 
     * *content-type is "json" or "text/plain"*
-    * *data is a JSONObject or Nested JSONObject(JSONArray is not yet supported)*
+    * *data is a JSONObject or Nested JSONObject or JSONArray*
 * *Response and Request Headers are collected only when the:*
     * *data is a JSONObject(Nested JSONObject and JSONArray are not yet supported)*
     * *server is provisioned with "Access-Control-Expose-Headers:*"* 
@@ -260,6 +251,7 @@ implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
   <summary><b> Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor</b></summary>
 
 ### Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor
+Deprecated feature
 This feature supports to track the Network Requests triggerred with in the application scope supported from 0.7.0 version onwards.
 
 *Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
