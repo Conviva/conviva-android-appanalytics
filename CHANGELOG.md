@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.8.2 (16/FEB/2024)
+* Enhances network request & response collection feature to capture JSONArray type data. <br/>
+  **Note: Please refer to [Network Request Feature](https://github.com/Conviva/conviva-android-appanalytics?tab=readme-ov-file#collection-of-the-okhttpretrofithttpsurlconnectionhttpurlconnection-networkrequest-tracking-via-instrumentation) for more details** 
+
 ## 0.8.1 (21/DEC/2023)
 * Fixes the Network Request Feature issue of sending Request/Response Body/Headers as String instead of JSONObject. <br/>
   **Note: The 0.8.1 version needs to be used for extracting the Request/Response Body/Headers for Network Request Feature, please refer to [Network Request Feature](https://github.com/Conviva/conviva-android-appanalytics?tab=readme-ov-file#collection-of-the-okhttpretrofithttpsurlconnectionhttpurlconnection-networkrequest-tracking-via-instrumentation) for more details** 
