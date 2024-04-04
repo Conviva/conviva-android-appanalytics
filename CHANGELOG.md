@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.8.3 (04/APR/2024)
+* Fixes the ClassCastException for the applications overriding the getApplicationContext with ContextImpl.
+  
 ## 0.8.2 (16/FEB/2024)
 * Enhances network request & response collection feature to capture JSONArray type data. <br/>
   **Note: Please refer to [Network Request Feature](https://github.com/Conviva/conviva-android-appanalytics?tab=readme-ov-file#collection-of-the-okhttpretrofithttpsurlconnectionhttpurlconnection-networkrequest-tracking-via-instrumentation) for more details** 
