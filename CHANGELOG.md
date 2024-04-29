@@ -1,6 +1,26 @@
 
 # Changelog
 
+## 0.9.0 (29/APR/2024)
+* Supports Android 14 version
+* Optimizes the payload size by applying *gzip encryption* and *schema optimization*
+* Supports custom gateway URL by using the unique `CUSTOMER_KEY` associated with each customer
+* Renames the remote configuration URL domain to `*.conviva.com` (`http://conviva.com/`)
+* Reduces the payload size of the *Network Request Event* by limiting the default attributes to `targetUrl`, `method`, `responseStatusCode`, and `duration`. However, the request/response body/header attributes remain unchanged
+* Updates the default block list of the *Network Request Tracking* feature
+* Updates the remote config attribute from `cacheRefreshInterval` in seconds to `cri` in minutes to support backward compatibility
+* Introduces API to report the *Screen Name* from the application instead of the default *Activity Name*. To know more, refer to this [section](https://github.com/Conviva/conviva-android-appanalytics/blob/main/README.md#api-to-override-the-default-activity-name-in-the-screen-view-event)
+* Enhances the remote configuration to fetch the application background state when the application remains active
+* Enhances the *Network Request Blocking* and *Custom Event Blocking* logic for the case insensitive support
+* Enhances the *Substring Matching* technique by removing the `%` regex. Earlier the `""` string was treated as `"*"`
+* Enhances the auto-detection of `application_background` and `application_foreground` events by making them independent of *Session Context*
+* Includes the Conviva debug event and context by applying remote config, which remain disabled, by default
+* Includes the *Retry* logic instead of the *Fallback* logic to fetch remote config
+* Fixes the issue of `application_foreground` events that are not sent during the first launch, as well as kill and relaunch of the application
+* Fixes the issue of fetching remote config after the kill and relaunch of the application
+* Fixes the issue of the duplicate `application_error` events that are sent during application crashes
+* Fixes the issue of not sending the `network_request` events during the network failure use cases
+
 ## 0.8.3 (04/APR/2024)
 * Fixes the ClassCastException for the applications overriding the getApplicationContext with ContextImpl.
   
