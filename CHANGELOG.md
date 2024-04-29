@@ -20,6 +20,7 @@
 * Fixes the issue of fetching remote config after the kill and relaunch of the application
 * Fixes the issue of the duplicate `application_error` events that are sent during application crashes
 * Fixes the issue of not sending the `network_request` events during the network failure use cases
+* Fixes the issue of Video Sensor Events not broadcasted to ECO Sensors in Android 14 devices
 
 ## 0.8.3 (04/APR/2024)
 * Fixes the ClassCastException for the applications overriding the getApplicationContext with ContextImpl.
