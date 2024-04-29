@@ -187,6 +187,17 @@ plugins {
     * *server is provisioned with "Access-Control-Expose-Headers:*"* 
 </details>
 
+## API to override the default Activity Name in the Screen View Event
+This feature supports overriding the default Activity Name in the Screen View Event. Add the public variable *convivaScreenName* in the corresponding activity which you want to set the screen name supported from 0.9.0 version onwards
+
+The following example shows how to include the plugin:
+```
+public class ExampleActivity extends Activity {
+    ...
+    Public String convivaScreenName = "HomeScreen";
+    ...
+```
+
 <details>
     <summary><b>Auto-collected Events</b></summary>
     
