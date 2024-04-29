@@ -37,7 +37,7 @@ dependencies {
 
 ## Support Android Version
 
-Target sdk version : Android 13 (API level 33)<br> 
+Target sdk version : Android 14 (API level 34)<br> 
 Minimum sdk version : Android 5.0 (API level 21)
 
 ## Initialize the tracker by enabling autocollection
@@ -52,64 +52,6 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
 
 <strong>appName</strong> - a string value used to distinguish your applications. Simple values that are unique across all of your integrated platforms work best here.
 
-
-<details>
-  <summary><b> Initialize the tracker to enable or disable specific autocollection</b></summary>
-
-## Initialize the tracker to enable or disable specific autocollection
-
-```
-TrackerConfiguration trackerConfiguration = new TrackerConfiguration(appName)
-    .bundleInfoAutotracking(false);
-    
-TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    customerKey,
-    trackerConfiguration
-);
-```
-</details>
-
-<details>
-  <summary><b> Initialize the tracker to disable event caching</b></summary>
-
-## Initialize the tracker to disable event caching
-
-### To run the Conviva initialisation in the main thread
-```
-// Supported from 0.3.3 onwards
-EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
-    .disableEventCaching(true);
-    
-TrackerController tracker = ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    customerKey,
-    appName,
-    emitterConfiguration
-);
-```
-        
-### To run the Conviva initialisation in the worker thread
-```
-// Supported from 0.3.4 onwards
-EmitterConfiguration emitterConfiguration = new EmitterConfiguration()
-    .disableEventCaching(true);
-
-TrackerController tracker;
-ConvivaAppAnalytics.createTracker(getApplicationContext(),
-    customerKey,
-    appName,
-    new Consumer<TrackerController>() {
-        @Override
-        public void accept(TrackerController trackerController) {
-            tracker = trackerController;
-            // update the tracker to be used for setting the user id
-        }
-    },
-    emitterConfiguration
-);
-```
-</details>
-        
-        
 ## Set the user id (viewer id)
 
 ```
@@ -190,19 +132,17 @@ The following example shows how to include the plugin:
 // in the root or project-level build.gradle
 dependencies {
   ...
-//For Android Gradle Plugin version 8.0 and above, use
-classpath 'com.conviva.sdk:android-plugin:0.3.2'
+// For Android Gradle Plugin version 8.0 and above, use
+classpath 'com.conviva.sdk:android-plugin:0.3.x'
 
-//For Android Gradle Plugin version 7.2 and below, use
-classpath 'com.conviva.sdk:android-plugin:0.2.2'
+// For Android Gradle Plugin version below 8.x, use
+classpath 'com.conviva.sdk:android-plugin:0.2.x'
   ...
 }
 
 // in the app, build.gradle at the end of plugins add the
 ...
 apply plugin: 'com.conviva.sdk.android-plugin'
-
-
 
 // in the app, build.gradle.kts at the end of plugins add the
 plugins {
@@ -214,29 +154,29 @@ plugins {
 ## Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
 This feature supports to track the Network Requests triggerred with in application and third party libraries scope as well supported from 0.7.1 version onwards
 
-*Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
-
 The following example shows how to include the plugin:
 ```
-// in root top-level build.gradle
+// in the root or project-level build.gradle
 dependencies {
   ...
-  classpath 'com.conviva.sdk:android-plugin:<version>'
+// For Android Gradle Plugin version 8.0 and above, use
+classpath 'com.conviva.sdk:android-plugin:0.3.x'
+
+// For Android Gradle Plugin version below 8.x, use
+classpath 'com.conviva.sdk:android-plugin:0.2.x'
   ...
 }
 
-// in app module-level build.gradle
+// in the app, build.gradle at the end of plugins add the
 ...
 apply plugin: 'com.conviva.sdk.android-plugin'
 
-// For Conviva Android tracker version <0.7.3 only
-implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
-//<version> starts from 0.1.0 version onwards
+// in the app, build.gradle.kts at the end of plugins add the
+plugins {
+    id 'com.conviva.sdk.android-plugin'
+}
 
-...
 ```
-*<strong>Note:</strong>* <br>
-*Please remove the interceptor integration while using the android plugin.</strong>* <br>
 <br> *Here are some of the granular details/limitations of the feature:*
 * *Response and Request Body atributes are collected only when the:*
     * *size is < 10kb and the content-length is available* 
@@ -245,25 +185,6 @@ implementation "com.conviva.sdk:conviva-instrumentation-tracker:<version>"
 * *Response and Request Headers are collected only when the:*
     * *data is a JSONObject(Nested JSONObject and JSONArray are not yet supported)*
     * *server is provisioned with "Access-Control-Expose-Headers:*"* 
-</details>
-
-<details>
-  <summary><b> Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor</b></summary>
-
-### Collection of the OkHttp/Retrofit NetworkRequest Tracking for the objects created with in the application scope via Okhttp Interceptor
-Deprecated feature
-This feature supports to track the Network Requests triggerred with in the application scope supported from 0.7.0 version onwards.
-
-*Note: This collection is disabled by default, reach out to Conviva Team enabling the tracking.* <br>
-
-The following example shows how to set the Network Request Interceptor for okhttp/retrofit:
-```
-...
-OkHttpClient client = new OkHttpClient.Builder()
-        .addInterceptor(new ConvivaOkHttpInterceptor())
-        .build();
-...
-```
 </details>
 
 <details>
