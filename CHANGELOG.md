@@ -1,6 +1,13 @@
 
 # Changelog
 
+## 0.9.1 (13/MAY/2024)
+* Fixes the issue of redundant deeplink events
+* Fixes the issue of monitoring of network request events which are in blocklist during the remote config application
+* Fixes the issue of network requests tracked before the corresponding feature enabled
+* Fixes the error due to deserialization of remote config which improves the remote config functionality
+* Improves the application error event reporting by increasing timeout to 2 seconds
+
 ## 0.9.0 (29/APR/2024)
 * Supports Android 14 version
 * Optimizes the payload size by applying *gzip encryption* and *schema optimization*
