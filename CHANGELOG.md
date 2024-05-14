@@ -10,7 +10,7 @@
 
 ## 0.9.0 (29/APR/2024)
 * Supports Android 14 version
-* Requires conviva gradle plugin version >= [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and >= [0.3.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.3).
+* Requires conviva gradle plugin version >= [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and >= [0.3.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.3). Please refer to [compatibility table](https://github.com/Conviva/conviva-android-appanalytics/blob/main/README.md#android-sensor-and-conviva-plugin-versions-compatibility)
 * Optimizes the payload size by applying *gzip encryption* and *schema optimization*
 * Supports custom gateway URL by using the unique `CUSTOMER_KEY` associated with each customer
 * Renames the remote configuration URL domain to `*.conviva.com` (`http://conviva.com/`)
