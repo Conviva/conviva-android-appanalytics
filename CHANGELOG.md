@@ -7,6 +7,7 @@
 * Fixes the issue of network requests tracked before the corresponding feature enabled
 * Fixes the error due to deserialization of remote config which improves the remote config functionality
 * Improves the application error event reporting by increasing timeout to 2 seconds
+* Requires conviva gradle plugin version >= [0.2.4](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.4) to support deeplink feature. Please refer to [compatibility table](https://github.com/Conviva/conviva-android-appanalytics/blob/main/README.md#android-sensor-and-conviva-plugin-versions-compatibility)
 
 ## 0.9.0 (29/APR/2024)
 * Supports Android 14 version
