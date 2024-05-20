@@ -1,7 +1,7 @@
 
 # Changelog
 ## 0.9.2 (20/MAY/2024)
-* Fixes the build issue of the [react native sensor](https://github.com/Conviva/conviva-react-native-appanalytics)
+* Fixes the build issue of the [react native sensor](https://github.com/Conviva/conviva-react-native-appanalytics) introduced in 0.9.0 version of sensor
 
 ## 0.9.1 (13/MAY/2024)
 * Fixes the issue of redundant deeplink events
