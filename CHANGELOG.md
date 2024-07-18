@@ -1,5 +1,12 @@
 
 # Changelog
+
+## 0.9.3 (19/JUL/2024)
+* Supports the auto detection of the compose navigation and compose click tracking.
+* Supports the fragments navigation.
+* Supports the traceparent header generation and collection.
+* Requires conviva gradle plugin version >= [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) to support auto detection of compose navigation, click and fragments navigation. Please refer to [compatibility table](https://github.com/Conviva/conviva-android-appanalytics/blob/main/README.md#android-sensor-and-conviva-plugin-versions-compatibility)
+
 ## 0.9.2 (20/MAY/2024)
 * Fixes the build issue of the [react native sensor](https://github.com/Conviva/conviva-react-native-appanalytics) introduced in 0.9.0 version of sensor
 
