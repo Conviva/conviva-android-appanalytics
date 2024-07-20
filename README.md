@@ -14,7 +14,7 @@ dependencies {
     ...
     implementation 'com.conviva.sdk:conviva-android-tracker:<version>'
 
-    // Conviva video sensor dependency(supported 4.0.19 onwards)
+    // Conviva video sensor dependency(recommended from 4.0.30 and above excluding 4.0.31)
     implementation 'com.conviva.sdk:conviva-core-sdk:<version>'
     ...
 }
@@ -43,7 +43,7 @@ Minimum sdk version : Android 5.0 (API level 21)
 ## Android Sensor and Conviva Plugin Versions compatibility
 Android Gradle Version | Conviva Sensor Version | Conviva Plugin Version |
 ------|------------ | ------------ |
- 7.2 and above | [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3) | [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) |
+ Any Android Gradle Version | [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3) | [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) |
  7.2 and above | [>=0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.3.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.3) |
  below 7.2  | [>=0.9.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.1) | [0.2.4](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.4) |
  below 7.2  | [0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) |
@@ -56,7 +56,8 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
     customerKey,
     appName
 );
-// The tracker object can be fetched using the following API in the other classes than the place where createTracker is invoked using following API:
+// The tracker object can be fetched using the following API in the other classes
+// than the place where createTracker is invoked using following API:
 TrackerController tracker = ConvivaAppAnalytics.getDefaultTracker();
 ```
 <strong>customerKey</strong> - a string to identify specific customer account. Different keys shall be used for development / debug versus production environment. Find your keys on the account info page in Pulse.
@@ -143,10 +144,70 @@ The following example shows how to include the plugin:
 // in the root or project-level build.gradle
 dependencies {
   ...
-// For Android Gradle Plugin version 8.0 and above, use
+// Unified Conviva Plugin supported from 0.3.5 onwards, use
+classpath 'com.conviva.sdk:android-plugin:0.3.x'
+  ...
+}
+
+// in the app, build.gradle at the end of plugins add the
+...
+apply plugin: 'com.conviva.sdk.android-plugin'
+
+// in the app, build.gradle.kts at the end of plugins add the
+plugins {
+    id 'com.conviva.sdk.android-plugin'
+}
+
+```
+    
+## Collection of the OkHttp/Retrofit/HTTPSUrlConnection/HTTPUrlConnection NetworkRequest Tracking via instrumentation
+This feature supports to track the Network Requests triggerred with in application and third party libraries scope as well supported from 0.7.1 version onwards
+
+The following example shows how to include the plugin:
+```
+// in the root or project-level build.gradle
+dependencies {
+  ...
+// Unified Conviva Plugin supported from 0.3.5 onwards, use
+classpath 'com.conviva.sdk:android-plugin:0.3.x'
+  ...
+}
+
+// in the app, build.gradle at the end of plugins add the
+...
+apply plugin: 'com.conviva.sdk.android-plugin'
+
+// in the app, build.gradle.kts at the end of plugins add the
+plugins {
+    id 'com.conviva.sdk.android-plugin'
+}
+
+```
+<br> *Here are some of the granular details/limitations of the feature:*
+* *Response and Request Body atributes are collected only when the:*
+    * *size is < 10kb and the content-length is available* 
+    * *content-type is "json" or "text/plain"*
+    * *data is a JSONObject or Nested JSONObject or JSONArray*
+* *Response and Request Headers are collected only when the:*
+    * *data is a JSONObject(Nested JSONObject and JSONArray are not yet supported)*
+    * *server is provisioned with "Access-Control-Expose-Headers:*"* 
+</details>
+
+<details>
+    <summary><b>Deprecated instructions for including Conviva Plugin <= 0.3.4 based on Android Gradle Plugin versions 7.2 and above or below</b></summary>
+
+## Collection of the user click events of any clickable views via instrumentation
+This feature supports tracking the user click events of views when a View.OnClickListener is set in the application and is supported from 0.7.3 version onwards
+
+The following example shows how to include the plugin:
+```
+// in the root or project-level build.gradle
+dependencies {
+  ...
+// For Android Gradle Plugin version 7.2 and above, use
 classpath 'com.conviva.sdk:android-plugin:0.3.x'
 
-// For Android Gradle Plugin version below 8.x, use
+// For Android Gradle Plugin version below 7.2, use
 classpath 'com.conviva.sdk:android-plugin:0.2.x'
   ...
 }
@@ -170,10 +231,10 @@ The following example shows how to include the plugin:
 // in the root or project-level build.gradle
 dependencies {
   ...
-// For Android Gradle Plugin version 8.0 and above, use
+// For Android Gradle Plugin version 7.2 and above, use
 classpath 'com.conviva.sdk:android-plugin:0.3.x'
 
-// For Android Gradle Plugin version below 8.x, use
+// For Android Gradle Plugin version below 7.2, use
 classpath 'com.conviva.sdk:android-plugin:0.2.x'
   ...
 }
