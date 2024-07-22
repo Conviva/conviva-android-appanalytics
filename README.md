@@ -291,3 +291,26 @@ anr_end | If the SDK gets response after triggering _anr_start_, then _anr_end_ 
 
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
 </details>
+
+
+## Fragments auto detection
+This feature supports auto detection of the fragment transactions such as navigation with fragments using a NavGraph or a simple fragmentTransaction to load next fragment etc.<br>
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+
+## Compose Navigation auto detection
+This feature supports auto detection of the navigation events when ComposeNavigation is used in the app to define a navigation flow.<br>
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+
+### Compose click auto detection
+This feature supports the auto detection of click events of composables when used as shown below.
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+```
+val submitLabel = "Submit"
+Text(text = submitLabel,
+  style = MaterialTheme.typography.button,
+  modifier = Modifier.clickable(onClick = onClickSeeAll, onClickLabel = submitLabel)
+```
+
+## Traceparent Header generation and collection
+Please contact conviva for enabling this feature.
+
