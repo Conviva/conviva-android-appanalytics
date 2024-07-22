@@ -298,7 +298,7 @@ This feature supports auto detection of the fragment transactions such as naviga
 <b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
 
 ## Compose Navigation auto detection
-This feature supports auto detection of the navigation events when ComposeNavigation is used in the app to define a navigation flow.<br>
+This feature supports auto detection of the navigation events when [ComposeNavigation](https://developer.android.com/develop/ui/compose/navigation) is used in the app to define a navigation flow.<br>
 <b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
 
 ### Compose click auto detection
