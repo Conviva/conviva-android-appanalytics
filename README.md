@@ -36,7 +36,7 @@ dependencies {
 </details>
 
 ## Proguard rules
-Please add the following proguard rules to keep conviva classes from obfuscation.
+Please add the following proguard rules to keep conviva sdk classes from obfuscation.
 ```
 -keep class com.conviva.** { *; }
 ```
