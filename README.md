@@ -321,7 +321,7 @@ Text(text = submitLabel,
 Please contact conviva for enabling this feature.
 
 ## Multidex Config
-If multidex is enabled and a mutlidex-config.pro is being used by the application, please add the following rule to the config file.
+If multidex is enabled and a multidex-config.pro is being used by the application, please add the following rule to the config.pro file.
 ```
 -keep class com.conviva.** { *; }
 ```
