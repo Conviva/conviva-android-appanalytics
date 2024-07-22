@@ -35,6 +35,12 @@ dependencies {
 ```
 </details>
 
+## Proguard rules
+Please add the following proguard rules to keep conviva classes from obfuscation.
+```
+-keep class com.conviva.** { *; }
+```
+
 ## Support Android Version
 
 Target sdk version : Android 14 (API level 34)<br> 
