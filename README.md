@@ -320,3 +320,10 @@ Text(text = submitLabel,
 ## Traceparent Header generation and collection
 Please contact conviva for enabling this feature.
 
+## Multidex Config
+If multidex is enabled and a mutlidex-config.pro is being used by the application, please add the following rule to the config file.
+```
+-keep class com.conviva.** { *; }
+```
+
+
