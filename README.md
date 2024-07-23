@@ -41,6 +41,12 @@ Please add the following proguard rules to keep conviva sdk classes from obfusca
 -keep class com.conviva.** { *; }
 ```
 
+## Multidex Config
+If multidex is enabled and a multidex-config.pro is being used by the application, please add the following rule to the config.pro file.
+```
+-keep class com.conviva.** { *; }
+```
+
 ## Support Android Version
 
 Target sdk version : Android 14 (API level 34)<br> 
@@ -265,6 +271,27 @@ plugins {
     * *server is provisioned with "Access-Control-Expose-Headers:*"* 
 </details>
 
+## Fragments auto detection
+This feature supports auto detection of the fragment transactions such as navigation with fragments using a NavGraph or a simple fragmentTransaction to load next fragment etc.<br>
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+
+## Compose Navigation auto detection
+This feature supports auto detection of the navigation events when [ComposeNavigation](https://developer.android.com/develop/ui/compose/navigation) is used in the app to define a navigation flow.<br>
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+
+### Compose click auto detection
+This feature supports the auto detection of click events of composables when used as shown below.
+<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
+```
+val submitLabel = "Submit"
+Text(text = submitLabel,
+  style = MaterialTheme.typography.button,
+  modifier = Modifier.clickable(onClick = onClickSeeAll, onClickLabel = submitLabel)
+```
+
+## Traceparent Header generation and collection
+Please contact conviva for enabling this feature.
+
 ## API to override the default Activity Name in the Screen View Event
 This feature supports overriding the default Activity Name in the Screen View Event. Add the public variable *convivaScreenName* in the corresponding activity which you want to set the screen name supported from 0.9.0 version onwards
 
@@ -299,31 +326,5 @@ To learn about the default metrics for analyzing the native and web applications
 </details>
 
 
-## Fragments auto detection
-This feature supports auto detection of the fragment transactions such as navigation with fragments using a NavGraph or a simple fragmentTransaction to load next fragment etc.<br>
-<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-
-## Compose Navigation auto detection
-This feature supports auto detection of the navigation events when [ComposeNavigation](https://developer.android.com/develop/ui/compose/navigation) is used in the app to define a navigation flow.<br>
-<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-
-### Compose click auto detection
-This feature supports the auto detection of click events of composables when used as shown below.
-<b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-```
-val submitLabel = "Submit"
-Text(text = submitLabel,
-  style = MaterialTheme.typography.button,
-  modifier = Modifier.clickable(onClick = onClickSeeAll, onClickLabel = submitLabel)
-```
-
-## Traceparent Header generation and collection
-Please contact conviva for enabling this feature.
-
-## Multidex Config
-If multidex is enabled and a multidex-config.pro is being used by the application, please add the following rule to the config.pro file.
-```
--keep class com.conviva.** { *; }
-```
 
 
