@@ -313,14 +313,16 @@ Event | Occurrence |
 network_request | after receiving the network request response |
 screen_view | when the screen is interacted on either first launch or relaunch |
 application_error | when an error occurrs in the application |
-button_click | on the button click callback |
+button_click | on the button click callback (works both Clickable Views and Clickable Modifiers in compose) |
 application_background | when the application is taken to the background |
 application_foreground | when the application is taken to the foreground |
 application_install | when the application is launched for the first time after it's installed. (It's not the exact installed time.) |
 deep_link_received | on opening an application using the UTM URL |
 anr_start | Timer starts for the response from the main thread. If it takes more than 4 seconds, _anr_start_ event is triggered. |
 anr_end | If the SDK gets response after triggering _anr_start_, then _anr_end_ is dispatched.   |
-
+conviva_fragment_view | Whenever a fragment transaction commits   |
+conviva_compose_view | Whenever a destination change occurs in the NavController  of the ComposeNavigation  |
+traceparent | Please contact Conviva for enabling this feature. |
 
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
 </details>
