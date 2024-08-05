@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.9.4 (05/AUG/2024)
+* Enables and disables the auto detection of the compose and fragment navigation auto detection dynamically based on the remote config.
+
 ## 0.9.3 (19/JUL/2024)
 * Supports the auto detection of the compose navigation and compose click tracking.
 * Supports the fragments navigation.
