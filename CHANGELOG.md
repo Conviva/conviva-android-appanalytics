@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.9.5 (06/SEP/2024)
+* Introduces API for setting the conviva identifier
+
 ## 0.9.4 (05/AUG/2024)
 * Enables and disables the auto detection of the compose and fragment navigation auto detection dynamically based on the remote config.
 
