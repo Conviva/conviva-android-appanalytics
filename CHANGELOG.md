@@ -1,6 +1,32 @@
 
 # Changelog
 
+## 0.9.6 (10/SEP/2024)
+* Remote config enhancements:
+  * Exponential back off of the remote config fetch on failure scenarios with max 3 attempts separated by 5 seconds
+  * Enhances the remote config version check
+  * Defaults timeout of read and connect to 30 seconds for remote config requests
+  * Enhances the remote config fetch timestamp based on response
+  * Enhances the cacheRefreshInterval delta to 3%
+* Enhances the retry logic to delete the db entries on response to avoid pile up events on failure cases
+* Conviva cleanup enhancements:
+  * Adds new API cleanup() to remove Conviva from application footprint
+  * Internal enhancements of the cleanup process
+* Changes LIFO to FIFO for the ctp requests from the db
+* Logging enhancements:
+  * Replaces all the printStackTrace in catch blocks with proper log messages and removed all regex log messages with string to avoid issues.
+  * Ensures diagnosticAutotracking is independent of logging
+  * Disables diagnostic_error events
+* Removes the debug context and debug event implementation
+* Removes the isDataSaverEnabled() check for the periodic_heartbeat events
+* Enhances applying of the cache refresh interval when it is non positive number
+* Removes explicit setting of the HTTP 1.2 for the ctp requests
+* Enhances the setting of the conviva identifier
+* Avoids tracker instance creation from the remote config when not created from application
+* Defaults timeout of read and connect to 30 seconds for ctp requests
+* Updates the file directories and the shared preferences of Conviva SDK
+* Adds internal enhancements
+
 ## 0.9.5 (06/SEP/2024)
 * Introduces API for setting the conviva identifier
 
