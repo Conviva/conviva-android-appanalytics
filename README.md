@@ -148,7 +148,7 @@ tracker.clearCustomTags(clearTagKeysSet);
 tracker.clearAllCustomTags();
 ```
 
-## Auto detection using Conviva plugin
+## Features Auto detected using Conviva plugin
 
 Conviva Plugin supports Auto detection below features. Please refer to the [Conviva Plugin](https://github.com/Conviva/conviva-android-plugin) for more details.
 
@@ -230,7 +230,6 @@ anr_start | Timer starts for the response from the main thread. If it takes more
 anr_end | If the SDK gets response after triggering _anr_start_, then _anr_end_ is dispatched.
 conviva_fragment_view | Whenever a fragment transaction commits
 conviva_compose_view | Whenever a destination change occurs in the NavController  of the ComposeNavigation
-traceparent | Please contact Conviva for enabling this feature.
 
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
 </details>
