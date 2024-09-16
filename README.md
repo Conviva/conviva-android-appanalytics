@@ -57,9 +57,10 @@ Android Gradle Version | Conviva Sensor Version | Conviva Plugin Version |
 ------|------------ | ------------ |
  Any Android Gradle Version | [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3) | [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) |
  7.2 and above | [>=0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.3.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.3) |
- below 7.2  | [>=0.9.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.1) | [0.2.4](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.4) |
- below 7.2  | [0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) |
+ below 7.0  | [>=0.9.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.1) | [0.2.4](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.4) |
+ below 7.0  | [0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) |
 
+ #### Note : Conviva Gradle Plugin do not support for the Android Gradle Plugin versions >= 7.0 and < 7.2
 
 ## Initialize the tracker by enabling autocollection
 
