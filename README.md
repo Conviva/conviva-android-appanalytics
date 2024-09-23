@@ -77,6 +77,8 @@ TrackerController tracker = ConvivaAppAnalytics.getDefaultTracker();
 
 <strong>appName</strong> - a string value used to distinguish your applications. Simple values that are unique across all of your integrated platforms work best here.
 
+#### Note : It is recommended to initialize the tracker at the start of the application before the first activity class.
+
 ## Set the user id (viewer id)
 
 ```
