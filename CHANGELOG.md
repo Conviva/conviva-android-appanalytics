@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.9.6.1 (25/SEP/2024)
+* Fixes the issue in capturing the response body when content-length is unknown.
+
 ## 0.9.6 (10/SEP/2024)
 * <b>Remote config enhancements:</b>
   * Implements exponential backoff for remote config fetch attempts in case of failures, with a maximum of 3 attempts, each separated by a 5-second interval
