@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.9.7 (30/OCT/2024)
+* Supports Controlled Ingestion Feature which is disabled by default. Upgrading to this version will not change the collection behavior unless it is enabled. To enable this feature, please contact Conviva support team.
+* Supports sending Diagnostic Info Events which is disabled by default.
+
 ## 0.9.6.1 (25/SEP/2024)
 * Fixes the issue in capturing the response body when content-length is unknown.
 
