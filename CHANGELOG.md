@@ -1,6 +1,10 @@
 
 # Changelog
 
+## 0.9.8 (21/NOV/2024)
+* Introduces Event Batching Feature with configurable payload size and interval which is enabled by default.
+* Enhancements of Diagnostic Info Events.
+
 ## 0.9.7 (30/OCT/2024)
 * Supports Controlled Ingestion Feature which is disabled by default. Upgrading to this version will not change the collection behavior unless it is enabled. To enable this feature, please contact Conviva support team.
 * Supports sending Diagnostic Info Events which is disabled by default.
