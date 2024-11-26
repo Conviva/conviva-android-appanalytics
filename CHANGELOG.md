@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 0.9.8.1 (26/NOV/2024)
+* Fixes the build issue of the [react native sensor](https://github.com/Conviva/conviva-react-native-appanalytics) introduced in 0.9.8 version of sensor
+
 ## 0.9.8 (21/NOV/2024)
 * Introduces Event Batching Feature with configurable payload size and interval which is enabled by default.
 * Enhancements of Diagnostic Info Events.
