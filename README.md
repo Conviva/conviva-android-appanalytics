@@ -160,7 +160,7 @@ Conviva Plugin supports Auto detection below features. Please refer to the [Conv
   <b>Prerequisites:</b> Conviva Gradle Plugin version [>=0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and tracker version [>=0.7.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.7.1)
       
   ### Network request detection
-  This feature supports for OkHttp, Retrofit, HTTPSUrlConnection, HTTPUrlConnection<br>
+  This feature supports for OkHttp, Retrofit, HTTPSUrlConnection, HTTPUrlConnection(tracking URL.getContent() and URL.getStream() are not supported.) <br>
   <b>Prerequisites:</b> Conviva Gradle Plugin version [>=0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and tracker version [>=0.7.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.7.3)
 
   #### Granular Details & Limitations:
