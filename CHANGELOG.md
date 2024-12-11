@@ -1,6 +1,18 @@
 
 # Changelog
 
+## 1.0.0 (11/DEC/2024)
+  * Enhances Conviva’s resource usage by minimising thread count reducing CPU and memory overhead
+  * Improves the I/O efficiency
+  * Improves the efficiency of network request handling provided in the [v0.9.6.2](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.6.2) hot fix
+  * Improves automatic collection of Application Not Responding (ANR) events, leveraging updated Android APIs for more accurate detection
+  * Enhances the ConvivaAppAnalytics.cleanup() to comprehensively remove Conviva from the application footprint
+  * Enhances force fetching of remote configuration during app upgrades by clearing the cache
+  * Enhances diagnostic event covering new use cases
+  * Enhances adherence to Strict Mode violations
+  * Deprecates the getDefaultTracker() method and introduced the getTracker()
+  * Fixes the missing duration and method in Network Requests using HttpURLConnection under specific scenarios
+
 ## 0.9.8.1 (26/NOV/2024)
 * Fixes the build issue of the [react native sensor](https://github.com/Conviva/conviva-react-native-appanalytics) introduced in 0.9.8 version of sensor
 
