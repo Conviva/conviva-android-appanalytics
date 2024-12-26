@@ -222,12 +222,12 @@ public class ExampleActivity extends Activity {
 Event | Occurrence
 ------|------------
 network_request | after receiving the network request response
-screen_view | when the screen is interacted on either first launch or relaunch(Limitation)
+screen_view | when the screen is interacted on either first launch or relaunch. [Refer limitations](#Limitations)
 application_error | when an error occurrs in the application
 button_click | on the button click callback (works both Clickable Views and Clickable Modifiers in compose)
 application_background | when the application is taken to the background
 application_foreground | when the application is taken to the foreground
-application_install | when the application is launched for the first time after it's installed. (It's not the exact installed time.)(Limitation)
+application_install | when the application is launched for the first time after it's installed. (It's not the exact installed time.)[Refer limitations](#Limitations)
 deep_link_received | on opening an application using the UTM URL
 anr_start | Timer starts for the response from the main thread. If it takes more than 4 seconds, _anr_start_ event is triggered.
 anr_end | If the SDK gets response after triggering _anr_start_, then _anr_end_ is dispatched.
@@ -235,7 +235,7 @@ conviva_fragment_view | Whenever a fragment transaction commits
 conviva_compose_view | Whenever a destination change occurs in the NavController  of the ComposeNavigation
 
 ### Limitations:
-- Starting from version [v0.9.7](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.7), the auto-collection of <b>screen_view</b> and <b>application_install</b> events are temporarily affected due to controlled ingestion by Conviva. This impact is only valid until the Conviva Remote Config is available and will no longer persist in subsequent launches.
+- Starting from version [v0.9.7](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.7), the auto-collection of <b>screen_view</b> and <b>application_install</b> events is temporarily affected due to controlled ingestion by Conviva. This impact occurs only during the first fresh launch after an app install or clear-data. It is valid only until the Conviva Remote Config becomes available and will no longer persist in subsequent launches.
 
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
 </details>
