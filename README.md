@@ -69,9 +69,10 @@ TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
     customerKey,
     appName
 );
+// getDefaultTracker() is deprecated from v1.0.0 and we recommend to replace the API with getTracker()
 // The tracker object can be fetched using the following API in the other classes
 // than the place where createTracker is invoked using following API:
-TrackerController tracker = ConvivaAppAnalytics.getDefaultTracker();
+TrackerController tracker = ConvivaAppAnalytics.getTracker();
 ```
 <strong>customerKey</strong> - a string to identify specific customer account. Different keys shall be used for development / debug versus production environment. Find your keys on the account info page in Pulse.
 
