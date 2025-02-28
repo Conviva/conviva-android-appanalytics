@@ -1,6 +1,11 @@
 
 # Changelog
 
+## 1.2.0 (28/FEB/2025)
+* Provides flexibility with control of the click event collection,  based on any element names, element types, element IDs, etc.
+* Enhances the EditText elements to restrict text collection for protecting the sensitive data.
+* Limits the elementText key to support at most 1024 characters.
+
 ## 1.1.0 (03/FEB/2025)
   * Introduces Intelligent Collection of Network Request Feature designed to optimize data collection while ensuring flexibility and actionable insights with reduced volume:
   * Controls network request volume through Activation rules (Collect or Block), which override previous URL-based blocklists.
