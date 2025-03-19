@@ -1,6 +1,12 @@
 
 # Changelog
 
+## 1.2.1 (20/MAR/2025)
+- Enhanced Network Request Collection: Supports automatic collection of network requests in Flutter for Dart’s core HTTP client, as well as popular libraries like Dio, Retrofit, and Chopper.  
+- Controlled Ingestion Feature: Now disabled by default. Upgrading to this version will not alter collection behavior unless explicitly enabled. To activate this feature, please contact the Conviva support team.  
+- Bug Fix – Target URL Query Parameters: Resolves an issue where the TargetURL in network requests was not reported along with query parameters.  
+- Bug Fix – Case Insensitivity: Fixes an issue where network request collection was failing when the TargetURL had case-insensitive variations.  
+
 ## 1.2.0 (28/FEB/2025)
 * Provides flexibility with control of the click event collection,  based on any element names, element types, element IDs, etc.
 * Enhances the EditText elements to restrict text collection for protecting the sensitive data.
