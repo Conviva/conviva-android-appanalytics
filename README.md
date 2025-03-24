@@ -1,101 +1,184 @@
-# conviva-android-appanalytics
-Use Application Analytics to autocollect events and track application specific events and state changes.
+# Conviva Android ECO SDK
 
-## Conviva Android App Analytics can be included in two ways in any Android app projects.
+Use Conviva Android ECO SDK to auto-collect events and track application-specific events and state changes.
 
-* Gradle dependency
-* Offline library
+**Table of Contents**
+- [Quick Start](#quick-start)
+- [More Features](#more-features)
+- [Auto-collected Events](#auto-collected-events)
+- [FAQ](#faq)
 
-## Gradle dependency
-Add the following line to app's <strong>build.gradle</strong> file along with the dependencies:
+## Quick Start
+
+##### Supported Android Version
+
+- Target SDK version: Android 14 (API level 34)
+- Minimum SDK version: Android 5.0 (API level 21)
+
+<details>
+<summary><b>Diagram</b></summary>
+
+  ```mermaid
+graph TD
+    build[Build Process] --> plugin;
+    plugin[Conviva ECO Gradle Plugin] -->|Injects code| app;
+    app[UI Layer & Business Logic] --> sdk@{ label: "Conviva ECO SDK" };
+    events[App Events] --> sdk;
+    app --> events;
+    sdk --> backend[Conviva Backend Server];
+
+    subgraph "Android Application Runtime"
+        app;
+        sdk;
+        events;
+    end
+
+    subgraph "Compilation Phase"
+        build;
+        plugin;
+    end
+	style plugin fill:#004AAD,color:#FFFFFF
+	style sdk fill:#004AAD,color:#FFFFFF
+	style backend fill:#004AAD,color:#FFFFFF
+  ```
+
+</details>
+
+### 1. Download
+
+- Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from Conviva [Conviva Android ECO Plugin](https://github.com/Conviva/conviva-android-plugin).
+
+```groovy
+// Groovy
+plugins {
+  // ...
+  id 'com.conviva.sdk.android-plugin' version '<version>' apply false
+}
 
 ```
-dependencies {
-    ...
-    implementation 'com.conviva.sdk:conviva-android-tracker:<version>'
 
-    // Conviva video sensor dependency(recommended from 4.0.30 and above excluding 4.0.31)
-    implementation 'com.conviva.sdk:conviva-core-sdk:<version>'
-    ...
+```kotlin
+// Kotlin
+plugins {
+  // ...
+  id("com.conviva.sdk.android-plugin") version "<version>" apply false
 }
+
+```
+
+- Apply the Gradle plugin and add the dependency in `app/build.gradle` file, replacing `<version>` with the latest SDK version available [here](https://github.com/Conviva/conviva-android-appanalytics/releases).
+
+```groovy
+// Groovy
+plugins {
+    // ...
+    id 'com.conviva.sdk.android-plugin'
+}
+
+android {
+  // ...
+}
+
+dependencies {
+    // ...
+    implementation 'com.conviva.sdk:conviva-android-tracker:<version>'
+}
+```
+
+```kotlin
+// Kotlin 
+plugins {
+    // ...
+    id("com.conviva.sdk.android-plugin")
+}
+
+android {
+  // ...
+}
+
+dependencies {
+    // ...
+    implementation("com.conviva.sdk:conviva-android-tracker:<version>")
+}
+
 ```
 
 <details>
-  <summary><b> Offline library</b></summary>
+    <summary>Using Offline Library for Dependencies</summary>
     
-## Offline library
-Place the Conviva App Sensor in app's 'libs' folder and add the following line to app's <strong>build.gradle</strong> file:
-
-```
+Download the `.aar` from GitHub's [releases page](https://github.com/Conviva/conviva-android-appanalytics/releases) and add it manually instead of using Gradle.
+    
+```groovy
 dependencies {
-    ...
+    // ...
     implementation fileTree(dir: 'libs',include:['*.aar'])
-    ...
 }
 ```
+
 </details>
 
-## Proguard rules
-Please add the following proguard rules to keep conviva sdk classes from obfuscation.
-```
+
+**Proguard / R8 / Multidex Config**
+
+Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent Conviva SDK obfuscation. If using multidex with the `multidex-config.pro` file, add the same rule there as well.
+
+```plaintext
 -keep class com.conviva.** { *; }
 ```
 
-## Multidex Config
-If multidex is enabled and a multidex-config.pro is being used by the application, please add the following rule to the config.pro file.
+### 2. Initialization
+
+#### Note: It is recommended to Initialize the tracker at app startup before the first activity.
+
+An example of Conviva Android ECO SDK initialization: 
+```java
+import com.conviva.apptracker.ConvivaAppAnalytics;
+
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // ...
+        //  Initialize the Conviva Android ECO SDK
+        TrackerController tracker = ConvivaAppAnalytics.createTracker(this, customerKey, appName);
+        
+    }
+}
 ```
--keep class com.conviva.** { *; }
-```
 
-## Support Android Version
+**customerKey** - A string to identify a specific customer account. Use different keys for dev and prod. Find them in [Pulse](https://pulse.conviva.com/app/profile/applications) under My Profile (_Conviva login required_).
 
-Target sdk version : Android 14 (API level 34)<br> 
-Minimum sdk version : Android 5.0 (API level 21)
+**appName** - A string value that uniquely identifies your app across platforms.
 
-## Android Sensor and Conviva Plugin Versions compatibility
-Android Gradle Version | Conviva Sensor Version | Conviva Plugin Version |
-------|------------ | ------------ |
- Any Android Gradle Version | [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3) | [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) |
- 7.2 and above | [>=0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.3.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.3) |
- below 7.0  | [>=0.9.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.1) | [0.2.4](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.4) |
- below 7.0  | [0.9.0](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.0) | [0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) |
-
- #### Note : Conviva Gradle Plugin do not support for the Android Gradle Plugin versions >= 7.0 and < 7.2
-
-## Initialize the tracker by enabling autocollection
-
-```
-TrackerController tracker = ConvivaAppAnalytics.createTracker(context,
-    customerKey,
-    appName
-);
-// getDefaultTracker() is deprecated from v1.0.0 and we recommend to replace the API with getTracker()
-// The tracker object can be fetched using the following API in the other classes
-// than the place where createTracker is invoked using following API:
+```java
+// The tracker object can be retrieved using the following API in other classes after initialization.
 TrackerController tracker = ConvivaAppAnalytics.getTracker();
 ```
-<strong>customerKey</strong> - a string to identify specific customer account. Different keys shall be used for development / debug versus production environment. Find your keys on the account info page in Pulse.
 
-<strong>appName</strong> - a string value used to distinguish your applications. Simple values that are unique across all of your integrated platforms work best here.
+### 3. Set the User ID
+User ID is a unique string identifier to distinguish individual viewers. If using [Conviva Video Sensor](https://github.com/Conviva/conviva-android-coresdk), match it with the **Viewer ID**.
 
-#### Note : It is recommended to initialize the tracker at the start of the application before the first activity class.
-
-## Set the user id (viewer id)
-
-```
+```java
 tracker.getSubject().setUserId(userId);
 ```
 
-        
-## Extend tracking to track your application specific events and state changes
-Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
-<strong>eventName</strong> - Name of the custom event<br>
-<strong>eventData</strong> - Any type of data in JSONObject format
+After steps 1–3, verify [auto-collected events](#auto-collected-events) in the [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
 
-The following example shows the implementation of the 'onClick' event listener to any element.
-```
-// Supported from 0.5.0 onwards
+## More Features
 
+<details>
+
+<summary><b>Track Custom Event</b></summary>
+
+
+Use the **trackCustomEvent()** API to track all kinds of events. This API provides 2 fields to describe the tracked events:
+
+**eventName** - Name of the custom event
+
+**eventData** - Data in a `JSONObject` or a JSON-formatted `String`
+
+```java
+// Set up the event properties JSONObject
 JSONObject eventDataJSON = new JSONObject();
 eventDataJSON.put("identifier1", intValue);
 eventDataJSON.put("identifier2", boolValue);
@@ -105,138 +188,115 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, eventDataJSON);
 ```
-<details>
-  <summary><b> track application with data in JSON String format </b></summary>
 
-## trackCustomEvent() with data in JSON String format
-
-Use <strong>trackCustomEvent()</strong> API to track all kinds of events. This API provides 2 fields to describe the tracked events:<br>
-<strong>eventName</strong> - Name of the custom event<br>
-<strong>eventData</strong> - Any type of data in JSON String format
-
-The following example shows the implementation of the 'onClick' event listener to any element.
-```
-// ... send events 'onClick' of button
-HashMap<String, Object> eventData = new HashMap<>(); 
-eventData.put("identifier1", intValue); 
-eventData.put("identifier2", boolValue); 
-eventData.put("identifier3", "stringValue");
-
-String eventName = "your-event-name";
-
-tracker.trackCustomEvent(eventName, JSONValue.toJSONString(eventData));
-```
 </details>
 
-## Extend tracking to set your application specific custom tags
-Use <strong>setCustomTags()</strong> API to set custom tags<br>
-Use <strong>clearCustomTags()</strong> API to clear few of the previously set custom tags<br>
-Use <strong>clearAllCustomTags()</strong> API to clear all the previously set custom tags<br>
+<details>
 
-The following example shows the implementation of the application using these API's:
-```
+<summary><b>Set Custom Tags</b></summary>
+
+Custom Tags are global tags applied to all events and persist throughout the application lifespan, or until they are cleared.
+
+Set custom tags:
+```java
 // Adds the custom tags
-HashMap<String, Object> tags = new HashMap<>(); 
-eventData.put("key1", intValue); 
-eventData.put("key2", boolValue); 
-eventData.put("key3", "stringValue");
+HashMap<String, Object> tags = new HashMap<>();
+tags.put("key1", intValue);
+tags.put("key2", boolValue);
+tags.put("key3", "stringValue");
 tracker.setCustomTags(tags);
+```
 
-// clears few of the custom tags
+Clear a few of the previously set custom tags:
+```java
+// Clears custom tags key1 & key2
 Set<String> clearTagKeysSet = new HashSet<>();
-clearTagKeysSet.add("key1"); 
-clearTagKeysSet.add("key2"); 
+clearTagKeysSet.add("key1");
+clearTagKeysSet.add("key2");
 tracker.clearCustomTags(clearTagKeysSet);
+```
 
-// clears all the custom tags
+Clear all the previously set custom tags:
+```java
+// Clears all the custom tags
 tracker.clearAllCustomTags();
 ```
 
-## Features Auto detected using Conviva plugin
-
-Conviva Plugin supports Auto detection below features. Please refer to the [Conviva Plugin](https://github.com/Conviva/conviva-android-plugin) for more details.
-
-  ### User Clicks detection
-  This feature supports auto detection of click events where View.OnClickListener is used.<br>
-  <b>Prerequisites:</b> Conviva Gradle Plugin version [>=0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and tracker version [>=0.7.1](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.7.1)
-      
-  ### Network request detection
-  This feature supports for OkHttp, Retrofit, HTTPSUrlConnection, HTTPUrlConnection(tracking URL.getContent() and URL.getStream() are not supported) <br>
-  <b>Prerequisites:</b> Conviva Gradle Plugin version [>=0.2.3](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.2.3) and tracker version [>=0.7.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.7.3)
-
-  #### Granular Details & Limitations:
-- **Request and Response Body Collection**:
-  - Collected only when:
-    - Size is < 10KB and content-length is available.
-    - Content-type is `"json"` or `"text/plain"`.
-    - Data is a `JSONObject`, nested `JSONObject`, or `JSONArray`.
-  
-- **Request and Response Header Collection**:
-  - Collected only when:
-    - Data is a `JSONObject` (nested `JSONObject` and `JSONArray` are not yet supported).
-    - The server is provisioned with `"Access-Control-Expose-Headers:"`.
-
-### Fragments auto detection
-  This feature supports auto detection of the fragment transactions such as navigation with fragments using a NavGraph or a simple fragmentTransaction to load next fragment etc.<br>
-  <b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-
-  ### Compose Navigation auto detection
-  This feature supports auto detection of the navigation events when [ComposeNavigation](https://developer.android.com/develop/ui/compose/navigation) is used in the app to define a navigation flow.<br>
-  <b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-
-  ### Compose click auto detection
-  This feature supports the auto detection of click events of composables when used as shown below.<br>
-  <b>Prerequisites:</b> Conviva Gradle Plugin version [0.3.5](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.5) and tracker version [>=0.9.3](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.3)
-
-  ```kotlin
-val submitLabel = "Submit"
-Text(
-    text = submitLabel,
-    style = MaterialTheme.typography.button,
-    modifier = Modifier.clickable(
-        onClick = onClickSeeAll,
-        onClickLabel = submitLabel
-    )
-)
-```
-
-  ### Traceparent Header generation and collection
-  Please contact conviva for enabling this feature.
-
-
-## API to override the default Activity Name in the Screen View Event
-This feature supports overriding the default Activity Name in the Screen View Event. Add the public variable *convivaScreenName* in the corresponding activity which you want to set the screen name supported from 0.9.0 version onwards
-
-The following example shows how to include the plugin:
-```
-public class ExampleActivity extends Activity {
-    ...
-    public String convivaScreenName = "HomeScreen";
-    ...
-```
+</details>
 
 <details>
-    <summary><b>Auto-collected Events</b></summary>
-    
-##### Conviva provides a rich set of application performance metrics with the help of auto collected app events. Below are the events which are auto collected once above initialisation is done.
 
-Event | Occurrence
-------|------------
-network_request | after receiving the network request response
-screen_view | when the screen is interacted on either first launch or relaunch. [Refer limitations](#Limitations)
-application_error | when an error occurrs in the application
-button_click | on the button click callback (works both Clickable Views and Clickable Modifiers in compose)
-application_background | when the application is taken to the background
-application_foreground | when the application is taken to the foreground
-application_install | when the application is launched for the first time after it's installed. (It's not the exact installed time.)[Refer limitations](#Limitations)
-deep_link_received | on opening an application using the UTM URL
-anr_start | Timer starts for the response from the main thread. If it takes more than 4 seconds, _anr_start_ event is triggered.
-anr_end | If the SDK gets response after triggering _anr_start_, then _anr_end_ is dispatched.
-conviva_fragment_view | Whenever a fragment transaction commits
-conviva_compose_view | Whenever a destination change occurs in the NavController  of the ComposeNavigation
+<summary><b>Override Activity Name</b></summary>
 
-### Limitations:
-- Starting from version [v0.9.7](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.7), the auto-collection of <b>screen_view</b> and <b>application_install</b> events is temporarily affected due to controlled ingestion by Conviva. This impact occurs only during the first fresh launch after an app install or clear-data. It is valid only until the Conviva Remote Config becomes available and will no longer persist in subsequent launches.
+Override the default Activity Name in the Screen View Event by adding the `convivaScreenName` variable in the desired activity.
+
+```java
+public class ExampleActivity extends Activity {
+    // ...
+    public String convivaScreenName = "HomeScreen";
+    // ...
+}
+```
+
+</details>
+
+
+## Auto-collected Events
+
+Conviva automatically collects rich set of app performance metrics through app events after completing the [Quick Start](#quick-start).
+
+<details>
+
+<summary><b>Auto-collected events table</b></summary>
+
+| Event | Occurrence |
+| --- | --- |
+| network\_request | After receiving the network request response. [Refer limitations](#limitations). _Collected by plugin._ |
+| screen\_view | When the screen is interacted with on either first launch or relaunch. [Refer limitations](#limitations). _Collected by plugin._ |
+| application\_error | When an error occurs in the application |
+| button\_click | On the button click callback (works with both Clickable Views and Clickable Modifiers in compose). _Collected by plugin._ |
+| application\_background | When the application is taken to the background |
+| application\_foreground | When the application is taken to the foreground |
+| application\_install | When the application is launched for the first time after it's installed. (It's not the exact installed time.) [Refer limitations](#limitations). |
+| deep\_link\_received | On opening an application using the UTM URL. _Collected by plugin._ |
+| anr\_start | Timer starts for the response from the main thread. If it takes more than 4 seconds, _anr\_start_ event is triggered. |
+| anr\_end | If the SDK gets a response after triggering _anr\_start_, then _anr\_end_ is dispatched. |
+| conviva\_fragment\_view | Whenever a fragment transaction commits. _Collected by plugin._ |
+| conviva\_compose\_view | Whenever a destination change occurs in the NavController of the ComposeNavigation. _Collected by plugin._ |
 
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
+
 </details>
+
+### Limitations
+
+<details>
+  <summary><b>screen_view, application_install</b></summary>
+
+  Auto-collection of **screen_view** and **application_install** events is temporarily affected due to controlled ingestion by Conviva.
+  This impact occurs only during the first fresh launch after an app install or clear-data. It is valid only until the Conviva Remote Config becomes available and will no longer persist in subsequent launches.
+
+</details>
+
+<details>
+  <summary><b>network_request</b></summary>
+  This feature supports OkHttp, Retrofit, HTTPSUrlConnection, HTTPUrlConnection (tracking URL.getContent() and URL.getStream() are not supported).
+
+  **Request and Response Body Collection:**
+
+  Collected only when:
+  - Size is < 10KB and content-length is available.
+  - Content-type is `"json"` or `"text/plain"`.
+  - Data is a `JSONObject`, nested `JSONObject`, or `JSONArray`.
+
+ **Request and Response Header Collection:**
+
+ Collected only when:
+ - Data is a `JSONObject` (Nested `JSONObject` and `JSONArray` are not yet supported).
+ - The server is provisioned with `"Access-Control-Expose-Headers:"`.
+
+</details>
+
+## FAQ
+
+[ECO Integration FAQ](https://pulse.conviva.com/learning-center/content/sensor_developer_center/tools/eco_integration/eco_integration_faq.htm)
