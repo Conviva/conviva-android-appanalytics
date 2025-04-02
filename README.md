@@ -133,6 +133,8 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 An example of Conviva Android ECO SDK initialization: 
 ```java
 import com.conviva.apptracker.ConvivaAppAnalytics;
+```
+```java
 
 public class MyApplication extends Application {
     @Override
