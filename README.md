@@ -123,7 +123,8 @@ dependencies {
 Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent Conviva SDK obfuscation. If using multidex with the `multidex-config.pro` file, add the same rule there as well.
 
 ```plaintext
--keep class com.conviva.** { *; }
+-keepnames class * extends android.view.View
+-keep, allowshrinking class com.conviva.** { *; }
 ```
 
 ### 2. Initialization
