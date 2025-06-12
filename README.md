@@ -195,12 +195,12 @@ User ID is a unique string identifier to distinguish individual viewers. If usin
 
 <!-- :::code-tabs[Java,Kotlin] -->
 **Java**
-```java
+```Java
 tracker.getSubject.setUserId(userId);
 ```
 
 **Kotlin**
-```kotlin
+```Kotlin
 tracker?.subject?.userId = userId
 ```
 <!-- ::: -->
