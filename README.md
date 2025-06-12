@@ -138,7 +138,7 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 ```
 <!--eof-self-serve-->
 
-### Initialization
+### 2. Initialization
 
 > **Note:** It is recommended to initialize the tracker at app startup before the first activity.  
 > An example of Conviva Android ECO SDK initialization:
