@@ -44,11 +44,13 @@ graph TD
 
 </details>
 
-### 1. Download
-
+### 1. Installation
+<!--self-serve[Gradle]-->
 - Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from Conviva [Conviva Android ECO Plugin](https://github.com/Conviva/conviva-android-plugin).
 
-```groovy
+<!-- :::code-tabs[Groovy,Kotlin] -->
+
+```Groovy
 // Groovy
 plugins {
   // ...
@@ -57,7 +59,7 @@ plugins {
 
 ```
 
-```kotlin
+```Kotlin
 // Kotlin
 plugins {
   // ...
@@ -65,10 +67,14 @@ plugins {
 }
 
 ```
+<!-- ::: -->
 
 - Apply the Gradle plugin and add the dependency in `app/build.gradle` file, replacing `<version>` with the latest SDK version available [here](https://github.com/Conviva/conviva-android-appanalytics/releases).
 
-```groovy
+<!-- :::code-tabs[Groovy,Kotlin] -->
+
+
+```Groovy
 // Groovy
 plugins {
     // ...
@@ -85,7 +91,7 @@ dependencies {
 }
 ```
 
-```kotlin
+```Kotlin
 // Kotlin 
 plugins {
     // ...
@@ -102,12 +108,15 @@ dependencies {
 }
 
 ```
+<!-- ::: -->
 
+<!--eof-self-serve--> 
 <details>
+<!--self-serve[Offline]-->
     <summary>Using Offline Library for Dependencies</summary>
     
 Download the `.aar` from GitHub's [releases page](https://github.com/Conviva/conviva-android-appanalytics/releases) and add it manually instead of using Gradle.
-    
+
 ```groovy
 dependencies {
     // ...
@@ -115,9 +124,10 @@ dependencies {
 }
 ```
 
+<!--eof-self-serve-->
 </details>
 
-
+<!--self-serve[Gradle,Offline]-->
 **Proguard / R8 / Multidex Config**
 
 Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent Conviva SDK obfuscation. If using multidex with the `multidex-config.pro` file, add the same rule there as well.
@@ -126,44 +136,74 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 -keepnames class * extends android.view.View
 -keep, allowshrinking class com.conviva.** { *; }
 ```
+<!--eof-self-serve-->
 
-### 2. Initialization
+### Initialization
 
-#### Note: It is recommended to Initialize the tracker at app startup before the first activity.
+> **Note:** It is recommended to initialize the tracker at app startup before the first activity.  
+> An example of Conviva Android ECO SDK initialization:
 
-An example of Conviva Android ECO SDK initialization: 
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+
+**Java**
+```Java
 import com.conviva.apptracker.ConvivaAppAnalytics;
-```
-```java
 
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // ...
-        //  Initialize the Conviva Android ECO SDK
-        TrackerController tracker = ConvivaAppAnalytics.createTracker(this, customerKey, appName);
-        
+        TrackerController tracker = ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME");
     }
 }
 ```
 
-**customerKey** - A string to identify a specific customer account. Use different keys for dev and prod. Find them in [Pulse](https://pulse.conviva.com/app/profile/applications) under My Profile (_Conviva login required_).
+**Kotlin**
+```Kotlin
+import com.conviva.apptracker.ConvivaAppAnalytics
 
-**appName** - A string value that uniquely identifies your app across platforms.
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        val tracker = ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
+    }
+}
+```
+<!-- ::: -->
+> where,  
+> **YOUR_CUSTOMER_KEY** – A string to identify this specific c3 account.  
+> **YOUR_APP_NAME** – A string value for the app name that uniquely identifies your app across platforms.
 
-```java
-// The tracker object can be retrieved using the following API in other classes after initialization.
+---
+
+The tracker object can be retrieved using the following API in other classes after initialization:
+<!-- :::code-tabs[Java,Kotlin] -->
+
+**Java**
+```Java
 TrackerController tracker = ConvivaAppAnalytics.getTracker();
 ```
+
+**Kotlin**
+```Kotlin
+val tracker = ConvivaAppAnalytics.getTracker()
+```
+<!-- ::: -->
 
 ### 3. Set the User ID
 User ID is a unique string identifier to distinguish individual viewers. If using [Conviva Video Sensor](https://github.com/Conviva/conviva-android-coresdk), match it with the **Viewer ID**.
 
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
 ```java
-tracker.getSubject().setUserId(userId);
+tracker.getSubject.setUserId(userId);
 ```
+
+**Kotlin**
+```kotlin
+tracker?.subject?.userId = userId
+```
+---
 
 After steps 1–3, verify [auto-collected events](#auto-collected-events) in the [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
 
