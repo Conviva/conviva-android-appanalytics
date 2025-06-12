@@ -210,7 +210,7 @@ After steps 1–3, verify [auto-collected events](#auto-collected-events) in the
 ## More Features
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Track Custom Event</b></summary>
 
 
@@ -231,11 +231,12 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, eventDataJSON);
 ```
+<!--eof-self-serve-custom-event--> 
 
 </details>
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Set Custom Tags</b></summary>
 
 Custom Tags are global tags applied to all events and persist throughout the application lifespan, or until they are cleared.
@@ -264,6 +265,7 @@ Clear all the previously set custom tags:
 // Clears all the custom tags
 tracker.clearAllCustomTags();
 ```
+<!--eof-self-serve-custom-event--> 
 
 </details>
 
