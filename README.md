@@ -203,7 +203,7 @@ tracker.getSubject.setUserId(userId);
 ```kotlin
 tracker?.subject?.userId = userId
 ```
----
+<!-- ::: -->
 
 After steps 1–3, verify [auto-collected events](#auto-collected-events) in the [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
 
