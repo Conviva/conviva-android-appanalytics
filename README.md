@@ -54,7 +54,7 @@ graph TD
 // Groovy
 plugins {
   // ...
-  id 'com.conviva.sdk.android-plugin' version '<version>' apply false
+  id 'com.conviva.sdk.android-plugin' version 'plugin_version' apply false
 }
 
 ```
