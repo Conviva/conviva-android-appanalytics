@@ -301,7 +301,7 @@ tracker.clearCustomTags(clearTagKeysSet)
 Clear all the previously set custom tags:
 <!-- :::code-tabs[Java,Kotlin] -->
 **Java**
-```java
+```Java
 // Clears all the custom tags
 tracker.clearAllCustomTags();
 ```
