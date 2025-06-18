@@ -44,20 +44,22 @@ graph TD
 
 </details>
 
-### 1. Download
-
+### 1. Installation
+<!--self-serve[Gradle]-->
 - Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from Conviva [Conviva Android ECO Plugin](https://github.com/Conviva/conviva-android-plugin).
 
-```groovy
+<!-- :::code-tabs[Groovy,Kotlin] -->
+
+```Groovy
 // Groovy
 plugins {
   // ...
-  id 'com.conviva.sdk.android-plugin' version '<version>' apply false
+  id 'com.conviva.sdk.android-plugin' version 'plugin_version' apply false
 }
 
 ```
 
-```kotlin
+```Kotlin
 // Kotlin
 plugins {
   // ...
@@ -65,10 +67,14 @@ plugins {
 }
 
 ```
+<!-- ::: -->
 
 - Apply the Gradle plugin and add the dependency in `app/build.gradle` file, replacing `<version>` with the latest SDK version available [here](https://github.com/Conviva/conviva-android-appanalytics/releases).
 
-```groovy
+<!-- :::code-tabs[Groovy,Kotlin] -->
+
+
+```Groovy
 // Groovy
 plugins {
     // ...
@@ -85,7 +91,7 @@ dependencies {
 }
 ```
 
-```kotlin
+```Kotlin
 // Kotlin 
 plugins {
     // ...
@@ -102,12 +108,15 @@ dependencies {
 }
 
 ```
+<!-- ::: -->
 
+<!--eof-self-serve--> 
 <details>
+<!--self-serve[Offline]-->
     <summary>Using Offline Library for Dependencies</summary>
     
 Download the `.aar` from GitHub's [releases page](https://github.com/Conviva/conviva-android-appanalytics/releases) and add it manually instead of using Gradle.
-    
+
 ```groovy
 dependencies {
     // ...
@@ -115,9 +124,10 @@ dependencies {
 }
 ```
 
+<!--eof-self-serve-->
 </details>
 
-
+<!--self-serve[Gradle,Offline]-->
 **Proguard / R8 / Multidex Config**
 
 Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent Conviva SDK obfuscation. If using multidex with the `multidex-config.pro` file, add the same rule there as well.
@@ -126,51 +136,81 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 -keepnames class * extends android.view.View
 -keep, allowshrinking class com.conviva.** { *; }
 ```
+<!--eof-self-serve-->
 
 ### 2. Initialization
 
-#### Note: It is recommended to Initialize the tracker at app startup before the first activity.
+> **Note:** It is recommended to initialize the tracker at app startup before the first activity.  
+> An example of Conviva Android ECO SDK initialization:
 
-An example of Conviva Android ECO SDK initialization: 
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+
+**Java**
+```Java
 import com.conviva.apptracker.ConvivaAppAnalytics;
-```
-```java
 
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // ...
-        //  Initialize the Conviva Android ECO SDK
-        TrackerController tracker = ConvivaAppAnalytics.createTracker(this, customerKey, appName);
-        
+        TrackerController tracker = ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME");
     }
 }
 ```
 
-**customerKey** - A string to identify a specific customer account. Use different keys for dev and prod. Find them in [Pulse](https://pulse.conviva.com/app/profile/applications) under My Profile (_Conviva login required_).
+**Kotlin**
+```Kotlin
+import com.conviva.apptracker.ConvivaAppAnalytics
 
-**appName** - A string value that uniquely identifies your app across platforms.
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        val tracker = ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
+    }
+}
+```
+<!-- ::: -->
+> where,  
+> **YOUR_CUSTOMER_KEY** – A string to identify this specific c3 account.  
+> **YOUR_APP_NAME** – A string value for the app name that uniquely identifies your app across platforms.
 
-```java
-// The tracker object can be retrieved using the following API in other classes after initialization.
+---
+
+The tracker object can be retrieved using the following API in other classes after initialization:
+<!-- :::code-tabs[Java,Kotlin] -->
+
+**Java**
+```Java
 TrackerController tracker = ConvivaAppAnalytics.getTracker();
 ```
+
+**Kotlin**
+```Kotlin
+val tracker = ConvivaAppAnalytics.getTracker()
+```
+<!-- ::: -->
 
 ### 3. Set the User ID
 User ID is a unique string identifier to distinguish individual viewers. If using [Conviva Video Sensor](https://github.com/Conviva/conviva-android-coresdk), match it with the **Viewer ID**.
 
-```java
-tracker.getSubject().setUserId(userId);
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
+tracker.getSubject.setUserId(userId);
 ```
+
+**Kotlin**
+```Kotlin
+tracker?.subject?.userId = userId
+```
+<!-- ::: -->
 
 After steps 1–3, verify [auto-collected events](#auto-collected-events) in the [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
 
 ## More Features
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Track Custom Event</b></summary>
 
 
@@ -179,8 +219,9 @@ Use the **trackCustomEvent()** API to track all kinds of events. This API provid
 **eventName** - Name of the custom event
 
 **eventData** - Data in a `JSONObject` or a JSON-formatted `String`
-
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 // Set up the event properties JSONObject
 JSONObject eventDataJSON = new JSONObject();
 eventDataJSON.put("identifier1", intValue);
@@ -191,17 +232,34 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, eventDataJSON);
 ```
+**Kotlin**
+```Kotlin
+val eventDataJSON = JSONObject().apply {
+put("identifier1", intValue)
+put("identifier2", boolValue)
+put("identifier3", "stringValue")
+}
+val eventName = "your-event-name"
+tracker.trackCustomEvent(eventName, eventDataJSON)
+
+```
+<!-- ::: -->
+
+<!--eof-self-serve-custom-event--> 
 
 </details>
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Set Custom Tags</b></summary>
 
 Custom Tags are global tags applied to all events and persist throughout the application lifespan, or until they are cleared.
 
 Set custom tags:
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+
+```Java
 // Adds the custom tags
 HashMap<String, Object> tags = new HashMap<>();
 tags.put("key1", intValue);
@@ -209,38 +267,79 @@ tags.put("key2", boolValue);
 tags.put("key3", "stringValue");
 tracker.setCustomTags(tags);
 ```
+**Kotlin**
+```Kotlin
+val tags = hashMapOf<String, Any>(
+  "key1" to intValue,
+  "key2" to boolValue,
+  "key3" to "stringValue"
+)
+tracker.setCustomTags(tags)
+
+```
+<!-- ::: -->
+
 
 Clear a few of the previously set custom tags:
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 // Clears custom tags key1 & key2
 Set<String> clearTagKeysSet = new HashSet<>();
 clearTagKeysSet.add("key1");
 clearTagKeysSet.add("key2");
 tracker.clearCustomTags(clearTagKeysSet);
 ```
+**Kotlin**
+```Kotlin
+val clearTagKeysSet = setOf("key1", "key2")
+tracker.clearCustomTags(clearTagKeysSet)
+
+```
+<!-- ::: -->
 
 Clear all the previously set custom tags:
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 // Clears all the custom tags
 tracker.clearAllCustomTags();
 ```
+**Kotlin**
+```Kotlin
+tracker.clearAllCustomTags();
+```
+
+<!-- ::: -->
+<!--eof-self-serve-custom-event--> 
 
 </details>
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Override Activity Name</b></summary>
 
 Override the default Activity Name in the Screen View Event by adding the `convivaScreenName` variable in the desired activity.
-
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 public class ExampleActivity extends Activity {
     // ...
     public String convivaScreenName = "HomeScreen";
     // ...
 }
 ```
+**Kotlin**
+```Kotlin
+class ExampleActivity : Activity() {
+  // ...
+  var convivaScreenName: String = "HomeScreen"
+  // ...
+}
 
+```
+<!-- ::: -->
+<!--eof-self-serve-custom-event--> 
 </details>
 
 
