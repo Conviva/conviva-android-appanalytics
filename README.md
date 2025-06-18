@@ -219,8 +219,9 @@ Use the **trackCustomEvent()** API to track all kinds of events. This API provid
 **eventName** - Name of the custom event
 
 **eventData** - Data in a `JSONObject` or a JSON-formatted `String`
-
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 // Set up the event properties JSONObject
 JSONObject eventDataJSON = new JSONObject();
 eventDataJSON.put("identifier1", intValue);
@@ -231,6 +232,19 @@ String eventName = "your-event-name";
 
 tracker.trackCustomEvent(eventName, eventDataJSON);
 ```
+**Kotlin**
+```Kotlin
+val eventDataJSON = JSONObject().apply {
+put("identifier1", intValue)
+put("identifier2", boolValue)
+put("identifier3", "stringValue")
+}
+val eventName = "your-event-name"
+tracker.trackCustomEvent(eventName, eventDataJSON)
+
+```
+<!-- ::: -->
+
 <!--eof-self-serve-custom-event--> 
 
 </details>
@@ -242,7 +256,10 @@ tracker.trackCustomEvent(eventName, eventDataJSON);
 Custom Tags are global tags applied to all events and persist throughout the application lifespan, or until they are cleared.
 
 Set custom tags:
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+
+```Java
 // Adds the custom tags
 HashMap<String, Object> tags = new HashMap<>();
 tags.put("key1", intValue);
@@ -250,39 +267,80 @@ tags.put("key2", boolValue);
 tags.put("key3", "stringValue");
 tracker.setCustomTags(tags);
 ```
+**Kotlin**
+```Kotlin
+val tags = hashMapOf<String, Any>(
+  "key1" to intValue,
+  "key2" to boolValue,
+  "key3" to "stringValue"
+)
+tracker.setCustomTags(tags)
+
+```
+<!-- ::: -->
+
 
 Clear a few of the previously set custom tags:
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 // Clears custom tags key1 & key2
 Set<String> clearTagKeysSet = new HashSet<>();
 clearTagKeysSet.add("key1");
 clearTagKeysSet.add("key2");
 tracker.clearCustomTags(clearTagKeysSet);
 ```
+**Kotlin**
+```Kotlin
+val clearTagKeysSet = setOf("key1", "key2")
+tracker.clearCustomTags(clearTagKeysSet)
+
+```
+<!-- ::: -->
 
 Clear all the previously set custom tags:
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
 ```java
 // Clears all the custom tags
 tracker.clearAllCustomTags();
 ```
+**Kotlin**
+```Kotlin
+tracker.clearAllCustomTags();
+```
+
+<!-- ::: -->
 <!--eof-self-serve-custom-event--> 
 
 </details>
 
 <details>
-
+<!--self-serve-custom-event-->
 <summary><b>Override Activity Name</b></summary>
 
 Override the default Activity Name in the Screen View Event by adding the `convivaScreenName` variable in the desired activity.
-
-```java
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
 public class ExampleActivity extends Activity {
     // ...
     public String convivaScreenName = "HomeScreen";
     // ...
 }
 ```
+**Kotlin**
+```Kotlin
+import android.app.Activity
+class ExampleActivity : Activity() {
+  // ...
+  var convivaScreenName: String = "HomeScreen"
+  // ...
+}
 
+```
+<!-- ::: -->
+<!--eof-self-serve-custom-event--> 
 </details>
 
 
