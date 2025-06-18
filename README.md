@@ -331,7 +331,6 @@ public class ExampleActivity extends Activity {
 ```
 **Kotlin**
 ```Kotlin
-import android.app.Activity
 class ExampleActivity : Activity() {
   // ...
   var convivaScreenName: String = "HomeScreen"
