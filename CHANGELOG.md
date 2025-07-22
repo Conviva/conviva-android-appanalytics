@@ -1,6 +1,9 @@
 
 # Changelog
 
+## 1.2.2 (22/JUL/2025)
+- Supports extracting query params from network request URLs. To enable it, please contact the Conviva Support team.
+
 ## 1.2.1 (20/MAR/2025)
 - Enhanced Network Request Collection: Supports automatic collection of network requests in Flutter for Dart’s core HTTP client, as well as popular libraries like Dio, Retrofit, and Chopper.  
 - Controlled Ingestion Feature: Now disabled by default. Upgrading to this version will not alter collection behavior unless explicitly enabled. To activate this feature, please contact the Conviva support team.  
