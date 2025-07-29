@@ -205,8 +205,6 @@ tracker?.subject?.userId = userId
 ```
 <!-- ::: -->
 
-After steps 1–3, verify [auto-collected events](#auto-collected-events) in the [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
-
 ## More Features
 
 <details>
@@ -369,6 +367,9 @@ Conviva automatically collects rich set of app performance metrics through app e
 To learn about the default metrics for analyzing the native and web applications performance, such as App Crashes, Avg Screen Load Time, and Page Loads, refer to the [App Experience Metrics](https://pulse.conviva.com/learning-center/content/eco/eco_metrics.html) page in the Learning Center.
 
 </details>
+
+### Validation
+To verify the integration for [auto-collected events](#auto-collected-events), check the page - [validation dashboard](https://pulse.conviva.com/app/appmanager/ecoIntegration/validation). (_Conviva login required_)
 
 ### Limitations
 
