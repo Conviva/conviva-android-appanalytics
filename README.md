@@ -1,6 +1,6 @@
-# Conviva Android ECO SDK
+# Conviva Android DPI SDK
 
-Use Conviva Android ECO SDK to auto-collect events and track application-specific events and state changes.
+Use Conviva Android DPI SDK to auto-collect events and track application-specific events and state changes.
 
 **Table of Contents**
 - [Quick Start](#quick-start)
@@ -21,8 +21,8 @@ Use Conviva Android ECO SDK to auto-collect events and track application-specifi
   ```mermaid
 graph TD
     build[Build Process] --> plugin;
-    plugin[Conviva ECO Gradle Plugin] -->|Injects code| app;
-    app[UI Layer & Business Logic] --> sdk@{ label: "Conviva ECO SDK" };
+    plugin[Conviva DPI Gradle Plugin] -->|Injects code| app;
+    app[UI Layer & Business Logic] --> sdk@{ label: "Conviva DPI SDK" };
     events[App Events] --> sdk;
     app --> events;
     sdk --> backend[Conviva Backend Server];
@@ -46,7 +46,7 @@ graph TD
 
 ### 1. Installation
 <!--self-serve[Gradle]-->
-- Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from Conviva [Conviva Android ECO Plugin](https://github.com/Conviva/conviva-android-plugin).
+- Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from [Conviva Android DPI Plugin](https://github.com/Conviva/conviva-android-plugin).
 
 <!-- :::code-tabs[Groovy,Kotlin] -->
 
@@ -141,7 +141,7 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 ### 2. Initialization
 
 > **Note:** It is recommended to initialize the tracker at app startup before the first activity.  
-> An example of Conviva Android ECO SDK initialization:
+> An example of Conviva Android DPI SDK initialization:
 
 <!-- :::code-tabs[Java,Kotlin] -->
 
