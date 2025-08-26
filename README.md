@@ -402,4 +402,4 @@ To verify the integration for [auto-collected events](#auto-collected-events), c
 
 ## FAQ
 
-[ECO Integration FAQ](https://pulse.conviva.com/learning-center/content/sensor_developer_center/tools/eco_integration/eco_integration_faq.htm)
+[DPI Integration FAQ](https://pulse.conviva.com/learning-center/content/sensor_developer_center/tools/eco_integration/eco_integration_faq.htm)
