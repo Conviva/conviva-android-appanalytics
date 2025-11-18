@@ -340,6 +340,79 @@ class ExampleActivity : Activity() {
 <!--eof-self-serve-custom-event--> 
 </details>
 
+<details>
+<!--self-serve-custom-event-->
+<summary><b>Override Fragment Name</b></summary>
+
+Override the default Fragment Name in the conviva_fragment_view Event 
+- By adding the `convivaScreenName` variable in the desired fragment.
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
+public class ExampleFragment extends Fragment {
+    // ...
+    public String convivaScreenName = "Profile";
+    // ...
+}
+```
+**Kotlin**
+```Kotlin
+class ExampleFragment : Fragment() {
+  // ...
+  var convivaScreenName: String = "Profile"
+  // ...
+}
+
+```
+- By assigning a proper resource id in the Xml(NavGraph or layout xml)
+**Jetpack Navigation: Xml**
+```Xml
+    <fragment
+        android:id="@+id/profile"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+```
+<!-- ::: -->
+<!--eof-self-serve-custom-event--> 
+</details>
+
+<details>
+<!--self-serve-custom-event-->
+<summary><b>Override Compose View Name</b></summary>
+
+Override the default Composable(Fragment) Name in the conviva_compose_view Event by adding the `route` or `label` to the desired composable.
+
+**Compose Navigation**
+<!-- :::code-tabs[>=2.4.0,<2.4.0] -->
+**Version >=2.4.0**
+```>=2.4.0
+	composable(route = "videoPlayer") //From route
+```
+
+**Version <2.4.0**
+```<2.4.0
+	composable(
+	    id = "settings_screen",
+	    label = "Settings" //From label
+	)
+```
+
+<!-- ::: -->
+<!--eof-self-serve-custom-event--> 
+</details>
+
+
+| Screen Type | `fragmentName` resolution (Priority Order) 
+|------------|--------------------------------------------------
+| **Fragment** |  `convivaScreenName`  → Fragment ID (`@+id/...`) → Class name 
+| **NavHostFragment (Navigation Graph)** |  `convivaScreenName` →  Fragment ID (`home_nav_host`) →  Class name (`NavHostFragment`)
+| **Compose Navigation (>= 2.4.0)** |  `route` →  destination ID (`id`) →  `label`
+| **Compose Navigation (< 2.4.0)** |  destination ID (`id`) → 2. `label`
+
+
 
 ## Auto-collected Events
 
