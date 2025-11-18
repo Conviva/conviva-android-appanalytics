@@ -365,16 +365,22 @@ class ExampleFragment : Fragment() {
 
 ```
 - By assigning a proper resource id in the Xml(NavGraph or layout xml)
-**Jetpack Navigation: Xml**
+
+**Jetpack Navigation using nav_graph.xml**
 ```Xml
     <fragment
         android:id="@+id/profile"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        android:name="com.example.ProfileFragment"
+        android:label="@string/title_profile" />
 ```
+
+**Summary: Navigation using Fragments or NavGraph**
+| Screen Type | `fragmentName` resolution (Priority Order) 
+|------------|--------------------------------------------------
+| **Fragment** |  `convivaScreenName`  → Fragment ID (`@+id/...`) → Class name 
+| **NavHostFragment (Navigation Graph)** |  `convivaScreenName` →  Fragment ID (`home_nav_host`) →  Class name (`NavHostFragment`)
+
+
 <!-- ::: -->
 <!--eof-self-serve-custom-event--> 
 </details>
@@ -383,35 +389,28 @@ class ExampleFragment : Fragment() {
 <!--self-serve-custom-event-->
 <summary><b>Override Compose View Name</b></summary>
 
-Override the default Composable(Fragment) Name in the conviva_compose_view Event by adding the `route` or `label` to the desired composable.
 
 **Compose Navigation**
-<!-- :::code-tabs[>=2.4.0,<2.4.0] -->
-**Version >=2.4.0**
-```>=2.4.0
-	composable(route = "videoPlayer") //From route
+<!-- :::code-tabs[Route,NoRoute] -->
+
+- override the route if the Navigation Version is **>=2.4.0**
+```Route
+	composable(route = "DetailsScreen") 
 ```
 
-**Version <2.4.0**
-```<2.4.0
-	composable(
-	    id = "settings_screen",
-	    label = "Settings" //From label
-	)
+- In case of empty route or no meaningful route, for Navigation Version < 2.4.0, the sdk uses the auto-generated Compose NavDestination ID as the name, or falls back to the label:
+```NoRoute
+	composable(route = "")
 ```
+**Summary: Compose Navigation using composables with and without providing route**
+| ScreenType |Jetpack Navigation Version| `destination` resolution (Priority Order) 
+|------------|--------------------------------------------------|------------------
+| **Composable with route** | **>= 2.4.0**  |  `route` →  NavDestination ID (`id`) →  `label`
+| **Composable without route** | **< 2.4.0**   |  auto-generated NavDestination ID as name → label
 
 <!-- ::: -->
 <!--eof-self-serve-custom-event--> 
 </details>
-
-
-| Screen Type | `fragmentName` resolution (Priority Order) 
-|------------|--------------------------------------------------
-| **Fragment** |  `convivaScreenName`  → Fragment ID (`@+id/...`) → Class name 
-| **NavHostFragment (Navigation Graph)** |  `convivaScreenName` →  Fragment ID (`home_nav_host`) →  Class name (`NavHostFragment`)
-| **Compose Navigation (>= 2.4.0)** |  `route` →  destination ID (`id`) →  `label`
-| **Compose Navigation (< 2.4.0)** |  destination ID (`id`) → 2. `label`
-
 
 
 ## Auto-collected Events
