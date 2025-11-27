@@ -1,5 +1,13 @@
 
 # Changelog
+## 1.2.5 (21/NOV/2025)
+- Improved crash reporting, including application crashes, ANRs and NDK crashes by using the ApplicationExitInfo API on Android 11(API 30) and above.
+
+## 1.2.4 (15/NOV/2025)
+- Enhanced the remote configuration feature to support instant updates.
+
+## 1.2.3 (15/OCT/2025)
+- Added support for configuring a maximum size limit for request and response body parsing during network request tracking.
 
 ## 1.2.2 (22/JUL/2025)
 - Supports extracting query params from network request URLs. To enable it, please contact the Conviva Support team.
