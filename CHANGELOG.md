@@ -1,5 +1,9 @@
 
 # Changelog
+## 1.2.6 (16/DEC/2025)
+- Supports reporting the Ad session events such as, Attempt, End, etc., to DPI.
+- Improves App Load Time metric by collecting more data.
+
 ## 1.2.5 (21/NOV/2025)
 - Improved crash reporting, including application crashes, ANRs and NDK crashes by using the ApplicationExitInfo API on Android 11(API 30) and above.
 
