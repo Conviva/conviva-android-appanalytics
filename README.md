@@ -472,6 +472,33 @@ To verify the integration for [auto-collected events](#auto-collected-events), c
 
 </details>
 
+<details> <summary><b>Cronet + Conviva OkHttp auto-instrumentation</b></summary>
+
+Conviva automatically instruments OkHttp clients using bytecode instrumentation. As part of this process, the Conviva OkHttp interceptor is **automatically added to the OkHttpClient interceptor chain at build time**.
+
+When Google’s Cronet Transport for OkHttp is used, the `CronetInterceptor` must be the **last application interceptor**. As documented by Google, if the Cronet interceptor is not last, **all subsequent interceptors are skipped**:  
+[https://github.com/google/cronet-transport-for-okhttp/blob/master/README.md#interceptor-incompatibilities](https://github.com/google/cronet-transport-for-okhttp/blob/master/README.md#interceptor-incompatibilities)
+
+<br/>
+
+<b>Impact:</b>  
+Since Conviva’s interceptor is automatically added via bytecode instrumentation, it may be added **after** the `CronetInterceptor`. In this case, the interceptor chain is short-circuited by Cronet and the Conviva interceptor is never invoked. As a result, Conviva Network Request auto-detection does not work for requests routed through Cronet.
+
+<br/>
+
+<b>Interceptor flow comparison:</b>
+<pre>Normal flow: Application Interceptor → Conviva (auto-instrumented) → OkHttp Network → Response 
+With Cronet: Application Interceptor → CronetInterceptor → (Cronet transport) → Response ✖ Conviva interceptor is skipped </pre> <br/>
+
+<b>Mitigation:</b>  
+To ensure Conviva interception works when using Cronet, the Conviva OkHttp interceptor must be added **before** the `CronetInterceptor`.
+
+<pre><code> OkHttpClient client = new OkHttpClient.Builder() 
+	.addInterceptor(new LogInterceptor()) 
+	.addInterceptor(new OkHttp3Instrumentation.ConvivaNetworkInterceptor()) // must be before CronetInterceptor 
+	.addInterceptor( CronetInterceptor.newBuilder( new CronetEngine.Builder(getApplicationContext()).build() ).build() ) .build(); </code></pre>
+</details>
+
 ## FAQ
 
 [DPI Integration FAQ](https://pulse.conviva.com/learning-center/content/sensor_developer_center/tools/eco_integration/eco_integration_faq.htm)
