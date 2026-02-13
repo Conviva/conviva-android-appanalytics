@@ -490,8 +490,8 @@ Since Conviva’s interceptor is automatically added via bytecode instrumentatio
 <pre>Normal flow: Application Interceptor → Conviva (auto-instrumented) → OkHttp Network → Response 
 With Cronet: Application Interceptor → CronetInterceptor → (Cronet transport) → Response ✖ Conviva interceptor is skipped </pre> <br/>
 
-<b>Mitigation:</b>  
-To ensure Conviva interception works when using Cronet, the Conviva OkHttp interceptor must be added **before** the `CronetInterceptor`.
+<b>Solution:</b>  
+To ensure Conviva interception works when using Cronet, the Conviva OkHttp interceptor must be **manually** added **before** the `CronetInterceptor`.
 
 <pre><code> OkHttpClient client = new OkHttpClient.Builder() 
 	.addInterceptor(new LogInterceptor()) 
