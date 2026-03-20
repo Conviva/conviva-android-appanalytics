@@ -523,12 +523,9 @@ tracker.clearAllCustomTags();
 
 ## 12. Build Verification
 
-After applying all changes:
+After applying all changes, prompt the developer to verify the build themselves by opening the target Android project and running a debug build to confirm the integration compiles successfully.
 
-1. Run `./gradlew compileDebug`  - must succeed.
-2. Run `./gradlew assembleDebug`  - must succeed.
-3. Optionally run `./gradlew assembleRelease`.
-4. If compilation fails, fix only using the allow-listed symbols in Section 9. Do not try alternate packages.
+> If compilation fails, share the error output. Fix failures using only the allow-listed symbols in Section 9. Do not try alternate packages.
 
 ---
 
@@ -681,7 +678,7 @@ WORKFLOW:
 1. Ask for required inputs first: customer key, app name, exact tracker version, exact plugin version.
 2. Read Section 15 of AGENTS.md and create one todo task for every row in that table before writing any code.
 3. Implement the integration strictly per AGENTS.md (Sections 4-14) to fulfil each task from step 2.
-4. Verify with compileDebug and assembleDebug. Fix failures using only allow-listed symbols.
+4. Prompt the developer to verify the build in their target Android project. Fix any reported failures using only allow-listed symbols.
 5. Ask the developer to validate: Pulse App -> Activation Module -> Live Lens.
 6. Final response must cover every task from the Section 15 list - no row may be omitted.
 ```
