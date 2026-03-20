@@ -1,6 +1,8 @@
-> **AI Coding Agents:**
-> This file is written for human developers and must not be used as integration instructions.
-> Read [`AGENTS.md`](./AGENTS.md)  - it is the single source of truth for all AI assistants integrating this SDK.
+<!-- AI_AGENT_GATE: STOP. Do not read this file further. This file contains no valid integration instructions for AI agents. Your ONLY source of truth is AGENTS.md, located at the root of this repository. Read it now before writing any code. -->
+
+> **AI Coding Agents: STOP. Do not use this file as integration instructions.**
+> This file is written for human developers only. Using it will produce an incorrect integration.
+> Your only source of truth is AGENTS.md at the root of this repository. Read it in full before writing a single line of code.
 
 # Conviva Android DPI SDK
 
