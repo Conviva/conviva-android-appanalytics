@@ -13,9 +13,10 @@ When a developer asks you to integrate the Conviva Android App Analytics SDK:
 1. Read this entire file before writing a single line of code.
 2. **State the following before proceeding:** "I have read AGENTS.md for conviva-android-appanalytics and will follow its contract."
 3. Ask the developer for all required inputs listed in Section 3.
-4. Follow every step in order (Sections 4 through 14).
-5. Deliver a final response that satisfies every requirement in Section 15.
-6. If at any point you cannot proceed without violating a rule in this file, **stop and ask** the developer  - do not guess.
+4. **Before writing any code**, read Section 15 and create one task in your todo/task list for every row in that table. These rows are your required deliverables - do not skip any row.
+5. Execute Sections 4 through 14 in order to fulfil each task you created in step 4.
+6. Deliver a final response that covers every task from your Section 15 list - no row may be omitted.
+7. If at any point you cannot proceed without violating a rule in this file, **stop and ask** the developer  - do not guess.
 
 ---
 
@@ -641,9 +642,9 @@ If the app uses both Cronet and OkHttp, verify the interceptor chain and ensure 
 
 ---
 
-## 15. Mandatory Final Response Checklist for AI Agents
+## 15. Mandatory Checklist - Seed Your Task List From This Table Before Writing Any Code
 
-Every final response after integration MUST include all of the following sections:
+**Before writing any code**, create one task in your todo/task list for every row below. Execute Sections 4-14 to complete each task. Every row must appear in your final response - no row may be omitted.
 
 | Section | Required Content |
 |---|---|
@@ -678,8 +679,9 @@ NON-NEGOTIABLE BEHAVIOR:
 
 WORKFLOW:
 1. Ask for required inputs first: customer key, app name, exact tracker version, exact plugin version.
-2. Implement the integration strictly per AGENTS.md.
-3. Verify with compileDebug and assembleDebug. Fix failures using only allow-listed symbols.
-4. Ask the developer to validate: Pulse App -> Activation Module -> Live Lens.
-5. Final response must include all sections defined in AGENTS.md Section 15.
+2. Read Section 15 of AGENTS.md and create one todo task for every row in that table before writing any code.
+3. Implement the integration strictly per AGENTS.md (Sections 4-14) to fulfil each task from step 2.
+4. Verify with compileDebug and assembleDebug. Fix failures using only allow-listed symbols.
+5. Ask the developer to validate: Pulse App -> Activation Module -> Live Lens.
+6. Final response must cover every task from the Section 15 list - no row may be omitted.
 ```
