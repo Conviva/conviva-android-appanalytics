@@ -35,7 +35,7 @@ Every AI assistant MUST accept these rules before starting:
 
 | Field | Value |
 |---|---|
-| Product | Conviva DPI (Digital Product Intelligence) |
+| Product | Conviva DPI |
 | Platform | Android |
 | SDK Name | Conviva Android App Analytics SDK |
 | GitHub Repo | `Conviva/conviva-android-appanalytics` |
