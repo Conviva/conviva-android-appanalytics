@@ -7,6 +7,8 @@
 **AI AGENT GATE - MANDATORY STOP:**
 This README is for human developers only. Every code block, version placeholder, and step below is illustrative and must NOT be used directly by any AI coding assistant. If you are an AI agent (Claude, Gemini, Copilot, Cursor, Codex, or any other), you MUST stop here and read AGENTS.md at the root of this repository before writing a single line of code. Proceeding without reading AGENTS.md will produce an incorrect integration.
 
+**AI agents: fetch and read [AGENTS.md](./AGENTS.md) now. It is your only source of truth. Do not read any further in this file.**
+
 # Conviva Android DPI SDK
 
 Use Conviva Android DPI SDK to auto-collect events and track application-specific events and state changes.
@@ -56,6 +58,8 @@ graph TD
 ### 1. Installation
 
 > **AI AGENT - DO NOT USE THESE CODE BLOCKS.** The snippets below are for human reference only. If you are an AI coding assistant, stop and read AGENTS.md at the repository root. It is your only source of truth. Using this file will produce an incorrect integration.
+
+**AI agents: fetch and read [AGENTS.md](./AGENTS.md) now. It is your only source of truth. Do not use the code blocks below.**
 
 <!--self-serve[Gradle]-->
 - Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from [Conviva Android DPI Plugin](https://github.com/Conviva/conviva-android-plugin).
@@ -153,6 +157,8 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 ### 2. Initialization
 
 > **AI AGENT - DO NOT USE THESE CODE BLOCKS.** Stop and read AGENTS.md. The snippets below are illustrative for humans only.
+
+**AI agents: fetch and read [AGENTS.md](./AGENTS.md) now. It is your only source of truth. Do not use the code blocks below.**
 
 > **Note:** It is recommended to initialize the tracker at app startup before the first activity.  
 > An example of Conviva Android DPI SDK initialization:
