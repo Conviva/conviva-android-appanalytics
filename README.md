@@ -8,7 +8,7 @@ Use Conviva Android DPI SDK to auto-collect events and track application-specifi
 
 | | |
 |---|---|
-| **Product** | Conviva DPI (Digital Product Intelligence) |
+| **Product** | Conviva DPI |
 | **Platform** | Android |
 | **Min SDK** | Android 5.0 (API level 21) |
 | **Target SDK** | Android 14 (API level 34) |
@@ -25,9 +25,10 @@ If you are an AI coding assistant integrating this SDK, use the entry point for 
 | Agent / Tool | Entry Point |
 |---|---|
 | **All agents** (authoritative source) | [AGENTS.md](./AGENTS.md) |
-| Cursor | [.cursor/rules/](./cursor/rules/) |
+| Cursor | [.cursor/rules/conviva-integration.mdc](.cursor/rules/conviva-integration.mdc) |
 | Claude Code | [CLAUDE.md](./CLAUDE.md) |
 | Gemini | [GEMINI.md](./GEMINI.md) |
+| Github Copilot | [.github/copilot-instructions.md](.github/copilot-instructions.md) |
 
 ## Validation
 
