@@ -217,6 +217,12 @@ Only these two classes may be imported (use the Java or Kotlin syntax as appropr
 
 Never import from `com.conviva.sdk.*` or `com.conviva.*`. Never use `ConvivaSdkConstants`, `settings`, `gateway`, `config`, `builder`, or `HashMap` in initialization code (HashMap is allowed only in custom event/tag payloads).
 
+### Cronet Interceptor Import
+
+When applying the Cronet fix (Section 12), add the following import to the affected file if not already present:
+- Kotlin: `import com.conviva.instrumentation.tracker.OkHttp3Instrumentation`
+- Java: `import com.conviva.instrumentation.tracker.OkHttp3Instrumentation;`
+
 ### Allowed Tracker Methods
 
 | Method | Purpose |
@@ -263,17 +269,22 @@ After completing Gradle and initialization changes, **before build verification*
 
 1. Search the codebase for `CronetInterceptor`, `CronetEngine`, or `cronet` in Gradle dependency declarations.
 2. If **none found** - record "No Cronet usage detected" in your checklist and proceed to Section 13. No further action is needed.
-3. If **Cronet is found** - this section becomes mandatory. Follow the remediation steps below. Do not skip them.
+3. If **Cronet is found** - this section becomes mandatory. Execute the automatic remediation steps below immediately. Do not ask the developer - do not skip.
 
-### Remediation - When Cronet Is Detected
+### Remediation - Automatic Fix When Cronet Is Detected
 
-If the project uses both Cronet and OkHttp:
+**Do not ask the developer.** Apply the fix automatically:
 
-1. **Inform the developer** that Conviva's auto-instrumented OkHttp interceptor will be skipped for requests routed through Cronet, because the `CronetInterceptor` short-circuits subsequent interceptors.
-2. **Recommend manual interceptor placement.** The Conviva interceptor must be added **before** the `CronetInterceptor` in the OkHttpClient builder chain. For the code snippet, see the **Cronet** section in `AGENTS-kotlin.md` or `AGENTS-java.md`.
+1. **Find every source file** that calls `addInterceptor(...)` with a Cronet interceptor. Search across all Kotlin and Java source files for `CronetInterceptor` usages (class names, constructor calls, builder calls). Record the exact file path and line number of each match.
 
-3. **Ask the developer to confirm** which OkHttpClient instances use Cronet and apply the fix to each one. Do not guess which clients are affected - the developer must confirm.
-4. If the developer chooses not to add the manual interceptor, record that Conviva network request tracking will not cover Cronet-routed traffic.
+2. **For each match**, do a targeted read of the surrounding lines to confirm it is inside an OkHttpClient builder chain.
+
+3. **Insert** `builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())` on the line **immediately before** the line that adds the Cronet interceptor. Use the language-specific snippet from the **Cronet** section in `AGENTS-kotlin.md` or `AGENTS-java.md`.
+   - Preserve the exact indentation of the surrounding lines.
+   - Do **not** remove or modify the existing Cronet interceptor line.
+   - Add `import com.conviva.instrumentation.tracker.OkHttp3Instrumentation` to the import block of the affected file if it is not already present (use the correct syntax for the file's language - see `AGENTS-kotlin.md` or `AGENTS-java.md`).
+
+4. **Record in your checklist** every file path and line number where the fix was applied.
 
 ---
 
@@ -316,7 +327,7 @@ If the build fails or runtime issues occur, fetch and read `AGENTS-troubleshooti
 | Initialization placement | Why this entry point was chosen from `AndroidManifest.xml` |
 | User ID setup | What was implemented, or exact instructions if auth hooks were unclear |
 | Custom events and tags | Brief explanation plus at least one code snippet each |
-| Cronet compatibility check | State whether Cronet was detected. If not found, record "No Cronet usage detected." If found, describe remediation applied or developer instructions given |
+| Cronet compatibility check | State whether Cronet was detected. If not found, record "No Cronet usage detected." If found, list every file path and line number where `OkHttp3Instrumentation.ConvivaNetworkInterceptor()` was automatically inserted before the Cronet interceptor |
 | Build verification | Commands run and outcomes |
 | AGP compatibility check | Confirm detected AGP version; if >= 9.0, confirm plugin version is >= 0.3.7 |
 | Product validation | Explicit ask to validate in Pulse App -> Activation Module -> Live Lens |

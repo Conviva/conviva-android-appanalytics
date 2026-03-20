@@ -56,9 +56,39 @@ tracker?.clearAllCustomTags()
 
 ## Cronet
 
-Add the Conviva interceptor **before** the Cronet interceptor in the OkHttpClient builder:
+> Only reach this section after following the automatic remediation steps in AGENTS.md Section 12. Do not ask the developer - apply the fix directly.
+
+### What to detect
+
+Search all Kotlin source files for any `addInterceptor(...)` call whose argument constructs a Cronet interceptor (e.g. `CronetInterceptor`, `MixinCronetInterceptor`, or any class whose name contains `Cronet` and implements `Interceptor`).
+
+### What to insert
+
+On the line **immediately before** every such `addInterceptor(...)` call, insert the following line, matching the surrounding indentation exactly:
 
 ```kotlin
 builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
-// existing Cronet interceptor follows here
+```
+
+Also add the following import to the file's import block if it is not already present:
+
+```kotlin
+import com.conviva.instrumentation.tracker.OkHttp3Instrumentation
+```
+
+### Example - before
+
+```kotlin
+if (engine != null) {
+    builder.addInterceptor(MixinCronetInterceptor.newBuilder(engine).build())
+}
+```
+
+### Example - after
+
+```kotlin
+if (engine != null) {
+    builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
+    builder.addInterceptor(MixinCronetInterceptor.newBuilder(engine).build())
+}
 ```
