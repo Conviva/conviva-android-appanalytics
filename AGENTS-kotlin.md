@@ -1,47 +1,24 @@
-# Conviva Android App Analytics — Kotlin Snippets
+# Conviva Android App Analytics - Kotlin Snippets
 
-Companion file to AGENTS.md. Only read this file if the target project uses Kotlin.
+Only read this file if the target project uses Kotlin. Imports are in AGENTS.md Section 9.
 
 ---
 
-## Initialization — Application class (super is not last)
+## Initialization
+
+Append at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Add the import if not already present.
 
 ```kotlin
 import com.conviva.apptracker.ConvivaAppAnalytics
 
-class MyApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        // ... existing startup code ...
-        ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
-    }
-}
+ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
 ```
-
-## Initialization — Application class (super is last line — insert above it)
-
-```kotlin
-import com.conviva.apptracker.ConvivaAppAnalytics
-
-class MyApp : Application() {
-    override fun onCreate() {
-        // ... existing startup code ...
-        ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
-        super.onCreate()
-    }
-}
-```
-
-Replace `YOUR_CUSTOMER_KEY` and `YOUR_APP_NAME` with the actual values from Section 3 of AGENTS.md.
 
 ---
 
 ## User ID
 
 ```kotlin
-import com.conviva.apptracker.ConvivaAppAnalytics
-import com.conviva.apptracker.controller.TrackerController
-
 val tracker = ConvivaAppAnalytics.getTracker()
 tracker?.subject?.userId = userId
 ```
@@ -73,4 +50,15 @@ tracker?.setCustomTags(tags)
 
 tracker?.clearCustomTags(listOf("key1", "key2"))
 tracker?.clearAllCustomTags()
+```
+
+---
+
+## Cronet
+
+Add the Conviva interceptor **before** the Cronet interceptor in the OkHttpClient builder:
+
+```kotlin
+builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
+// existing Cronet interceptor follows here
 ```

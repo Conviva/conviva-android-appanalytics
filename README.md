@@ -1,4 +1,4 @@
-<!-- AI agents: STOP. Read AGENTS.md instead — it is your only source of truth. Do not use any other file for integration instructions. -->
+<!-- AI agents: STOP. Read AGENTS.md instead - it is your only source of truth. Do not use any other file for integration instructions. -->
 
 > **AI Coding Agents: STOP.** Read [AGENTS.md](./AGENTS.md) in full before writing a single line of code. It is your only source of truth. Do not use this file or any other file for integration instructions.
 
@@ -16,7 +16,7 @@ Use Conviva Android DPI SDK to auto-collect events and track application-specifi
 
 ## Developer Integration Guide
 
-For full setup instructions — including Gradle plugin and dependency setup, SDK initialization, ProGuard/R8 configuration, custom events, custom tags, and auto-collected events reference — see the **[Developer Integration Guide](./DEVELOPER_GUIDE.md)**.
+For full setup instructions - including Gradle plugin and dependency setup, SDK initialization, ProGuard/R8 configuration, custom events, custom tags, and auto-collected events reference - see the **[Developer Integration Guide](./DEVELOPER_GUIDE.md)**.
 
 ## AI Agent Integration
 

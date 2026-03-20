@@ -1,4 +1,4 @@
-# Conviva Android App Analytics — Troubleshooting
+# Conviva Android App Analytics - Troubleshooting
 
 Companion file to AGENTS.md. Only fetch this file if a build failure or runtime issue occurs.
 
@@ -42,7 +42,7 @@ Nested `JSONObject` and `JSONArray` header payloads are not yet supported.
 
 ## Troubleshooting
 
-### Issue 1 — Gradle sync fails to resolve Conviva artifacts
+### Issue 1 - Gradle sync fails to resolve Conviva artifacts
 
 **Symptoms:**
 - `Could not find com.conviva.sdk:conviva-android-tracker:<version>`
@@ -50,24 +50,24 @@ Nested `JSONObject` and `JSONArray` header payloads are not yet supported.
 
 **Fixes:**
 1. Verify the exact tracker and plugin versions from GitHub Releases.
-2. Verify that required repositories already exist in the project. If not, ask the developer to add them — the AI must not edit repositories blocks.
+2. Verify that required repositories already exist in the project. If not, ask the developer to add them - the AI must not edit repositories blocks.
 3. Ask the developer to verify network or proxy configuration.
 
-### Issue 2 — Wrong TrackerController import
+### Issue 2 - Wrong TrackerController import
 
 Use exactly: `com.conviva.apptracker.controller.TrackerController`
 
-### Issue 3 — Wrong ConvivaAppAnalytics import
+### Issue 3 - Wrong ConvivaAppAnalytics import
 
 Use exactly: `com.conviva.apptracker.ConvivaAppAnalytics`
 
-### Issue 4 — Initialization inserted in the wrong place in `onCreate()`
+### Issue 4 - Initialization inserted in the wrong place in `onCreate()`
 
 - The only change inside `onCreate()` must be the inserted Conviva line(s).
 - Place at end of method; if `super.onCreate(...)` is last, place Conviva above it.
 - Revert any unrelated edits in `onCreate()`.
 
-### Issue 5 — Conviva SDK obfuscated by ProGuard / R8
+### Issue 5 - Conviva SDK obfuscated by ProGuard / R8
 
 Append if missing:
 
@@ -76,7 +76,7 @@ Append if missing:
 -keep,allowshrinking class com.conviva.** { *; }
 ```
 
-### Issue 6 — Cronet plus OkHttp instrumentation conflicts
+### Issue 6 - Cronet plus OkHttp instrumentation conflicts
 
 > **This is now a pre-build check.** See Section 12 of AGENTS.md. The scan for Cronet is always performed; remediation is mandatory only when Cronet is detected in the project.
 

@@ -10,13 +10,11 @@
 
 When a developer asks you to integrate the Conviva Android App Analytics SDK:
 
-1. Read this entire file before writing a single line of code.
-2. **State the following before proceeding:** "I have read AGENTS.md for conviva-android-appanalytics and will follow its contract."
-3. Ask the developer for all required inputs listed in Section 3.
-4. **Before writing any code**, read Section 16 and create one task in your todo/task list for every row in that table. These rows are your required deliverables - do not skip any row.
-5. Execute Sections 4 through 15 in order to fulfil each task you created in step 4.
-6. Deliver a final response that covers every task from your Section 16 list - no row may be omitted.
-7. If at any point you cannot proceed without violating a rule in this file, **stop and ask** the developer  - do not guess.
+1. **State:** "I have read AGENTS.md for conviva-android-appanalytics and will follow its contract."
+2. Collect all required inputs (Section 3). Gather project context per **Section 3a** - read each file once, partial reads only.
+3. Seed your task list from Section 16 **before writing any code**.
+4. Execute Sections 4-15 in order. Every Section 16 row must appear in your final response.
+5. If you cannot proceed without violating a rule, **stop and ask** - do not guess.
 
 ---
 
@@ -62,16 +60,54 @@ Every AI assistant MUST accept these rules before starting:
 
 ---
 
+## 3a. Efficient Project Scanning - Read Each File Once
+
+Before writing any code, gather exactly the context listed below. These rules exist to avoid token waste from reading irrelevant files, reading full files when only a section is needed, and re-reading files that are already in context.
+
+### No-Re-Read Rule
+
+> If a subagent, exploration tool, or prior tool call has already returned the content of a file, **do not open that file again**. Use the content already in your context window. Every duplicate read is wasted context.
+
+### What to Read and How Much
+
+| File | What to extract | How to read |
+|---|---|---|
+| Root `build.gradle` / `build.gradle.kts` | Presence of `buildscript { dependencies { classpath ... } }` block; AGP version (`com.android.tools.build:gradle:<version>`); existing classpath lines | Full file - root build files are typically short (< 200 lines) |
+| `app/build.gradle` / `app/build.gradle.kts` | Top `plugins {}` block; any `apply plugin:` lines; the `proguardFiles` line; last ~25 lines of `dependencies {}` | **Partial read** - first 30 lines + a targeted search for `proguardFiles` + last 25 lines. Do not read the full file. |
+| `app/src/main/AndroidManifest.xml` | The `android:name` attribute on the `<application>` tag | **Partial read** - first 20 lines are sufficient in most projects |
+| Application class (resolved from Manifest) | `import` block + full `onCreate()` method - specifically its first line and last line | **Partial read** - target only `onCreate()` and the imports at the top of the file |
+| Auth hooks (login / logout) | The single function called on login (e.g. `storeAccount`), the single function called on logout (e.g. `clearAccount`) | **Single targeted read** - read lines covering both functions in one pass rather than separate reads |
+| ProGuard file (from `proguardFiles` reference) | Confirm file exists; find the end of the file for appending | **Partial read** - last 10 lines only |
+
+### What NOT to Read
+
+- Do **not** read `MainActivity` or any Activity unless the Manifest shows no custom `Application` class.
+- Do **not** read library modules, test source sets, or any file not listed in the table above.
+- Do **not** open `settings.gradle` / `settings.gradle.kts` unless no `buildscript` block is found in the root `build.gradle`.
+- Do **not** read the full Application class file. Target `onCreate()` only.
+
+### Subagent / Exploration Tool Scope
+
+If you use a subagent or codebase exploration tool to gather initial context, instruct it to return **only**:
+- Root `build.gradle` contents
+- `app/build.gradle` first 30 lines + last 25 lines of `dependencies {}`
+- The `android:name` value from `AndroidManifest.xml`
+- The `onCreate()` body from the Application class
+
+Do **not** ask the subagent to read `MainActivity`, activity files, fragment files, or any file outside this list.
+
+---
+
 ## 4. Rules
 
-- Initialize exactly once using only `ConvivaAppAnalytics.createTracker(context, key, name)` — no settings maps, config objects, or builders.
+- Initialize exactly once using only `ConvivaAppAnalytics.createTracker(context, key, name)` - no settings maps, config objects, or builders.
 - Read `AndroidManifest.xml` to find the entry point. Use the existing `Application` class, or the MAIN/LAUNCHER Activity if none exists. Never create a new `Application` class or modify `AndroidManifest.xml`.
-- Insert the Conviva call at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Change only the inserted line(s) — no other modifications.
-- Gradle changes are **append-only** — never modify, remove, or reorder existing lines. `repositories {}` blocks are read-only.
+- Insert the Conviva call at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Change only the inserted line(s) - no other modifications.
+- Gradle changes are **append-only** - never modify, remove, or reorder existing lines. `repositories {}` blocks are read-only.
 - Apply the Conviva plugin only in the app module (not root or library modules).
-- Import only from `com.conviva.apptracker.*` — never from `com.conviva.sdk.*`. If something does not compile, stop and ask.
+- Import only from `com.conviva.apptracker.*` - never from `com.conviva.sdk.*`. If something does not compile, stop and ask.
 - Set `userId` immediately after `createTracker(...)` if a non-PII identifier is available. Update on login, logout, and account switch. Never use PII (email, phone, full name). If no guest identifier exists, ask the developer to define a policy.
-- Append ProGuard rules to existing file(s) only — never modify existing rules. Also append to `multidex-config.pro` if multidex is in use. If no ProGuard file exists, ask the developer.
+- Append ProGuard rules to existing file(s) only - never modify existing rules. Also append to `multidex-config.pro` if multidex is in use. If no ProGuard file exists, ask the developer.
 
 ---
 
@@ -96,95 +132,39 @@ Every AI assistant MUST accept these rules before starting:
 > Before writing any Gradle code, check the AGP version in the project-level `build.gradle` / `build.gradle.kts` (look for `com.android.tools.build:gradle:<version>` or `id("com.android.application") version "<version>"`).
 > If the developer-supplied `PLUGIN_VERSION` is below `0.3.7` and the detected AGP is >= 9.0, **stop and inform the developer**  - do not proceed with an incompatible version.
 
-### Project-level `build.gradle`  - Groovy DSL
-
-Append inside `buildscript > dependencies`:
-
-```groovy
-classpath 'com.conviva.sdk:android-plugin:<PLUGIN_VERSION>'
-```
-
-### Project-level `build.gradle.kts`  - Kotlin DSL
-
-Append inside `buildscript > dependencies`:
-
-```kotlin
-classpath("com.conviva.sdk:android-plugin:<PLUGIN_VERSION>")
-```
-
-### `settings.gradle` / `settings.gradle.kts`  - plugins DSL projects
-
-If the project uses the plugins DSL in settings, append the plugin declaration there and keep all existing repository configuration untouched.
-
-**Groovy DSL:**
-```groovy
-id 'com.conviva.sdk.android-plugin' version '<PLUGIN_VERSION>' apply false
-```
-
-**Kotlin DSL:**
-```kotlin
-id("com.conviva.sdk.android-plugin") version "<PLUGIN_VERSION>" apply false
-```
-
-### App `build.gradle`  - Groovy DSL
-
-Append the plugin apply at the top of the app module file:
-
-```groovy
-apply plugin: 'com.conviva.sdk.android-plugin'
-```
-
-Append inside `dependencies {}`:
-
-```groovy
-implementation 'com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>'
-```
-
-### App `build.gradle.kts`  - Kotlin DSL
-
-Append the plugin inside `plugins {}`:
-
-```kotlin
-id("com.conviva.sdk.android-plugin")
-```
-
-Append inside `dependencies {}`:
-
-```kotlin
-implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")
-```
-
 ### Detecting the Gradle Style
 
-Before writing any Gradle code, detect the project style:
+- **buildscript style:** root `build.gradle` contains `buildscript { dependencies { classpath ... } }` -> add classpath to that block + `apply plugin:` in the app module. **Never** add Conviva to a `plugins {}` block in this style.
+- **plugins DSL style:** plugin versions declared in `settings.gradle` / `settings.gradle.kts` -> add `id ... apply false` in settings + `id(...)` in app `plugins {}` block.
 
-- **buildscript style:** root `build.gradle` has `buildscript { dependencies { classpath ... } }` → use `classpath` in buildscript block + `apply plugin:` in app module. **Never** add Conviva to a `plugins {}` block in this style.
-- **plugins DSL style:** plugin versions declared in `settings.gradle` / `settings.gradle.kts` → add `apply false` declaration in settings + `id(...)` in app `plugins {}` block.
+### Lines to Append - by Style and File
+
+| Style | File | Location | Append |
+|---|---|---|---|
+| buildscript / Groovy | root `build.gradle` | `buildscript > dependencies {}` | `classpath 'com.conviva.sdk:android-plugin:<PLUGIN_VERSION>'` |
+| buildscript / Kotlin | root `build.gradle.kts` | `buildscript > dependencies {}` | `classpath("com.conviva.sdk:android-plugin:<PLUGIN_VERSION>")` |
+| plugins DSL / Groovy | `settings.gradle` | `pluginManagement > plugins {}` | `id 'com.conviva.sdk.android-plugin' version '<PLUGIN_VERSION>' apply false` |
+| plugins DSL / Kotlin | `settings.gradle.kts` | `pluginManagement > plugins {}` | `id("com.conviva.sdk.android-plugin") version "<PLUGIN_VERSION>" apply false` |
+
+**App module - all styles:**
+
+| DSL | File | Location | Append |
+|---|---|---|---|
+| Groovy (buildscript) | `app/build.gradle` | after existing `apply plugin:` lines | `apply plugin: 'com.conviva.sdk.android-plugin'` |
+| Kotlin (plugins DSL) | `app/build.gradle.kts` | inside `plugins {}` | `id("com.conviva.sdk.android-plugin")` |
+| Groovy | `app/build.gradle` | inside `dependencies {}` | `implementation 'com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>'` |
+| Kotlin | `app/build.gradle.kts` | inside `dependencies {}` | `implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")` |
 
 ---
 
 ## 6. ProGuard / R8 Rules
 
-### How to Find the Correct File(s)
-
-1. Open the app module `build.gradle` / `build.gradle.kts`.
-2. Look for `proguardFiles`  - add rules to the referenced file, typically `proguard-rules.pro`.
-3. Check whether `multidex-config.pro` exists. If it does, add the same rules there too.
-
-### Rules to Add
-
-Append the following rules to `proguard-rules.pro` (and to `multidex-config.pro` if present):
+Find the ProGuard file via the `proguardFiles` line in `app/build.gradle` (typically `proguard-rules.pro`). Append these two rules to it. If `multidex-config.pro` also exists, append there too. Append-only - never modify existing rules. If no ProGuard file exists, ask the developer.
 
 ```proguard
 -keepnames class * extends android.view.View
 -keep,allowshrinking class com.conviva.** { *; }
 ```
-
-### ProGuard Policy  - Enforced
-
-- Append only  - do not modify or remove any existing ProGuard rules.
-- Only add these rules to the existing ProGuard files already used by the project.
-- If neither file exists, ask the developer whether ProGuard / R8 is enabled before proceeding.
 
 ---
 
@@ -209,8 +189,8 @@ Append the following rules to `proguard-rules.pro` (and to `multidex-config.pro`
 ### Language-Specific Snippets
 
 Detect the project language, then fetch **only one**:
-- Kotlin projects (`.kt` files in app/src) → read the "Initialization" sections in `AGENTS-kotlin.md`
-- Java projects (`.java` files in app/src) → read the "Initialization" sections in `AGENTS-java.md`
+- Kotlin projects (`.kt` files in app/src) -> read the "Initialization" sections in `AGENTS-kotlin.md`
+- Java projects (`.java` files in app/src) -> read the "Initialization" sections in `AGENTS-java.md`
 
 ### Forbidden Initialization Patterns
 
@@ -258,16 +238,16 @@ If a symbol does not compile using the allow-listed imports, **stop and report t
 
 Set `userId` immediately after `createTracker(...)` if a non-PII identifier is already available. Update on every login, logout, and account switch. For the language-specific snippet, see the "User ID" section in `AGENTS-kotlin.md` or `AGENTS-java.md`.
 
-- `userId` must be **non-PII** — no email addresses, phone numbers, or full names.
+- `userId` must be **non-PII** - no email addresses, phone numbers, or full names.
 - Set `userId` for both **guest** and **logged-in** users.
-- If the app has no guest identifier, tell the developer to define a non-PII guest identifier policy — do not implement guest-id generation yourself.
+- If the app has no guest identifier, tell the developer to define a non-PII guest identifier policy - do not implement guest-id generation yourself.
 - If you cannot safely find auth hooks, tell the developer they must add userId reporting themselves.
 
 ---
 
-## 11. Post-Integration — Custom Events and Custom Tags (Optional)
+## 11. Post-Integration - Custom Events and Custom Tags (Optional)
 
-After core integration is complete, the developer may optionally enrich analytics with custom events and custom tags. `HashMap` and `JSONObject` are allowed **only** in these payloads — never in initialization or configuration.
+After core integration is complete, the developer may optionally enrich analytics with custom events and custom tags. `HashMap` and `JSONObject` are allowed **only** in these payloads - never in initialization or configuration.
 
 For language-specific snippets, see the "Custom Events" and "Custom Tags" sections in `AGENTS-kotlin.md` or `AGENTS-java.md`.
 
@@ -275,48 +255,24 @@ For language-specific snippets, see the "Custom Events" and "Custom Tags" sectio
 
 ## 12. Cronet Compatibility Check
 
-Conviva auto-instruments OkHttp clients via bytecode instrumentation at build time, automatically adding a Conviva interceptor to the OkHttpClient interceptor chain. When Google's Cronet Transport for OkHttp is also present, the `CronetInterceptor` short-circuits the chain — any interceptor added **after** it is silently skipped. This means Conviva's auto-instrumented interceptor may never execute, and **network request auto-detection will not work** for Cronet-routed traffic.
+Conviva auto-instruments OkHttp clients via bytecode instrumentation at build time, automatically adding a Conviva interceptor to the OkHttpClient interceptor chain. When Google's Cronet Transport for OkHttp is also present, the `CronetInterceptor` short-circuits the chain - any interceptor added **after** it is silently skipped. This means Conviva's auto-instrumented interceptor may never execute, and **network request auto-detection will not work** for Cronet-routed traffic.
 
-### Detection — Always Perform This Scan
+### Detection - Always Perform This Scan
 
 After completing Gradle and initialization changes, **before build verification**, scan the project for Cronet usage:
 
 1. Search the codebase for `CronetInterceptor`, `CronetEngine`, or `cronet` in Gradle dependency declarations.
-2. If **none found** — record "No Cronet usage detected" in your checklist and proceed to Section 13. No further action is needed.
-3. If **Cronet is found** — this section becomes mandatory. Follow the remediation steps below. Do not skip them.
+2. If **none found** - record "No Cronet usage detected" in your checklist and proceed to Section 13. No further action is needed.
+3. If **Cronet is found** - this section becomes mandatory. Follow the remediation steps below. Do not skip them.
 
-### Remediation — When Cronet Is Detected
+### Remediation - When Cronet Is Detected
 
 If the project uses both Cronet and OkHttp:
 
 1. **Inform the developer** that Conviva's auto-instrumented OkHttp interceptor will be skipped for requests routed through Cronet, because the `CronetInterceptor` short-circuits subsequent interceptors.
-2. **Recommend manual interceptor placement.** The Conviva interceptor must be added **before** the `CronetInterceptor` in the OkHttpClient builder chain:
+2. **Recommend manual interceptor placement.** The Conviva interceptor must be added **before** the `CronetInterceptor` in the OkHttpClient builder chain. For the code snippet, see the **Cronet** section in `AGENTS-kotlin.md` or `AGENTS-java.md`.
 
-**Java:**
-```java
-OkHttpClient client = new OkHttpClient.Builder()
-    .addInterceptor(new OkHttp3Instrumentation.ConvivaNetworkInterceptor())
-    .addInterceptor(
-        CronetInterceptor.newBuilder(
-            new CronetEngine.Builder(context).build()
-        ).build()
-    )
-    .build();
-```
-
-**Kotlin:**
-```kotlin
-val client = OkHttpClient.Builder()
-    .addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
-    .addInterceptor(
-        CronetInterceptor.newBuilder(
-            CronetEngine.Builder(context).build()
-        ).build()
-    )
-    .build()
-```
-
-3. **Ask the developer to confirm** which OkHttpClient instances use Cronet and apply the fix to each one. Do not guess which clients are affected — the developer must confirm.
+3. **Ask the developer to confirm** which OkHttpClient instances use Cronet and apply the fix to each one. Do not guess which clients are affected - the developer must confirm.
 4. If the developer chooses not to add the manual interceptor, record that Conviva network request tracking will not cover Cronet-routed traffic.
 
 ---
