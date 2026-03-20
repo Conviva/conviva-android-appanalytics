@@ -1,5 +1,5 @@
-# Conviva Android App Analytics — Gemini CLI
+# Conviva Android App Analytics  - Gemini CLI
 
-Full integration contract is in `AGENTS.md`. Read that file completely before writing any code.
+Read [`AGENTS.md`](./AGENTS.md)  - it is the complete integration contract for this SDK.
 
 @./AGENTS.md

@@ -1,4 +1,4 @@
-# Conviva Android App Analytics — AI Integration Contract
+# Conviva Android App Analytics  - AI Integration Contract
 
 > **Single source of truth for every AI coding assistant.**
 > This file governs: Cursor, Claude Code, OpenAI Codex, ChatGPT, Gemini CLI, GitHub Copilot, Android Studio AI, and any other agent.
@@ -11,10 +11,11 @@
 When a developer asks you to integrate the Conviva Android App Analytics SDK:
 
 1. Read this entire file before writing a single line of code.
-2. Ask the developer for all required inputs listed in Section 3.
-3. Follow every step in order (Sections 4 through 14).
-4. Deliver a final response that satisfies every requirement in Section 15.
-5. If at any point you cannot proceed without violating a rule in this file, **stop and ask** the developer — do not guess.
+2. **State the following before proceeding:** "I have read AGENTS.md for conviva-android-appanalytics and will follow its contract."
+3. Ask the developer for all required inputs listed in Section 3.
+4. Follow every step in order (Sections 4 through 14).
+5. Deliver a final response that satisfies every requirement in Section 15.
+6. If at any point you cannot proceed without violating a rule in this file, **stop and ask** the developer  - do not guess.
 
 ---
 
@@ -26,7 +27,7 @@ Every AI assistant MUST accept these rules before starting:
 2. Do **not** invent, guess, or hallucinate Conviva APIs, class names, imports, packages, Gradle coordinates, repositories, or configuration.
 3. Do **not** mix instructions from other Conviva SDKs (VSI, JS, iOS, legacy Android SDKs).
 4. **Prompt the developer** for all required inputs (customer key, app name, tracker version, plugin version). Never assume or hardcode them.
-5. Apply **minimal, localized changes only** — no refactors, no comment cleanup, no unrelated edits.
+5. Apply **minimal, localized changes only**  - no refactors, no comment cleanup, no unrelated edits.
 6. If you cannot proceed without violating these rules, **stop and ask**.
 
 ---
@@ -45,11 +46,11 @@ Every AI assistant MUST accept these rules before starting:
 
 ---
 
-## 3. Required Inputs — Ask the Developer Before Writing Any Code
+## 3. Required Inputs  - Ask the Developer Before Writing Any Code
 
 | Input | Description |
 |---|---|
-| `CUSTOMER_KEY` | Conviva Customer Key — never guess or hardcode |
+| `CUSTOMER_KEY` | Conviva Customer Key  - never guess or hardcode |
 | `APP_NAME` | App name string passed to tracker initialization |
 | `TRACKER_VERSION` | Exact tracker version from GitHub Releases |
 | `PLUGIN_VERSION` | Exact Android plugin version from GitHub Releases |
@@ -108,7 +109,7 @@ Every AI assistant MUST accept these rules before starting:
 |---|---|
 | Append Conviva rules to the existing ProGuard file(s) only | Modify or remove any existing ProGuard rules |
 | Also append the same rules to `multidex-config.pro` if multidex is in use | Skip the multidex file when multidex is configured |
-| Append only — never reorder or reformat existing rules | Create a new ProGuard file if none exists — ask the developer instead |
+| Append only  - never reorder or reformat existing rules | Create a new ProGuard file if none exists  - ask the developer instead |
 
 ---
 
@@ -131,9 +132,9 @@ Every AI assistant MUST accept these rules before starting:
 
 > **Rule:** If the application uses AGP >= 9.0, the Conviva Android Plugin version (`PLUGIN_VERSION`) **must be >= 0.3.7**.
 > Before writing any Gradle code, check the AGP version in the project-level `build.gradle` / `build.gradle.kts` (look for `com.android.tools.build:gradle:<version>` or `id("com.android.application") version "<version>"`).
-> If the developer-supplied `PLUGIN_VERSION` is below `0.3.7` and the detected AGP is >= 9.0, **stop and inform the developer** — do not proceed with an incompatible version.
+> If the developer-supplied `PLUGIN_VERSION` is below `0.3.7` and the detected AGP is >= 9.0, **stop and inform the developer**  - do not proceed with an incompatible version.
 
-### Project-level `build.gradle` — Groovy DSL
+### Project-level `build.gradle`  - Groovy DSL
 
 Append inside `buildscript > dependencies`:
 
@@ -141,7 +142,7 @@ Append inside `buildscript > dependencies`:
 classpath 'com.conviva.sdk:android-plugin:<PLUGIN_VERSION>'
 ```
 
-### Project-level `build.gradle.kts` — Kotlin DSL
+### Project-level `build.gradle.kts`  - Kotlin DSL
 
 Append inside `buildscript > dependencies`:
 
@@ -149,7 +150,7 @@ Append inside `buildscript > dependencies`:
 classpath("com.conviva.sdk:android-plugin:<PLUGIN_VERSION>")
 ```
 
-### `settings.gradle` / `settings.gradle.kts` — plugins DSL projects
+### `settings.gradle` / `settings.gradle.kts`  - plugins DSL projects
 
 If the project uses the plugins DSL in settings, append the plugin declaration there and keep all existing repository configuration untouched.
 
@@ -163,7 +164,7 @@ id 'com.conviva.sdk.android-plugin' version '<PLUGIN_VERSION>' apply false
 id("com.conviva.sdk.android-plugin") version "<PLUGIN_VERSION>" apply false
 ```
 
-### App `build.gradle` — Groovy DSL
+### App `build.gradle`  - Groovy DSL
 
 Append the plugin apply at the top of the app module file:
 
@@ -177,7 +178,7 @@ Append inside `dependencies {}`:
 implementation 'com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>'
 ```
 
-### App `build.gradle.kts` — Kotlin DSL
+### App `build.gradle.kts`  - Kotlin DSL
 
 Append the plugin inside `plugins {}`:
 
@@ -191,9 +192,51 @@ Append inside `dependencies {}`:
 implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")
 ```
 
-### Gradle Policy — Enforced
+### Common Gradle Anti-Patterns  - Never Do These
 
-- `repositories {}` blocks are **read-only** — never add or change them.
+The most frequent AI mistake is applying the wrong Gradle style. Before writing any Gradle code, check whether the root build file uses `buildscript { dependencies { classpath ... } }` (buildscript style) or declares plugin versions inside `settings.gradle` / `settings.gradle.kts` (plugins DSL style). Each style requires a different approach.
+
+**buildscript style  - wrong vs correct**
+
+WRONG: **WRONG**  - adding to the `plugins {}` block in root `build.gradle`:
+```groovy
+// root build.gradle  - WRONG
+plugins {
+    id 'com.conviva.sdk.android-plugin' version '0.3.7' apply false  // <-- never do this
+}
+```
+
+CORRECT: **CORRECT**  - appending inside `buildscript > dependencies {}`:
+```groovy
+// root build.gradle  - CORRECT
+buildscript {
+    dependencies {
+        classpath 'com.conviva.sdk:android-plugin:<PLUGIN_VERSION>'  // <-- append here
+    }
+}
+```
+
+WRONG: **WRONG**  - adding inside the `plugins {}` block in `app/build.gradle`:
+```groovy
+// app/build.gradle  - WRONG
+plugins {
+    id 'com.conviva.sdk.android-plugin'  // <-- never do this for buildscript-style projects
+}
+```
+
+CORRECT: **CORRECT**  - using the legacy apply statement in `app/build.gradle`:
+```groovy
+// app/build.gradle  - CORRECT
+apply plugin: 'com.conviva.sdk.android-plugin'  // <-- append after existing apply lines
+```
+
+**plugins DSL style  - `settings.gradle.kts` projects**
+
+For projects that declare plugin versions in `settings.gradle` / `settings.gradle.kts`, add the `apply false` declaration there and apply inside the app `plugins {}` block  - this is the only case where the `plugins {}` block approach is correct. See Section 5 for the exact syntax.
+
+### Gradle Policy  - Enforced
+
+- `repositories {}` blocks are **read-only**  - never add or change them.
 - All Conviva dependency edits are **append-only**.
 - Replace a version string only if the exact same Conviva coordinate already exists.
 - Do not reformat or reorder any existing lines.
@@ -206,7 +249,7 @@ implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")
 ### How to Find the Correct File(s)
 
 1. Open the app module `build.gradle` / `build.gradle.kts`.
-2. Look for `proguardFiles` — add rules to the referenced file, typically `proguard-rules.pro`.
+2. Look for `proguardFiles`  - add rules to the referenced file, typically `proguard-rules.pro`.
 3. Check whether `multidex-config.pro` exists. If it does, add the same rules there too.
 
 ### Rules to Add
@@ -218,9 +261,9 @@ Append the following rules to `proguard-rules.pro` (and to `multidex-config.pro`
 -keep,allowshrinking class com.conviva.** { *; }
 ```
 
-### ProGuard Policy — Enforced
+### ProGuard Policy  - Enforced
 
-- Append only — do not modify or remove any existing ProGuard rules.
+- Append only  - do not modify or remove any existing ProGuard rules.
 - Only add these rules to the existing ProGuard files already used by the project.
 - If neither file exists, ask the developer whether ProGuard / R8 is enabled before proceeding.
 
@@ -229,8 +272,8 @@ Append the following rules to `proguard-rules.pro` (and to `multidex-config.pro`
 ## 7. Finding the Right Initialization Point
 
 1. Open `AndroidManifest.xml`.
-2. Look at the `<application>` tag — if `android:name` points to a custom `Application` class, **use that class**.
-3. If there is no custom `Application` class, find the `<activity>` that has both `android.intent.action.MAIN` and `android.intent.category.LAUNCHER` intent filters — **use that Activity**.
+2. Look at the `<application>` tag  - if `android:name` points to a custom `Application` class, **use that class**.
+3. If there is no custom `Application` class, find the `<activity>` that has both `android.intent.action.MAIN` and `android.intent.category.LAUNCHER` intent filters  - **use that Activity**.
 4. Do **not** create a new `Application` class.
 5. Do **not** modify `AndroidManifest.xml`.
 
@@ -244,7 +287,7 @@ Append the following rules to `proguard-rules.pro` (and to `multidex-config.pro`
 - Exception: if `super.onCreate(...)` is the very last line, insert the Conviva call **above** it.
 - The **only** changes inside `onCreate()` are the inserted Conviva line(s). No other lines may change.
 
-### Kotlin — Application class (super is not last)
+### Kotlin  - Application class (super is not last)
 
 ```kotlin
 import com.conviva.apptracker.ConvivaAppAnalytics
@@ -258,7 +301,7 @@ class MyApp : Application() {
 }
 ```
 
-### Kotlin — Application class (super is last line — insert above it)
+### Kotlin  - Application class (super is last line  - insert above it)
 
 ```kotlin
 import com.conviva.apptracker.ConvivaAppAnalytics
@@ -272,7 +315,7 @@ class MyApp : Application() {
 }
 ```
 
-### Java — Application class (super is not last)
+### Java  - Application class (super is not last)
 
 ```java
 import com.conviva.apptracker.ConvivaAppAnalytics;
@@ -287,7 +330,7 @@ public class MyApp extends Application {
 }
 ```
 
-### Java — Application class (super is last line — insert above it)
+### Java  - Application class (super is last line  - insert above it)
 
 ```java
 import com.conviva.apptracker.ConvivaAppAnalytics;
@@ -304,7 +347,7 @@ public class MyApp extends Application {
 
 ### Forbidden Initialization Patterns
 
-The following patterns are forbidden — never generate them:
+The following patterns are forbidden  - never generate them:
 
 ```
 ConvivaAppAnalytics.createTracker(context, key, name, settings)
@@ -339,7 +382,7 @@ import com.conviva.apptracker.ConvivaAppAnalytics
 import com.conviva.apptracker.controller.TrackerController
 ```
 
-### Forbidden Imports — Never Use
+### Forbidden Imports  - Never Use
 
 ```
 com.conviva.sdk.*
@@ -356,7 +399,7 @@ settings
 gateway
 config
 builder
-HashMap      ← forbidden in init/config; allowed only in custom event/tag payloads
+HashMap      <-- forbidden in init/config; allowed only in custom event/tag payloads
 ```
 
 ### Allowed Tracker Methods
@@ -402,10 +445,10 @@ tracker.getSubject().setUserId(userId);
 
 ### Rules
 
-- `userId` must be **non-PII** — no email addresses, phone numbers, or full names.
+- `userId` must be **non-PII**  - no email addresses, phone numbers, or full names.
 - Set `userId` for both **guest** and **logged-in** users.
 - Update `userId` on guest-to-logged-in transitions and on account switches.
-- If the app has no guest identifier, tell the developer to define a non-PII guest identifier policy — **do not implement guest-id generation yourself**.
+- If the app has no guest identifier, tell the developer to define a non-PII guest identifier policy  - **do not implement guest-id generation yourself**.
 
 ### If You Cannot Safely Find Auth Hooks
 
@@ -413,17 +456,17 @@ Tell the developer explicitly:
 
 > You must add userId reporting yourself. Set userId immediately after tracker initialization and update it on login, logout, and account switches using the snippets above.
 >
-> Conviva recommendation: set userId for both guest and logged-in users using non-PII identifiers. If the app does not have a guest identifier, define a non-PII guest identifier policy — do not implement guest-id generation in this integration.
+> Conviva recommendation: set userId for both guest and logged-in users using non-PII identifiers. If the app does not have a guest identifier, define a non-PII guest identifier policy  - do not implement guest-id generation in this integration.
 
 ---
 
-## 11. Post-Integration — Custom Events and Custom Tags (Optional)
+## 11. Post-Integration  - Custom Events and Custom Tags (Optional)
 
 After core integration is complete, the developer may optionally enrich analytics with custom events and custom tags.
 
-> `HashMap` and `JSONObject` are allowed **only** in the payloads below — never in initialization or configuration.
+> `HashMap` and `JSONObject` are allowed **only** in the payloads below  - never in initialization or configuration.
 
-### Custom Events — Kotlin
+### Custom Events  - Kotlin
 
 ```kotlin
 val tracker = ConvivaAppAnalytics.getTracker()
@@ -435,7 +478,7 @@ val eventData = JSONObject().apply {
 tracker?.trackCustomEvent("your-event-name", eventData)
 ```
 
-### Custom Events — Java
+### Custom Events  - Java
 
 ```java
 TrackerController tracker = ConvivaAppAnalytics.getTracker();
@@ -446,7 +489,7 @@ eventData.put("identifier3", "stringValue");
 tracker.trackCustomEvent("your-event-name", eventData);
 ```
 
-### Custom Tags — Kotlin
+### Custom Tags  - Kotlin
 
 ```kotlin
 val tracker = ConvivaAppAnalytics.getTracker()
@@ -461,7 +504,7 @@ tracker?.clearCustomTags(listOf("key1", "key2"))
 tracker?.clearAllCustomTags()
 ```
 
-### Custom Tags — Java
+### Custom Tags  - Java
 
 ```java
 TrackerController tracker = ConvivaAppAnalytics.getTracker();
@@ -481,8 +524,8 @@ tracker.clearAllCustomTags();
 
 After applying all changes:
 
-1. Run `./gradlew compileDebug` — must succeed.
-2. Run `./gradlew assembleDebug` — must succeed.
+1. Run `./gradlew compileDebug`  - must succeed.
+2. Run `./gradlew assembleDebug`  - must succeed.
 3. Optionally run `./gradlew assembleRelease`.
 4. If compilation fails, fix only using the allow-listed symbols in Section 9. Do not try alternate packages.
 
@@ -492,7 +535,7 @@ After applying all changes:
 
 After a successful build, ask the developer to validate the integration:
 
-**Navigate to: Pulse App → Activation Module → Live Lens**
+**Navigate to: Pulse App -> Activation Module -> Live Lens**
 
 Confirm that:
 - Tracking events are live.
@@ -541,7 +584,7 @@ Nested `JSONObject` and `JSONArray` header payloads are not yet supported.
 
 ### Troubleshooting
 
-#### Issue 1 — Gradle sync fails to resolve Conviva artifacts
+#### Issue 1  - Gradle sync fails to resolve Conviva artifacts
 
 **Symptoms:**
 - `Could not find com.conviva.sdk:conviva-android-tracker:<version>`
@@ -550,10 +593,10 @@ Nested `JSONObject` and `JSONArray` header payloads are not yet supported.
 
 **Fixes:**
 1. Verify the exact tracker and plugin versions from GitHub Releases.
-2. Verify that required repositories already exist in the project. If not, ask the developer to add them — the AI must not edit repositories blocks.
+2. Verify that required repositories already exist in the project. If not, ask the developer to add them  - the AI must not edit repositories blocks.
 3. Ask the developer to verify network or proxy configuration.
 
-#### Issue 2 — Wrong TrackerController import
+#### Issue 2  - Wrong TrackerController import
 
 Use exactly:
 
@@ -565,7 +608,7 @@ import com.conviva.apptracker.controller.TrackerController;
 import com.conviva.apptracker.controller.TrackerController
 ```
 
-#### Issue 3 — Wrong ConvivaAppAnalytics import
+#### Issue 3  - Wrong ConvivaAppAnalytics import
 
 Use exactly:
 
@@ -577,13 +620,13 @@ import com.conviva.apptracker.ConvivaAppAnalytics;
 import com.conviva.apptracker.ConvivaAppAnalytics
 ```
 
-#### Issue 4 — Initialization inserted in the wrong place in `onCreate()`
+#### Issue 4  - Initialization inserted in the wrong place in `onCreate()`
 
 - The only change inside `onCreate()` must be the inserted Conviva line(s).
 - Place at end of method; if `super.onCreate(...)` is last, place Conviva above it.
 - Revert any unrelated edits in `onCreate()`.
 
-#### Issue 5 — Conviva SDK obfuscated by ProGuard / R8
+#### Issue 5  - Conviva SDK obfuscated by ProGuard / R8
 
 Append if missing:
 
@@ -592,7 +635,7 @@ Append if missing:
 -keep,allowshrinking class com.conviva.** { *; }
 ```
 
-#### Issue 6 — Cronet plus OkHttp instrumentation conflicts
+#### Issue 6  - Cronet plus OkHttp instrumentation conflicts
 
 If the app uses both Cronet and OkHttp, verify the interceptor chain and ensure Conviva instrumentation is attached to the actual client handling the request path. If request capture appears partial or duplicated, ask the developer to confirm which stack is authoritative for production traffic before making further edits.
 
@@ -612,7 +655,7 @@ Every final response after integration MUST include all of the following section
 | Custom events and tags | Brief explanation plus at least one code snippet each |
 | Build verification | Commands run and outcomes |
 | AGP compatibility check | Confirm detected AGP version; if >= 9.0, confirm plugin version is >= 0.3.7 |
-| Product validation | Explicit ask to validate in Pulse App → Activation Module → Live Lens |
+| Product validation | Explicit ask to validate in Pulse App -> Activation Module -> Live Lens |
 
 ---
 
@@ -637,6 +680,6 @@ WORKFLOW:
 1. Ask for required inputs first: customer key, app name, exact tracker version, exact plugin version.
 2. Implement the integration strictly per AGENTS.md.
 3. Verify with compileDebug and assembleDebug. Fix failures using only allow-listed symbols.
-4. Ask the developer to validate: Pulse App → Activation Module → Live Lens.
+4. Ask the developer to validate: Pulse App -> Activation Module -> Live Lens.
 5. Final response must include all sections defined in AGENTS.md Section 15.
 ```

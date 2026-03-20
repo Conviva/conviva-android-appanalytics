@@ -1,3 +1,7 @@
+> **AI Coding Agents:**
+> This file is written for human developers and must not be used as integration instructions.
+> Read [`AGENTS.md`](./AGENTS.md)  - it is the single source of truth for all AI assistants integrating this SDK.
+
 # Conviva Android DPI SDK
 
 Use Conviva Android DPI SDK to auto-collect events and track application-specific events and state changes.
@@ -171,8 +175,8 @@ class MyApplication : Application() {
 ```
 <!-- ::: -->
 > where,  
-> **YOUR_CUSTOMER_KEY** – A string to identify this specific c3 account.  
-> **YOUR_APP_NAME** – A string value for the app name that uniquely identifies your app across platforms.
+> **YOUR_CUSTOMER_KEY** - A string to identify this specific c3 account.  
+> **YOUR_APP_NAME** - A string value for the app name that uniquely identifies your app across platforms.
 
 ---
 
@@ -377,8 +381,8 @@ class ExampleFragment : Fragment() {
 **Summary: Navigation using Fragments or NavGraph**
 | Screen Type | `fragmentName` resolution (Priority Order) 
 |------------|--------------------------------------------------
-| **Fragment** |  `convivaScreenName`  → Fragment ID (`@+id/...`) → Class name 
-| **NavHostFragment (Navigation Graph)** |  `convivaScreenName` →  Fragment ID (`home_nav_host`) →  Class name (`NavHostFragment`)
+| **Fragment** |  `convivaScreenName`  -> Fragment ID (`@+id/...`) -> Class name 
+| **NavHostFragment (Navigation Graph)** |  `convivaScreenName` ->  Fragment ID (`home_nav_host`) ->  Class name (`NavHostFragment`)
 
 
 <!-- ::: -->
@@ -405,8 +409,8 @@ class ExampleFragment : Fragment() {
 **Summary: Compose Navigation using composables with and without providing route**
 | ScreenType |Jetpack Navigation Version| `destination` resolution (Priority Order) 
 |------------|--------------------------------------------------|------------------
-| **Composable with route** | **>= 2.4.0**  |  `route` →  NavDestination ID (`id`) →  `label`
-| **Composable without route** | **< 2.4.0**   |  auto-generated NavDestination ID as name → label
+| **Composable with route** | **>= 2.4.0**  |  `route` ->  NavDestination ID (`id`) ->  `label`
+| **Composable without route** | **< 2.4.0**   |  auto-generated NavDestination ID as name -> label
 
 <!-- ::: -->
 <!--eof-self-serve-custom-event--> 
@@ -476,19 +480,19 @@ To verify the integration for [auto-collected events](#auto-collected-events), c
 
 Conviva automatically instruments OkHttp clients using bytecode instrumentation. As part of this process, the Conviva OkHttp interceptor is **automatically added to the OkHttpClient interceptor chain at build time**.
 
-When Google’s Cronet Transport for OkHttp is used, the `CronetInterceptor` must be the **last application interceptor**. As documented by Google, if the Cronet interceptor is not last, **all subsequent interceptors are skipped**:  
+When Google's Cronet Transport for OkHttp is used, the `CronetInterceptor` must be the **last application interceptor**. As documented by Google, if the Cronet interceptor is not last, **all subsequent interceptors are skipped**:  
 [https://github.com/google/cronet-transport-for-okhttp/blob/master/README.md#interceptor-incompatibilities](https://github.com/google/cronet-transport-for-okhttp/blob/master/README.md#interceptor-incompatibilities)
 
 <br/>
 
 <b>Impact:</b>  
-Since Conviva’s interceptor is automatically added via bytecode instrumentation, it may be added **after** the `CronetInterceptor`. In this case, the interceptor chain is short-circuited by Cronet and the Conviva interceptor is never invoked. As a result, Conviva Network Request auto-detection does not work for requests routed through Cronet.
+Since Conviva's interceptor is automatically added via bytecode instrumentation, it may be added **after** the `CronetInterceptor`. In this case, the interceptor chain is short-circuited by Cronet and the Conviva interceptor is never invoked. As a result, Conviva Network Request auto-detection does not work for requests routed through Cronet.
 
 <br/>
 
 <b>Interceptor flow comparison:</b>
-<pre>Normal flow: Application Interceptor → Conviva (auto-instrumented) → OkHttp Network → Response 
-With Cronet: Application Interceptor → CronetInterceptor → (Cronet transport) → Response ✖ Conviva interceptor is skipped </pre> <br/>
+<pre>Normal flow: Application Interceptor -> Conviva (auto-instrumented) -> OkHttp Network -> Response 
+With Cronet: Application Interceptor -> CronetInterceptor -> (Cronet transport) -> Response [skipped] Conviva interceptor is skipped </pre> <br/>
 
 <b>Solution:</b>  
 To ensure Conviva interception works when using Cronet, the Conviva OkHttp interceptor must be **manually** added **before** the `CronetInterceptor`.

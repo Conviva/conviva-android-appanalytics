@@ -17,10 +17,10 @@
 - Supports extracting query params from network request URLs. To enable it, please contact the Conviva Support team.
 
 ## 1.2.1 (20/MAR/2025)
-- Enhanced Network Request Collection: Supports automatic collection of network requests in Flutter for Dart’s core HTTP client, as well as popular libraries like Dio, Retrofit, and Chopper.  
+- Enhanced Network Request Collection: Supports automatic collection of network requests in Flutter for Dart's core HTTP client, as well as popular libraries like Dio, Retrofit, and Chopper.  
 - Controlled Ingestion Feature: Now disabled by default. Upgrading to this version will not alter collection behavior unless explicitly enabled. To activate this feature, please contact the Conviva support team.  
-- Bug Fix – Target URL Query Parameters: Resolves an issue where the TargetURL in network requests was not reported along with query parameters.  
-- Bug Fix – Case Insensitivity: Fixes an issue where network request collection was failing when the TargetURL had case-insensitive variations.  
+- Bug Fix - Target URL Query Parameters: Resolves an issue where the TargetURL in network requests was not reported along with query parameters.  
+- Bug Fix - Case Insensitivity: Fixes an issue where network request collection was failing when the TargetURL had case-insensitive variations.  
 
 ## 1.2.0 (28/FEB/2025)
 * Provides flexibility with control of the click event collection,  based on any element names, element types, element IDs, etc.
@@ -35,7 +35,7 @@
 By default, this feature is not enabled during Activation. To enable it, please contact the Conviva Support team. Existing customers will not be impacted if the feature remains disabled, as all changes are fully backward compatible.
 
 ## 1.0.0 (11/DEC/2024)
-  * Enhances Conviva’s resource usage by minimising thread count reducing CPU and memory overhead
+  * Enhances Conviva's resource usage by minimising thread count reducing CPU and memory overhead
   * Improves the I/O efficiency
   * Improves the efficiency of network request handling provided in the [v0.9.6.2](https://github.com/Conviva/conviva-android-appanalytics/releases/tag/v0.9.6.2) hot fix
   * Improves automatic collection of Application Not Responding (ANR) events, leveraging updated Android APIs for more accurate detection
