@@ -1,0 +1,7 @@
+---
+description: Conviva Android App Analytics integration contract — always apply when working in this repo
+globs: ["**/*.kt", "**/*.java", "**/build.gradle", "**/build.gradle.kts", "**/settings.gradle", "**/settings.gradle.kts", "**/proguard-rules.pro", "**/multidex-config.pro", "**/AndroidManifest.xml"]
+alwaysApply: true
+---
+
+@AGENTS.md
