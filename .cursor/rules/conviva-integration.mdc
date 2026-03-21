@@ -1,8 +1,6 @@
 ---
-description: Conviva SDK integration instructions for Android
+description: Conviva Android App Analytics AI Integration Contract. Auto-injected into every Cursor session — do not re-read Read [`AGENTS.md`](../../AGENTS.md) if it is already in your context window.
 alwaysApply: true
 ---
-
-Read [`AGENTS.md`](../../AGENTS.md) - it is the complete integration contract for this SDK.
 
 @AGENTS.md
