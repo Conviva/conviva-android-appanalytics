@@ -248,7 +248,7 @@ tracker.trackCustomEvent(eventName, eventDataJSON)
 </details>
 
 <details>
-<!--self-serve-custom-event-->
+<!--self-serve-revenue-event-->
 <summary><b>Track Revenue Event</b></summary>
 
 
@@ -380,7 +380,7 @@ tracker.trackRevenueEvent(event)
 ```
 <!-- ::: -->
 
-<!--eof-self-serve-custom-event--> 
+<!--eof-self-serve-revenue-event--> 
 
 </details>
 
