@@ -249,6 +249,143 @@ tracker.trackCustomEvent(eventName, eventDataJSON)
 
 <details>
 <!--self-serve-custom-event-->
+<summary><b>Track Revenue Event</b></summary>
+
+
+Use the **trackRevenueEvent()** API to track purchase and revenue events. You can use the resulting data for Business/Revenue metrics in Pulse.
+
+**Required Fields:**
+
+Build the event with **`ConvivaRevenueEvent.builder(totalOrderAmount, transactionId, currency)`**. These three arguments are required and validated at track time.
+
+| Field              | Type   | Description |
+| ------------------ | ------ | ----------- |
+| totalOrderAmount   | double | Total order amount (must be a finite number) |
+| transactionId      | String | Unique order/transaction identifier (non-null, non-empty after trim). If your backend uses `orderId`, pass it here. |
+| currency           | String | Currency code, e.g. `"USD"`, `"EUR"` (non-null, non-empty after trim) |
+
+**Optional fields:**
+
+Chain optional values on the builder. Omitted or null values are not included in the payload. Blank strings for optional string fields are omitted.
+
+| Field             | Type                            | Description |
+| ----------------- | ------------------------------- | ----------- |
+| taxAmount         | Double                          | Tax amount |
+| shippingCost      | Double                          | Shipping cost |
+| discount          | Double                          | Discount / coupon value |
+| cartSize          | Integer                         | Count of items in the order |
+| paymentMethod     | String                          | e.g. `"card"`, `"ApplePay"`, `"payPal"` |
+| paymentProvider   | String                          | e.g. `"Stripe"`, `"Adyen"` |
+| items             | `List<ConvivaRevenueEventItem>` | Line items |
+| extraMetadata     | JSONObject                      | Custom key/value pairs for fields not modeled above (merged into the payload as `extraMetadata`) |
+
+**Notes:**
+- If validation fails on required fields (e.g. missing `transactionId` or non-finite `totalOrderAmount`), the SDK logs a warning and skips the event without throwing.
+- Optional fields with unexpected types are stripped with a warning; the event is still sent.
+
+**Example — minimal:**
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
+ConvivaRevenueEvent event = ConvivaRevenueEvent
+        .builder(49.99, "ORD-12345", "USD")
+        .build();
+
+tracker.trackRevenueEvent(event);
+```
+**Kotlin**
+```Kotlin
+val event = ConvivaRevenueEvent
+		.builder(49.99, "ORD-12345", "USD")
+        .build()
+
+tracker.trackRevenueEvent(event)
+```
+
+**Example — full:**
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
+ConvivaRevenueEventItem item1 = ConvivaRevenueEventItem.builder()
+        .productId("p1")
+        .name("Widget")
+        .unitPrice(19.99)
+        .quantity(2)
+        .build();
+
+ConvivaRevenueEventItem item2 = ConvivaRevenueEventItem.builder()
+        .productId("p2")
+        .name("Gadget")
+        .unitPrice(19.99)
+        .quantity(1)
+        .build();
+
+List<ConvivaRevenueEventItem> items = Arrays.asList(item1, item2);
+
+JSONObject extraMetadata = new JSONObject();
+extraMetadata.put("promoCode", "SAVE10");
+extraMetadata.put("campaignId", "summer-sale");
+extraMetadata.put("orderStatus", "completed"); // use extraMetadata for order-level extras
+
+ConvivaRevenueEvent event = ConvivaRevenueEvent
+        .builder(59.97, "ORD-12345", "USD")
+        .taxAmount(5.00)
+        .shippingCost(4.99)
+        .discount(10.00)
+        .cartSize(3)
+        .paymentMethod("card")
+        .paymentProvider("Stripe")
+        .items(items)
+        .extraMetadata(extraMetadata)
+        .build();
+
+tracker.trackRevenueEvent(event);
+```
+**Kotlin**
+```Kotlin
+import com.conviva.apptracker.revenue.ConvivaRevenueEvent
+import com.conviva.apptracker.revenue.ConvivaRevenueEventItem
+import org.json.JSONObject
+
+val items = listOf(
+    ConvivaRevenueEventItem.builder()
+        .productId("p1")
+        .name("Widget")
+        .unitPrice(19.99)
+        .quantity(2)
+        .build(),
+    ConvivaRevenueEventItem.builder()
+        .productId("p2")
+        .name("Gadget")
+        .unitPrice(19.99)
+        .quantity(1)
+        .build(),
+)
+
+val event = ConvivaRevenueEvent.builder(59.97, "ORD-12345", "USD")
+    .taxAmount(5.00)
+    .shippingCost(4.99)
+    .discount(10.00)
+    .cartSize(3)
+    .paymentMethod("card")
+    .paymentProvider("Stripe")
+    .items(items)
+    .extraMetadata(JSONObject().apply {
+        put("promoCode", "SAVE10")
+        put("campaignId", "summer-sale")
+    })
+    .build()
+
+tracker.trackRevenueEvent(event)
+```
+<!-- ::: -->
+
+<!--eof-self-serve-custom-event--> 
+
+</details>
+
+<details>
+<!--self-serve-custom-event-->
 <summary><b>Set Custom Tags</b></summary>
 
 Custom Tags are global tags applied to all events and persist throughout the application lifespan, or until they are cleared.
