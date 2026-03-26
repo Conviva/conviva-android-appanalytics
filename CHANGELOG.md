@@ -1,5 +1,15 @@
 
 # Changelog
+## 1.3.1 (26/MAR/2026)
+- Improves NDK crash detection for Android 12+ (with a 500KB safety limit)(**Note**: Stack traces are unavailable on Android 11)
+- Enhances Crash Event metadata by adding Build Variant (requires Conviva Gradle Plugin [0.3.8](https://github.com/Conviva/conviva-android-plugin/releases/tag/v0.3.8)) and Package Name
+- Fixes rapid Java/Kotlin v2_crash events by adding debouncing technique
+
+
+## 1.3.0 (18/MAR/2026)
+- Introduced a dedicated Revenue Tracking API to enhance accuracy and reliability of revenue measurement
+- Discontinued collection of the Google Advertising ID to improve privacy compliance
+
 ## 1.2.6 (16/DEC/2025)
 - Supports reporting the Ad session events such as, Attempt, End, etc., to DPI.
 - Improves App Load Time metric by collecting more data.
