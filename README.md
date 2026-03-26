@@ -252,7 +252,7 @@ tracker.trackCustomEvent(eventName, eventDataJSON)
 <summary><b>Track Revenue Event</b></summary>
 
 
-Use the **trackRevenueEvent()** API to track purchase and revenue events. You can use the resulting data for Business/Revenue metrics in Pulse.
+Use the **trackRevenueEvent()** API to track successful purchase events. The event is sent as **conviva_revenue_event** and can be used for Business/Revenue Metrics in Conviva.
 
 **Required Fields:**
 
