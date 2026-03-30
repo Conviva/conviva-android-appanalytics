@@ -11,7 +11,7 @@
 When a developer asks you to integrate the Conviva Android App Analytics SDK:
 
 1. **State:** "I have read AGENTS.md for conviva-android-appanalytics and will follow its contract."
-2. Collect all required inputs (Section 3). Gather project context per **Section 3a** - read each file once, partial reads only.
+2. Collect all required inputs (Section 3). Gather project context per **Section 3a** - read each file once, partial reads only. Detect multi-module structure per **Section 3b** before reading any module file.
 3. Seed your task list from Section 16 **before writing any code**.
 4. Execute Sections 4-15 in order. Every Section 16 row must appear in your final response.
 5. If you cannot proceed without violating a rule, **stop and ask** - do not guess.
@@ -72,29 +72,68 @@ Before writing any code, gather exactly the context listed below. These rules ex
 
 | File | What to extract | How to read |
 |---|---|---|
+| `settings.gradle` / `settings.gradle.kts` | All `include` lines; full list of module paths | **Partial read** - scan for `include` lines only; this is always the first file to read |
 | Root `build.gradle` / `build.gradle.kts` | Presence of `buildscript { dependencies { classpath ... } }` block; AGP version (`com.android.tools.build:gradle:<version>`); existing classpath lines | Full file - root build files are typically short (< 200 lines) |
-| `app/build.gradle` / `app/build.gradle.kts` | Top `plugins {}` block; any `apply plugin:` lines; the `proguardFiles` line; last ~25 lines of `dependencies {}` | **Partial read** - first 30 lines + a targeted search for `proguardFiles` + last 25 lines. Do not read the full file. |
-| `app/src/main/AndroidManifest.xml` | The `android:name` attribute on the `<application>` tag | **Partial read** - first 20 lines are sufficient in most projects |
+| Each included module's `build.gradle` (first 10 lines only) | The `plugins {}` or `apply plugin:` block - just enough to identify which module declares `com.android.application` (this is the **app module**) | **Partial read** - first 10 lines per module; stop once the app module is identified |
+| App module `build.gradle` / `build.gradle.kts` | Top `plugins {}` block; any `apply plugin:` lines; the `proguardFiles` line; last ~25 lines of `dependencies {}` | **Partial read** - first 30 lines + a targeted search for `proguardFiles` + last 25 lines. Do not read the full file. |
+| App module `src/main/AndroidManifest.xml` | The `android:name` attribute on the `<application>` tag | **Partial read** - first 20 lines are sufficient in most projects |
 | Application class (resolved from Manifest) | `import` block + full `onCreate()` method - specifically its first line and last line | **Partial read** - target only `onCreate()` and the imports at the top of the file |
 | Auth hooks (login / logout) | The single function called on login (e.g. `storeAccount`), the single function called on logout (e.g. `clearAccount`) | **Single targeted read** - read lines covering both functions in one pass rather than separate reads |
-| ProGuard file (from `proguardFiles` reference) | Confirm file exists; find the end of the file for appending | **Partial read** - last 10 lines only |
+| ProGuard file (from `proguardFiles` reference in the app module) | Confirm file exists; find the end of the file for appending | **Partial read** - last 10 lines only |
 
 ### What NOT to Read
 
 - Do **not** read `MainActivity` or any Activity unless the Manifest shows no custom `Application` class.
-- Do **not** read library modules, test source sets, or any file not listed in the table above.
-- Do **not** open `settings.gradle` / `settings.gradle.kts` unless no `buildscript` block is found in the root `build.gradle`.
+- Do **not** read library module source files, test source sets, or any file not listed in the table above.
 - Do **not** read the full Application class file. Target `onCreate()` only.
+- Do **not** read beyond the first 10 lines of a library module's `build.gradle` - only enough to confirm it is not the app module.
+- Once the app module is identified, do **not** revisit any other module's `build.gradle`, `proguard-rules.pro`, or `AndroidManifest.xml`.
 
 ### Subagent / Exploration Tool Scope
 
 If you use a subagent or codebase exploration tool to gather initial context, instruct it to return **only**:
-- Root `build.gradle` contents
-- `app/build.gradle` first 30 lines + last 25 lines of `dependencies {}`
-- The `android:name` value from `AndroidManifest.xml`
+- `settings.gradle` / `settings.gradle.kts` - all `include` lines (to enumerate modules)
+- Root `build.gradle` / `build.gradle.kts` - full contents
+- First 10 lines of **each** included module's `build.gradle` - just enough to identify which one declares `com.android.application` (the app module)
+- Once the app module is identified: that module's `build.gradle` first 30 lines + last 25 lines of `dependencies {}`; and the `proguardFiles` line
+- The `android:name` value from the **app module's** `AndroidManifest.xml` only
 - The `onCreate()` body from the Application class
 
-Do **not** ask the subagent to read `MainActivity`, activity files, fragment files, or any file outside this list.
+Do **not** ask the subagent to read library module source files, `MainActivity`, activity files, fragment files, or any `AndroidManifest.xml` from library modules.
+
+---
+
+## 3b. Multi-Module Project Detection
+
+### What Is a Multi-Module Project
+
+A project is **multi-module** when `settings.gradle` / `settings.gradle.kts` contains more than one `include` statement. Always read `settings.gradle` first - before opening any other project file.
+
+### Identifying the App Module
+
+Read the first 10 lines of each included module's `build.gradle`. The module that declares `com.android.application` (Groovy: `id 'com.android.application'`; Kotlin DSL: `id("com.android.application")`) is the **app module**. All other modules are library modules.
+
+> **Rule:** The app module is not always in a folder named `app/`. Always confirm by reading the plugins block. Never assume the folder name.
+
+### Where Changes Are Applied in a Multi-Module Project
+
+| Change type | Target |
+|---|---|
+| Conviva plugin classpath / plugins DSL declaration | Root `build.gradle` or `settings.gradle` only |
+| Conviva plugin application (`apply plugin:` / `id(...)`) | **App module** `build.gradle` only |
+| Tracker `implementation` dependency | **App module** `build.gradle` only |
+| ProGuard / R8 rules | ProGuard file referenced by `proguardFiles` in the **app module** `build.gradle` only |
+| `ConvivaAppAnalytics.createTracker(...)` call | Application class or MAIN/LAUNCHER Activity found in the **app module** only |
+
+> **Rule:** Library modules (those applying `com.android.library`) must **never** receive the Conviva plugin, tracker dependency, ProGuard rules, or initialization code - even if they have their own `build.gradle` or `proguard-rules.pro` files.
+
+### ProGuard Files in Library Modules
+
+Library modules often ship their own `proguard-rules.pro` files (e.g., `login/proguard-rules.pro`, `home/proguard-rules.pro`). These are for library-specific shrinking rules and must be ignored entirely. Append Conviva ProGuard rules only to the file identified by `proguardFiles` in the **app module's** `build.gradle`. If the app module's `build.gradle` delegates build configuration to a shared file (e.g., `apply from: '../extensions.gradle'`) and `proguardFiles` is not directly visible, search that shared file for the `proguardFiles` reference.
+
+### Application Class Resolution in Multi-Module Projects
+
+The app manifest's `android:name` may use a relative class name (e.g., `".App"`). Resolve it using the app module's package name - found in the `namespace` field of the app module's `build.gradle` or the `package` attribute of the app manifest. The Application class source file will always be in the app module's source set. Do not look for it in library module source sets.
 
 ---
 
@@ -104,7 +143,7 @@ Do **not** ask the subagent to read `MainActivity`, activity files, fragment fil
 - Read `AndroidManifest.xml` to find the entry point. Use the existing `Application` class, or the MAIN/LAUNCHER Activity if none exists. Never create a new `Application` class or modify `AndroidManifest.xml`.
 - Insert the Conviva call at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Change only the inserted line(s) - no other modifications.
 - Gradle changes are **append-only** - never modify, remove, or reorder existing lines. `repositories {}` blocks are read-only.
-- Apply the Conviva plugin only in the app module (not root or library modules).
+- Apply the Conviva plugin only in the app module (not root or library modules). In a multi-module project, read `settings.gradle` first to enumerate all modules, then confirm which module applies `com.android.application` (per Section 3b) before modifying any `build.gradle`. Never modify a library module's `build.gradle`, `proguard-rules.pro`, or source files.
 - Import only from `com.conviva.apptracker.*` - never from `com.conviva.sdk.*`. If something does not compile, stop and ask.
 - Set `userId` immediately after `createTracker(...)` if a non-PII identifier is available. Update on login, logout, and account switch. Never use PII (email, phone, full name). If no guest identifier exists, ask the developer to define a policy.
 - Append ProGuard rules to existing file(s) only - never modify existing rules. Also append to `multidex-config.pro` if multidex is in use. If no ProGuard file exists, ask the developer.
@@ -150,16 +189,20 @@ Do **not** ask the subagent to read `MainActivity`, activity files, fragment fil
 
 | DSL | File | Location | Append |
 |---|---|---|---|
-| Groovy (buildscript) | `app/build.gradle` | after existing `apply plugin:` lines | `apply plugin: 'com.conviva.sdk.android-plugin'` |
-| Kotlin (plugins DSL) | `app/build.gradle.kts` | inside `plugins {}` | `id("com.conviva.sdk.android-plugin")` |
-| Groovy | `app/build.gradle` | inside `dependencies {}` | `implementation 'com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>'` |
-| Kotlin | `app/build.gradle.kts` | inside `dependencies {}` | `implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")` |
+| Groovy (buildscript) | `<app-module>/build.gradle` | after existing `apply plugin:` lines | `apply plugin: 'com.conviva.sdk.android-plugin'` |
+| Kotlin (plugins DSL) | `<app-module>/build.gradle.kts` | inside `plugins {}` | `id("com.conviva.sdk.android-plugin")` |
+| Groovy | `<app-module>/build.gradle` | inside `dependencies {}` | `implementation 'com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>'` |
+| Kotlin | `<app-module>/build.gradle.kts` | inside `dependencies {}` | `implementation("com.conviva.sdk:conviva-android-tracker:<TRACKER_VERSION>")` |
+
+> **Note:** `<app-module>` is the folder name of the module identified as the app module in Section 3b. In many projects this is `app/`, but do not assume - use the confirmed module path.
 
 ---
 
 ## 6. ProGuard / R8 Rules
 
-Find the ProGuard file via the `proguardFiles` line in `app/build.gradle` (typically `proguard-rules.pro`). Append these two rules to it. If `multidex-config.pro` also exists, append there too. Append-only - never modify existing rules. If no ProGuard file exists, ask the developer.
+Find the ProGuard file via the `proguardFiles` line in the **app module's** `build.gradle` (typically `<app-module>/proguard-rules.pro`). Append these two rules to it. If `multidex-config.pro` also exists in the app module, append there too. Append-only - never modify existing rules. If no ProGuard file exists, ask the developer.
+
+> **Multi-module note:** Library modules (e.g., `login/`, `home/`, `core/`) often have their own `proguard-rules.pro` files. These must be ignored entirely - do **not** append Conviva rules to them. Only the ProGuard file referenced by `proguardFiles` in the **app module's** `build.gradle` is the correct target. If the app module's `build.gradle` uses a shared config file (e.g., `apply from: '../extensions.gradle'`) and the `proguardFiles` line is not directly visible, search that shared file to locate the reference before concluding no ProGuard file exists.
 
 ```proguard
 -keepnames class * extends android.view.View
@@ -321,9 +364,10 @@ If the build fails or runtime issues occur, fetch and read `AGENTS-troubleshooti
 
 | Section | Required Content |
 |---|---|
+| Multi-module detection | State whether the project is multi-module; list all modules found in `settings.gradle`; name the confirmed app module; confirm all changes were applied only to that module |
 | Summary of changes | Exact files changed and why |
 | Gradle changes | Exact appended lines and which files received them |
-| ProGuard / R8 | Exact rules added and where |
+| ProGuard / R8 | Exact rules added and which file they were appended to; confirm no library module ProGuard files were modified |
 | Initialization placement | Why this entry point was chosen from `AndroidManifest.xml` |
 | User ID setup | What was implemented, or exact instructions if auth hooks were unclear |
 | Custom events and tags | Brief explanation plus at least one code snippet each |
