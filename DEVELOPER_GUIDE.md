@@ -49,6 +49,8 @@ graph TD
 <!--self-serve[Gradle]-->
 - Add the plugin to your project's root `build.gradle` file, replacing `<version>` with the latest from [Conviva Android DPI Plugin](https://github.com/Conviva/conviva-android-plugin).
 
+> **Note:** The examples below use the **plugins DSL** style (recommended for AGP 7.2+). If your root `build.gradle` uses the older `buildscript { dependencies { classpath ... } }` style, add `classpath 'com.conviva.sdk:android-plugin:<version>'` inside that `dependencies {}` block and then use `apply plugin: 'com.conviva.sdk.android-plugin'` in the app module instead.
+
 <!-- :::code-tabs[Groovy,Kotlin] -->
 
 ```Groovy
@@ -135,7 +137,7 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 
 ```plaintext
 -keepnames class * extends android.view.View
--keep, allowshrinking class com.conviva.** { *; }
+-keep,allowshrinking class com.conviva.** { *; }
 ```
 <!--eof-self-serve-->
 
@@ -149,6 +151,7 @@ Add the following ProGuard/R8 rule to the `proguard-rules.pro` file to prevent C
 **Java**
 ```Java
 import com.conviva.apptracker.ConvivaAppAnalytics;
+import com.conviva.apptracker.controller.TrackerController;
 
 public class MyApplication extends Application {
     @Override
@@ -197,7 +200,7 @@ User ID is a unique string identifier to distinguish individual viewers. If usin
 <!-- :::code-tabs[Java,Kotlin] -->
 **Java**
 ```Java
-tracker.getSubject.setUserId(userId);
+tracker.getSubject().setUserId(userId);
 ```
 
 **Kotlin**
@@ -284,15 +287,11 @@ Clear a few of the previously set custom tags:
 **Java**
 ```Java
 // Clears custom tags key1 & key2
-Set<String> clearTagKeysSet = new HashSet<>();
-clearTagKeysSet.add("key1");
-clearTagKeysSet.add("key2");
-tracker.clearCustomTags(clearTagKeysSet);
+tracker.clearCustomTags(Arrays.asList("key1", "key2"));
 ```
 **Kotlin**
 ```Kotlin
-val clearTagKeysSet = setOf("key1", "key2")
-tracker.clearCustomTags(clearTagKeysSet)
+tracker.clearCustomTags(listOf("key1", "key2"))
 
 ```
 <!-- ::: -->

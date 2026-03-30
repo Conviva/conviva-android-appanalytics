@@ -3,6 +3,7 @@
 > **Single source of truth for every AI coding assistant.**
 > This file governs: Cursor, Claude Code, OpenAI Codex, ChatGPT, Gemini CLI, GitHub Copilot, Android Studio AI, and any other agent.
 > If any other file or documentation in this repository conflicts with what is written here, **this file always wins**.
+> **File size:** ~380 lines. Read in full once; do not re-read if already in context (see Section 3a No-Re-Read Rule).
 
 ---
 
@@ -143,7 +144,7 @@ The app manifest's `android:name` may use a relative class name (e.g., `".App"`)
 - Read `AndroidManifest.xml` to find the entry point. Use the existing `Application` class, or the MAIN/LAUNCHER Activity if none exists. Never create a new `Application` class or modify `AndroidManifest.xml`.
 - Insert the Conviva call at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Change only the inserted line(s) - no other modifications.
 - Gradle changes are **append-only** - never modify, remove, or reorder existing lines. `repositories {}` blocks are read-only.
-- Apply the Conviva plugin only in the app module (not root or library modules). In a multi-module project, read `settings.gradle` first to enumerate all modules, then confirm which module applies `com.android.application` (per Section 3b) before modifying any `build.gradle`. Never modify a library module's `build.gradle`, `proguard-rules.pro`, or source files.
+- **Multi-module rule** (see Section 3b): Apply the Conviva plugin only in the **app module** (not root or library modules). Never modify a library module's `build.gradle`, `proguard-rules.pro`, or source files.
 - Import only from `com.conviva.apptracker.*` - never from `com.conviva.sdk.*`. If something does not compile, stop and ask.
 - Set `userId` immediately after `createTracker(...)` if a non-PII identifier is available. Update on login, logout, and account switch. Never use PII (email, phone, full name). If no guest identifier exists, ask the developer to define a policy.
 - Append ProGuard rules to existing file(s) only - never modify existing rules. Also append to `multidex-config.pro` if multidex is in use. If no ProGuard file exists, ask the developer.
@@ -202,7 +203,7 @@ The app manifest's `android:name` may use a relative class name (e.g., `".App"`)
 
 Find the ProGuard file via the `proguardFiles` line in the **app module's** `build.gradle` (typically `<app-module>/proguard-rules.pro`). Append these two rules to it. If `multidex-config.pro` also exists in the app module, append there too. Append-only - never modify existing rules. If no ProGuard file exists, ask the developer.
 
-> **Multi-module note:** Library modules (e.g., `login/`, `home/`, `core/`) often have their own `proguard-rules.pro` files. These must be ignored entirely - do **not** append Conviva rules to them. Only the ProGuard file referenced by `proguardFiles` in the **app module's** `build.gradle` is the correct target. If the app module's `build.gradle` uses a shared config file (e.g., `apply from: '../extensions.gradle'`) and the `proguardFiles` line is not directly visible, search that shared file to locate the reference before concluding no ProGuard file exists.
+> **Multi-module note:** Library modules often have their own `proguard-rules.pro` files. These must be ignored entirely - do **not** append Conviva rules to them. Only the file referenced by `proguardFiles` in the **app module's** `build.gradle` is correct (see Section 3b).
 
 ```proguard
 -keepnames class * extends android.view.View

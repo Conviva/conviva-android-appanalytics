@@ -27,8 +27,10 @@ If you are an AI coding assistant integrating this SDK, use the entry point for 
 | **All agents** (authoritative source) | [AGENTS.md](./AGENTS.md) |
 | Cursor | [.cursor/rules/conviva-integration.mdc](.cursor/rules/conviva-integration.mdc) |
 | Claude Code | [CLAUDE.md](./CLAUDE.md) |
-| Gemini | [GEMINI.md](./GEMINI.md) |
-| Github Copilot | [.github/copilot-instructions.md](.github/copilot-instructions.md) |
+| Gemini CLI | [GEMINI.md](./GEMINI.md) |
+| GitHub Copilot | [.github/copilot-instructions.md](.github/copilot-instructions.md) |
+| Windsurf / Codeium | [.windsurfrules](./.windsurfrules) |
+| OpenAI Codex | [CODEX.md](./CODEX.md) |
 
 ## Validation
 
