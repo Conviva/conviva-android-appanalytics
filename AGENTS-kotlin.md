@@ -6,7 +6,7 @@ Only read this file if the target project uses Kotlin. Imports are in AGENTS.md 
 
 ## Initialization
 
-Append at the end of `onCreate()`. If `super.onCreate()` is the last line, insert above it. Add the import if not already present.
+Insert at end of `onCreate()`. If `super.onCreate()` is last, insert above it. Add the import if not already present.
 
 ```kotlin
 import com.conviva.apptracker.ConvivaAppAnalytics
@@ -18,9 +18,18 @@ ConvivaAppAnalytics.createTracker(this, "YOUR_CUSTOMER_KEY", "YOUR_APP_NAME")
 
 ## User ID
 
+Place immediately after successful login or registration at the convergence point.
+
 ```kotlin
 val tracker = ConvivaAppAnalytics.getTracker()
 tracker?.subject?.userId = userId
+```
+
+Clear on logout:
+
+```kotlin
+val tracker = ConvivaAppAnalytics.getTracker()
+tracker?.subject?.userId = null
 ```
 
 ---
@@ -36,6 +45,8 @@ val eventData = JSONObject().apply {
 }
 tracker?.trackCustomEvent("your-event-name", eventData)
 ```
+
+---
 
 ## Custom Tags
 
@@ -56,39 +67,14 @@ tracker?.clearAllCustomTags()
 
 ## Cronet
 
-> Only reach this section after following the automatic remediation steps in AGENTS.md Section 12. Do not ask the developer - apply the fix directly.
-
-### What to detect
-
-Search all Kotlin source files for any `addInterceptor(...)` call whose argument constructs a Cronet interceptor (e.g. `CronetInterceptor`, `MixinCronetInterceptor`, or any class whose name contains `Cronet` and implements `Interceptor`).
-
-### What to insert
-
-On the line **immediately before** every such `addInterceptor(...)` call, insert the following line, matching the surrounding indentation exactly:
+Only apply after AGENTS.md Section 12 detection confirms Cronet is present. Insert immediately before the Cronet interceptor line, matching surrounding indentation.
 
 ```kotlin
 builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
 ```
 
-Also add the following import to the file's import block if it is not already present:
+Add import if not present:
 
 ```kotlin
 import com.conviva.instrumentation.tracker.OkHttp3Instrumentation
-```
-
-### Example - before
-
-```kotlin
-if (engine != null) {
-    builder.addInterceptor(MixinCronetInterceptor.newBuilder(engine).build())
-}
-```
-
-### Example - after
-
-```kotlin
-if (engine != null) {
-    builder.addInterceptor(OkHttp3Instrumentation.ConvivaNetworkInterceptor())
-    builder.addInterceptor(MixinCronetInterceptor.newBuilder(engine).build())
-}
 ```
