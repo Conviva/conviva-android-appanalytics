@@ -24,7 +24,7 @@ If you are an AI coding assistant integrating this SDK, use the entry point for 
 
 | Agent / Tool | Entry Point |
 |---|---|
-| **All agents** (authoritative source) | [AGENTS.md](./AGENTS.md) |
+| All agents - START HERE (authoritative source) | [AGENTS.md](./AGENTS.md) |
 | Cursor | [.cursor/rules/conviva-integration.mdc](.cursor/rules/conviva-integration.mdc) |
 | Claude Code | [CLAUDE.md](./CLAUDE.md) |
 | Gemini CLI | [GEMINI.md](./GEMINI.md) |

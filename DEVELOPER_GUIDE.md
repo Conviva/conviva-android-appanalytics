@@ -288,7 +288,7 @@ Chain optional values on the builder. Omitted or null values are not included in
 - If validation fails on required fields (e.g. missing `transactionId` or non-finite `totalOrderAmount`), the SDK logs a warning and skips the event without throwing.
 - Optional fields with unexpected types are stripped with a warning; the event is still sent.
 
-**Example — minimal:**
+**Example --- minimal:**
 <!-- :::code-tabs[Java,Kotlin] -->
 **Java**
 ```Java
@@ -307,7 +307,7 @@ val event = ConvivaRevenueEvent
 tracker.trackRevenueEvent(event)
 ```
 
-**Example — full:**
+**Example --- full:**
 <!-- :::code-tabs[Java,Kotlin] -->
 **Java**
 ```Java
