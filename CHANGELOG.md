@@ -1,8 +1,8 @@
 
 # Changelog
 ## 1.3.2 (17/APR/2026)
-- conviva_click event now includes the hosting Fragment or Activity name, to identify which screen the clicked element belongs to.
-- Fixed event batching on Android 9 and below, by replacing the SQLite window function used for cumulative event size calculation with a Java-side equivalent.
+- Enhances `conviva_click` event with `elementParent` to include the hosting Fragment or Activity name, enabling identification of the screen associated with the clicked element.
+- Fixes event batching on Android 9 and its earlier versions by replacing the SQLite window function used for cumulative event size calculation with a Java-side equivalent.
 
 ## 1.3.1 (26/MAR/2026)
 - Improves NDK crash detection for Android 12+ (with a 500KB safety limit)(**Note**: Stack traces are unavailable on Android 11)
