@@ -1,5 +1,10 @@
 
 # Changelog
+## 1.4.0 (21/MAY/2026)
+- Adds automatic client ID synchronization to in-app WebViews via cookie and JS bridge, enabling unified user identity across native and web surfaces without developer code changes.
+- Upgraded the DiagnosticInfo schema version to 1-0-5
+- Fixes the trace parent app config issue.
+
 ## 1.3.2 (17/APR/2026)
 - Enhances `conviva_click` event with `elementParent` to include the hosting Fragment or Activity name, enabling identification of the screen associated with the clicked element.
 - Fixes event batching on Android 9 and its earlier versions by replacing the SQLite window function used for cumulative event size calculation with a Java-side equivalent.
