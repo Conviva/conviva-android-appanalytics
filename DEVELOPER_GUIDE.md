@@ -452,6 +452,79 @@ tracker.clearAllCustomTags();
 </details>
 
 <details>
+<!--self-serve-webview-clid-sync-->
+<summary><b>WebView Client ID Sync</b></summary>
+
+**Available from Android SDK [v1.4.0](https://github.com/Conviva/conviva-android-appanalytics/releases/v1.4.0).**
+
+Conviva automatically shares the native client ID with in-app WebViews so that native and web sessions are attributed to the same user. No code changes are required — the feature is enabled by default and controlled via remote config.
+
+**How it works:**
+
+- **Cookie (primary):** The SDK seeds a `Conviva_sdkConfig` cookie into the WebView cookie jar for each configured domain. The Web SDK reads it on page load.
+- **JS bridge (fallback):** When the cookie is unavailable (domain not configured or async gap), the Web SDK calls `window.__ConvivaNativeWebInterface.getClientId()` to retrieve the native client ID. **JavaScript must be enabled** (`webView.getSettings().setJavaScriptEnabled(true)`) for the bridge and cookie approaches to function.
+
+> **Web SDK requirement:** The cookie path works with any Web SDK version that already reads `Conviva_sdkConfig`. The JS bridge fallback requires **Web SDK ≥ [2.2.0](https://github.com/Conviva/conviva-js-appanalytics/releases/v2.2.0)**.
+
+---
+
+**Option 1 — No code changes (remote config only)**
+
+Both cookie seeding and the JS bridge default to **enabled**. To configure the WebView domains in remote config, contact the [Conviva support team](https://support.conviva.com).
+
+---
+
+**Option 2 — Supply fallback domains in app code**
+
+Provide domains at tracker creation so cookie seeding starts immediately at launch, before the first remote config fetch:
+
+<!-- :::code-tabs[Java,Kotlin] -->
+**Java**
+```Java
+import com.conviva.apptracker.ConvivaAppAnalytics;
+import com.conviva.apptracker.internal.tracker.ClidSyncConfiguration;
+
+ConvivaAppAnalytics.createTracker(
+    this,
+    "YOUR_CUSTOMER_KEY",
+    "YOUR_APP_NAME",
+    new ClidSyncConfiguration().domains(Arrays.asList(".example.com", ".partner.com"))
+);
+```
+**Kotlin**
+```Kotlin
+import com.conviva.apptracker.ConvivaAppAnalytics
+import com.conviva.apptracker.internal.tracker.ClidSyncConfiguration
+
+ConvivaAppAnalytics.createTracker(
+    this,
+    "YOUR_CUSTOMER_KEY",
+    "YOUR_APP_NAME",
+    ClidSyncConfiguration().domains(listOf(".example.com", ".partner.com"))
+)
+```
+<!-- ::: -->
+> **Recommendation:** Use leading-dot domains (`.example.com`) to cover all subdomains. Keep the same domain list in both app config and remote config. App-config domains seed cookies immediately at launch (before remote config arrives); remote config domains take over once fetched. If the two lists differ, there is a window during the first launch where a WebView loading a remote-config-only domain will miss the cookie. Keeping them in sync ensures uninterrupted client ID sharing from the very first WebView load.
+
+---
+
+**Option 3 — AGP plugin: cover off-tree WebViews**
+
+The lifecycle registrar automatically instruments WebViews that are attached to an Activity. For WebViews created outside of an Activity context (such as in a Service or a third-party library), instrumentation is handled by the [conviva-android-plugin](https://github.com/Conviva/conviva-android-plugin/releases/0.3.9). This behavior can be toggled using the webViewSync flag, which defaults to true.
+
+<!-- :::code-tabs[Kotlin] -->
+```Kotlin
+conviva {
+    webViewSync = false
+}
+```
+
+---
+
+<!--eof-self-serve-webview-clid-sync-->
+</details>
+
+<details>
 <!--self-serve-custom-event-->
 <summary><b>Override Activity Name</b></summary>
 
